@@ -1,41 +1,16 @@
-# Company Direct Apply Strategy
+# Company career pages (company_direct)
 
-## Objective
-Apply directly on company career pages or supported direct ATS pages such as Greenhouse, Lever, and Ashby.
+Adds only these steps to `AGENTS.md`; if the two ever conflict, `AGENTS.md` wins. Covers company career pages and direct application systems such as Greenhouse, Lever and Ashby.
 
-Browser window and tab handling follows the Browser usage rules in `AGENTS.md`. Do not add platform-specific tab or Back-button behaviour here.
+## Start
+- `company_direct` as a plan item: use the career page URLs in `personal_data/profile.md`. When a page has a job search, use its freshness controls (`AGENTS.md` section 9).
+- A job handed over from discovery or a job source: start at that job's application page. No saved career URL is needed, and never restart a search.
 
-## Entry points
-This strategy supports two entry points:
-- **company_direct plan** — use the company career URLs saved in `personal_data/profile.md`.
-- **discovery handoff** — use the exact ATS/application URL discovered from the current job. Do not require a saved career URL and do not restart a search.
+## Apply
+1. Find the Apply or View Roles control on the current page, and tell the application system from the page's address and content.
+2. Greenhouse, Lever and Ashby: attach `personal_data/resume.pdf`; fill basic details and links from `profile.md`; answer from `form_answers.md`; compare prefilled values; submit and wait for the confirmation.
+3. Other systems: follow what the page shows. Use the portal login only when an account is required: check `tracking/created_accounts.csv` first, and add a new account's record at once.
 
-## Search / freshness
-If the current company/ATS page provides a job-search results UI, apply the shared freshness rule in `AGENTS.md` before reviewing results. Do not invent controls or widen to older ranges automatically.
-
-## Execution Flow
-1. Start from the current company/job page supplied by the plan or discovery flow.
-2. Locate the Apply/View Roles control shown by the current page.
-3. Identify the current ATS from the actual URL/page.
-4. Run fit, duplicate, and daily-limit checks before account creation or submission.
-5. For Greenhouse / Lever / Ashby:
-   - attach `personal_data/resume.pdf`;
-   - fill Basic Info from `profile.md`;
-   - fill links from `profile.md`;
-   - answer common or contextual questions from `form_answers.md`;
-   - compare prefilled factual values with `profile.md`;
-   - if upload is unsupported, use the documented user-upload `done` fallback;
-   - before the session's first submit-capable action, show the filled answers and wait for `ok`;
-   - submit and wait for actual confirmation.
-6. For custom/proprietary ATS:
-   - inspect the actual page instead of assuming a fixed sequence;
-   - use reusable credentials only when an account is required;
-   - check `tracking/created_accounts.csv` before creating a new account;
-   - log a new account immediately when created;
-   - answer only from saved data and matching contextual answers.
-7. Append the application outcome immediately to today's `applied/YYYY-MM-DD/applications.md`.
-8. Follow the shared cooldown/rotation rule in `AGENTS.md`; do not add a separate fixed wait here.
-
-## Exclusions
-- Skip essay-style behavioral questions that are required but not covered by saved user information.
-- Never invent a Greenhouse/Lever/Ashby UI control or confirmation.
+## Skip
+- Required essay-style questions about past behaviour that the saved answers do not cover.
+- Never invent a control or a confirmation.
