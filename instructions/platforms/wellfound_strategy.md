@@ -1,30 +1,17 @@
-# Wellfound (AngelList) Application Strategy
+# Wellfound
 
-## Objective
-Apply to relevant startup roles on Wellfound using the current application and pitching UI.
+Adds only Wellfound's steps to `AGENTS.md`; if the two ever conflict, `AGENTS.md` wins.
 
-Browser window and tab handling follows the Browser usage rules in `AGENTS.md`. Do not add platform-specific tab or Back-button behaviour here.
+## Search
+1. Open Wellfound jobs with the role and location filters from `personal_data/profile.md`.
+2. Use Wellfound's freshness controls when it has them (`AGENTS.md` section 9).
 
-## Search Strategy
-1. Navigate to Wellfound jobs.
-2. Apply role and location filters from `personal_data/profile.md`.
-3. Apply the shared freshness rule in `AGENTS.md` when the current UI exposes freshness controls; verify them before reviewing results.
-4. Run the fit check before applying.
+## Apply
+1. Write a short note or pitch from facts in `profile.md` and details shown on this job's post.
+2. Compare prefilled values with `profile.md`, and use contextual answers only when their context matches.
+3. For the session's first application, the `ok` preview shows the pitch too.
+4. Submit and wait for Wellfound's confirmation.
 
-## Execution Flow
-1. Read today's daily file and history for scoped duplicates.
-2. Read the complete job post.
-3. If Wellfound is signed out or the application simply asks for login, ask the user to sign in in the current tab and reply `done`; verify sign-in and continue the current flow. Do not stop the platform.
-4. Prepare the short Note/Pitch from facts in `profile.md` plus role/company details shown on the current job post.
-5. Compare any prefilled facts with the authoritative profile.
-6. Use contextual answers only when their context matches.
-7. Before the session's first submit-capable action, show the pitch and filled answers and wait for `ok`.
-8. Submit.
-9. Confirm success from Wellfound.
-10. Append the application outcome immediately to today's daily Markdown file.
-11. Follow the shared cooldown/rotation rule in `AGENTS.md`; do not add a separate fixed wait here.
-
-## Exclusions
-- Do not write a long generic cover letter.
-- Do not invent startup-specific facts.
-- Stop Wellfound for the day only on a daily-limit, CAPTCHA, unusual-activity warning, security restriction, or equivalent access restriction, and record the dated site stop.
+## Never
+- A long generic cover letter.
+- Facts about the startup that the job post does not show.
