@@ -1,42 +1,18 @@
-# Workday Application Strategy
+# Workday
 
-## Objective
-Complete Workday application forms safely. Any Workday application counts toward the Workday daily limit, regardless of where the job was discovered.
+Adds only Workday's steps to `AGENTS.md`; if the two ever conflict, `AGENTS.md` wins. Any application on a Workday form counts as `workday`, wherever the job was found.
 
-Browser window and tab handling follows the Browser usage rules in `AGENTS.md`. Do not add platform-specific tab or Back-button behaviour here.
+## Start
+- `workday` as a plan item: search with the target job titles, locations and work modes from `personal_data/profile.md`, and Workday's freshness controls when it has them (`AGENTS.md` section 9).
+- A job arriving from discovery, a job source or a company page: continue that job's form. Never restart a Workday search for it.
 
-## Search / Entry Point
-1. When Workday is selected directly, discover roles using the current search flow.
-2. When a Workday job arrives from discovery or a company page, **continue the current discovered job**. Do not restart a Workday search.
-3. Use target titles, locations, and work modes from `personal_data/profile.md`.
-4. When the current Workday search UI exposes freshness controls, apply the shared freshness rule in `AGENTS.md`; verify them before reviewing results.
+## Apply
+1. The fit, duplicate and limit checks pass before any sign-in or account creation.
+2. Account: check `tracking/created_accounts.csv`. If this company has a record, use **Sign In**. If not, create an account with `personal_data/credentials.md` and add its record at once.
+3. Upload `personal_data/resume.pdf` (manual upload: `AGENTS.md` section 7).
+4. Compare what Workday read from the resume with `profile.md`, and fix material differences from it. Do not get stuck on harmless old-experience details; fix the required facts and go on.
+5. Go through the steps the site shows. Labels vary, so never assume a fixed order.
+6. Answer questions from `form_answers.md` only when the answer and its context match.
+7. Check the final values, follow any extra Workday approval, submit, and wait for Workday's confirmation.
 
-## Execution Flow
-1. Read today's daily file and applicable history for scoped duplicates.
-2. Read the complete job post and run fit and daily-limit checks before creating or signing in to an account.
-3. Check `tracking/created_accounts.csv` before creating a company account.
-4. If an account exists for that company, use **Sign In**. Do not create a duplicate account.
-5. If no account exists, create one with `personal_data/credentials.md` as permitted, then log the new account immediately in `tracking/created_accounts.csv`.
-6. Upload `personal_data/resume.pdf`.
-7. Compare Workday-parsed information with `profile.md` before accepting it. Correct material discrepancies from the authoritative source.
-8. If automated upload is unsupported, ask the user to upload `personal_data/resume.pdf` in the current tab, wait for `done`, and then verify the upload.
-9. Complete the current Workday steps shown by the site. Do not invent a fixed sequence; labels can vary.
-10. Answer application questions from `form_answers.md` only when the answer and context match. Do not guess.
-11. Re-check final factual values before submission.
-12. Before the first submit-capable action of the session, show the exact application data/questions and wait for `ok`.
-13. Honor any additional Workday approval prompt.
-14. Submit.
-15. Wait for confirmation shown by Workday.
-16. Append the outcome immediately to today's daily Markdown file.
-17. Follow the shared cooldown/rotation rule in `AGENTS.md`; do not add a separate fixed wait here.
-
-## Account / verification fallback
-If Workday requires email verification that the agent cannot complete, say:
-"Please sign in / create the account / click the email verification link in this tab, then reply done"
-
-Continue only after the user replies `done`.
-
-## Exclusions / Rules
-- Do not create another account when an existing company account record is available.
-- Do not get stuck repeatedly correcting harmless old-experience parsing issues; correct required material values and proceed.
-- A Workday CAPTCHA or security restriction stops that application or site according to `AGENTS.md`; never bypass it.
+If an email check cannot be finished, use the sign-in message in `AGENTS.md` section 10 and wait for `done`.
