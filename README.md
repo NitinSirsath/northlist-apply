@@ -1,160 +1,111 @@
-# AI-Native Job Application Framework
+# NorthList Apply
 
-This repository contains zero executable code. It is a small set of Markdown instructions, local personal-data files, setup state, account records, and daily application records for an AI agent with browser automation.
+Your own AI app applies to jobs for you, one at a time, with your OK first.
 
-## ⚠️ Before you start — read this
+NorthList Apply is a set of written instructions, not a program. Open this folder in an AI app that can use your browser, such as Codex, Claude Code or Antigravity, and type `start`. It finds jobs that fit on the sites you choose, fills in the forms from your profile, saved answers and resume, and keeps a daily record in this folder. Connect [NorthList](https://northlist.site/automation) if you like, and every application sits next to the mails that follow.
 
-**STOP. Read this before the run starts.**
-This run can take up to the configured session time limit (default 4 hours).
-If your computer sleeps, the browser disconnects and the run fails.
-Applications already recorded in today's file are safe. Unfinished ones are lost.
-Before replying `ready`, make sure ALL of these are true:
-1. The laptop or PC is plugged into power. Do not run on battery.
-2. Sleep is turned OFF for this run:
-   - macOS: System Settings → Lock Screen → "Turn display off when inactive" → Never.
-     Also System Settings → Battery → Options (or Displays → Advanced) →
-     "Prevent automatic sleeping on power adapter when the display is off" → On.
-   - Windows 11: Settings → System → Power & battery → Screen and sleep →
-     "When plugged in, put my device to sleep after" → Never, and
-     "When plugged in, turn off my screen after" → Never.
-3. The laptop lid stays open for the whole run.
-4. Chrome (or the browser your AI app controls) is already open with ONE window.
-5. Do not use this computer for other work while the run is active.
+In beta. Tried so far on LinkedIn Easy Apply, Naukri and Indeed. Like any AI, it can make mistakes, so watch its first runs.
 
-## 🚀 Workflow
+## What you need
 
-1. Download the repository folder.
-2. Open the folder in Codex, Claude Code, Antigravity, or another supported AI app with browser access.
+- An AI app that can read files and use your browser, for example Codex, or Claude Code with its browser extension.
+- Your resume as a PDF.
+- Your accounts on the job sites you want, signed in in that browser.
+
+## Get started
+
+1. Download this repository (**Code › Download ZIP**, then unzip it) or clone it.
+2. Open the folder in your AI app.
 3. Type `start`.
-4. The agent creates missing personal-data files from the committed templates and guides setup one topic at a time.
-5. Setup is resumable: answers are saved immediately, skipped optional values are stored as `None`, and a local `setup_checklist.md` is only a progress aid.
-6. The agent verifies the real files before allowing applications.
-7. After setup, choose today's platforms and requested application counts. Supported choices are LinkedIn, Indeed, Naukri, Wellfound, Instahyre, Workday, company career pages, web discovery, The Reliable Jobs, TEKsystems, Teksands, D4hire, Supersourcing, and We Work Remotely.
-8. Before the first browser action, the agent shows the power/sleep checklist and waits for `ready`.
-9. Today's plan and every outcome are stored in exactly one file: `applied/YYYY-MM-DD/applications.md`.
-10. The agent applies one job at a time, uses the platform strategy files, respects the hard daily limits, pauses for the first-submit `ok` approval, and records confirmation only after the site shows it.
-11. A later session on the same local date resumes the same daily file instead of creating another tracker.
-12. When a real model handoff is needed, all progress is already saved in the local files.
 
-The legacy `tracking/applied_jobs.csv`, when present, is read-only history. The separate `tracking/created_accounts.csv` remains the account record for reusable company-portal accounts. New applications are never written back to the CSV tracker.
+The first time, it asks for your resume and fills in your profile from it. It shows you what it filled in, then asks only for what is still missing, such as your notice period, salary, work authorization and the jobs you want. Your profile, saved answers, portal login and resume stay in `personal_data/` on your computer, and Git ignores them, so they are never committed.
 
-## 📁 Key files
+## A normal run
 
-- `AGENTS.md` — authoritative workflow and safety rules.
-- `CLAUDE.md` — imports `AGENTS.md`.
-- `personal_data/profile_template.md` — authoritative profile/job-preference template.
-- `personal_data/form_answers_template.md` — reusable and contextual screening-answer template.
-- `personal_data/credentials_template.md` — company-portal credential template.
-- `instructions/platforms/` — platform strategies, including Instahyre.
-- `instructions/advanced_strategies/` — company-direct and discovery flows.
-- `setup_checklist.md` — local ignored setup progress created at runtime.
-- `applied/YYYY-MM-DD/applications.md` — one local-date application record created at runtime.
-- `tracking/created_accounts.csv` — local company account record.
-- `tracking/applied_jobs.csv` — legacy read-only history, if present.
+1. **`start`**: it checks your setup and shows today's plan, for example "Same as last time: linkedin 10, naukri 10", with a short check (see "Before a run"). Tell it if you want a different plan.
+2. **`ready`**: once the check is done. It opens the browser and starts.
+3. **`ok`**: it shows you the first application of the run, with every answer, and sends it only after your OK. Then it goes on, one job at a time.
 
-## 🧭 Daily limits
+When a site asks you to sign in, it waits for you: sign in in that tab and reply `done`. At the end, it sums up the run and asks you the questions it could not answer, and saves your answers for next time.
 
-- LinkedIn: 20
-- Indeed: 20
-- Naukri: 25
-- Wellfound: 10
-- Instahyre: 10
-- Workday: 5
-- company_direct + discovery combined: 10
+## Before a run
 
-The Reliable Jobs, TEKsystems, Teksands, D4hire, Supersourcing, and We Work Remotely are source selectors only; they do not create additional daily-limit buckets. Their applications are counted under the existing actual-destination limits.
-- all platforms combined: 50
+A run can take up to your session limit (4 hours by default). If the computer sleeps, the browser disconnects and the run stops. Jobs already in today's record are safe.
 
-User-requested counts and lower user limits are respected. Counts reset by local date, while duplicate history remains available across earlier daily files and any legacy CSV.
+1. Plug the computer in.
+2. Turn sleep off for the run:
+   - **macOS:** System Settings › Lock Screen › "Turn display off when inactive" › Never. Also System Settings › Battery › Options (or Displays › Advanced) › "Prevent automatic sleeping on power adapter when the display is off" › On.
+   - **Windows 11:** Settings › System › Power & battery › Screen and sleep: set "When plugged in, put my device to sleep after" and "When plugged in, turn off my screen after" to Never.
+3. Keep the lid open.
+4. Open the browser your AI app controls, with one window.
+5. Don't use the computer for other work during the run.
 
-## 🤖 Model guidance
+## Sites and limits
 
-Model names and versions are intentionally not hard-coded.
+- **Tried:** LinkedIn (Easy Apply), Naukri, Indeed.
+- **Written up, not tested yet:** Wellfound, Instahyre, Workday, company career pages (`company_direct`), web search (`discovery`), and the job sources The Reliable Jobs, TEKsystems, Teksands, D4hire, Supersourcing and We Work Remotely. Job sources only find jobs; each job is applied to on the site where its form is.
 
-- **Strongest/current-vendor tier:** setup.
-- **Light/current-vendor tier:** LinkedIn, Indeed, Naukri, Wellfound, Instahyre quick applications.
-- **Medium/current-vendor tier:** Workday, company direct, and discovery.
+Most applications per day: LinkedIn 20, Indeed 20, Naukri 25, Wellfound 10, Instahyre 10, Workday 5, company career pages and web search together 10, all sites together 50. Your plan's numbers, and an optional lower limit in your profile, can only make these smaller.
 
-The agent recommends a tier from the same vendor and asks the user to select it when a change is needed. It should not pretend to switch models itself or force a new chat unless a real handoff is necessary.
+## What it always does
 
-## 🔎 Selectable job sources
+- Applies to one job at a time, with at least 2 minutes between two applications on the same site.
+- Applies only to jobs that match your titles, places and work modes, and skips the companies you list.
+- Fills in only facts from your profile, saved answers and resume. When a question has no saved answer, it asks you instead of guessing.
+- Shows you the first application of each run and waits for your `ok`.
+- Counts a job as applied only after the site confirms it.
+- Stops a site for the day at a CAPTCHA, a security check or a limit message, and never tries to get around it.
+- Never emails recruiters, and never turns on a site's own auto-apply.
+- Keeps one record per day in `applied/YYYY-MM-DD/applications.md`, and never applies to the same job twice.
 
-- The Reliable Jobs — `https://thereliablejobs.com/`
-- TEKsystems — `https://www.teksystems.com/en/careers`
-- Teksands — `https://teksands.ai/`
-- D4hire — `https://d4hire.in/`
-- Supersourcing — `https://supersourcing.com/`
-- We Work Remotely — `https://weworkremotely.com/`
+## Which model
 
-Source selection records where the job was found; the daily record also stores the actual application destination. The existing discovery, company-direct, and Workday flows are reused according to that destination. Unsupported or email-only routes are reported rather than invented, and source-site auto-apply services/recruiter emails are not enabled.
+Once per run, it tells you which kind of model fits today's plan; it never names one. A light model is enough for the quick-apply sites (LinkedIn, Indeed, Naukri, Wellfound, Instahyre). Workday, company career pages, web search and the job sources go better with a medium one. For the first setup, use your app's strongest model.
 
-## 🧭 Session length and browser
+## Connect NorthList (optional)
 
-- Default session limit is 4 hours, set in `personal_data/profile.md`.
-- Use one browser window, one anchor tab per platform, and a tab cap of selected platforms + 2.
-- `company_direct`, `discovery`, and Workday may trigger a browser-permission prompt per company.
+[NorthList](https://northlist.site/automation) tracks your job applications. Connected, each job this automation applies to shows up there with its links and the answers it sent, and mail from the company moves it on. Without it nothing changes: the daily record in this folder is enough.
 
-## 🛠️ Troubleshooting
+**Set up once:**
+1. In NorthList, open **Automation › Setup** and create a token. Copy it: it is shown once.
+2. In your AI app's **user-level** MCP settings (never a file inside this folder), add NorthList as a server with the server address from the Setup tab (it ends in `/mcp`) and the header `Authorization: Bearer <token>`. If your app cannot send headers, use the `mcp-remote` bridge with that same address: `npx mcp-remote <server address> --header "Authorization: Bearer <token>"`.
+3. Allow its two tools: `record_application_submission` and `record_not_submitted_job`.
+4. In `personal_data/profile.md`, set the profile line the Setup tab shows, `- NorthList server: <address>` (without `/mcp`). An older `- Career Companion server: <address>` line works the same.
 
-**The AI app keeps asking for browser permission, sometimes 10 to 15 times.**
-Why: many AI apps ask once per new website. `company_direct`, `discovery`, and Workday open a new company domain for almost every job.
-Do this: allow it for the session if your app offers that; stay near the computer when those three sources are selected; for hands-off runs use the five quick-apply platforms (LinkedIn, Indeed, Naukri, Wellfound, Instahyre), which use fixed domains.
+**What NorthList gets:**
+- For each job it applied to: the company, job title, site, job and apply page links, the apply site's address, the job ID, where the job was found, location, work mode, time, the site's confirmation, your resume's file name and the answers it sent.
+- For each job it opened but did not apply to: the company, job title, site, job link, whether it skipped the job or left it for you, the reason and the time.
+- Never: your passwords, your resume file or its text, or your plan and limits.
 
-**"Browser connection lost. The run is paused."**
-Why: the browser closed, the computer slept, or the extension the AI app uses lost its connection.
-Do this: open the browser with exactly one window; check the extension is enabled and connected; wake the computer and keep it on power; reply `ready`. The agent retries once, then ends the session cleanly. Nothing was recorded as applied without a site confirmation.
+Each application is sent right after it is recorded, so a stopped run keeps what was sent. Jobs it did not apply to are sent at the end of the run, and failed sends are tried again then. To send a day again later, say `sync NorthList for YYYY-MM-DD`. If you delete an application in NorthList, what this automation sent for it goes too. Tokens expire: when it says the tools are not available, create a new token and replace it in your AI app's settings.
 
-**Many browser windows or tabs opened and the computer became slow or unusable.**
-Why: the run was started before the browser rules in `AGENTS.md` section 7A existed, or the AI app started a new browser task per job.
-Do this: stop the run; close every extra window and tab; keep one window with one tab per platform; type `start` to resume the same daily file. Expected tab count during a run is selected platforms + 2.
+## Files
 
-**The run stopped by itself after about 4 hours.**
-Why: the session time limit in `personal_data/profile.md` was reached. This is intended.
-Do this: type `start` in a new session to continue today's file. To change the limit, edit `Session time limit (hours)` in `personal_data/profile.md`.
+- `AGENTS.md`: the rules for every run (`CLAUDE.md` loads it for Claude Code).
+- `instructions/`: setup, NorthList sync, and one file per site, each read only when needed.
+- `personal_data/*_template.md`: templates for your profile, saved answers and portal login.
+- `docs/walkthroughs.md`: checks for anyone who changes the instructions.
 
-**The laptop slept overnight and the run died.**
-Why: sleep disconnects the browser. The "Before you start" checklist was not followed.
-Do this: applications already recorded in `applied/YYYY-MM-DD/applications.md` are safe. Fix the sleep settings from the checklist, plug in the charger, type `start` to resume.
+Made while running and ignored by Git: your files in `personal_data/` (profile, saved answers, portal login, resume), `applied/` (one record per day) and `tracking/` (company portal accounts).
 
-**The agent keeps asking me to sign in.**
-Why: the platform is signed out. Ordinary login is not a site stop and the agent will not type your password.
-Do this: sign in yourself in the current tab, then reply `done`. The agent verifies the login and continues the same job.
+## Troubleshooting
 
-**A platform stopped for the day after a CAPTCHA or "unusual activity" message.**
-Why: this is a site stop. The agent never bypasses CAPTCHA, anti-bot, or security checks.
-Do this: nothing today on that platform. The stop is recorded under Site Stops in today's file. Other selected platforms continue. Try that platform again tomorrow.
+**Many browser permission prompts.** Many AI apps ask once per new website, and Workday, company career pages, web search and the job sources open a new company site for almost every job. Allow it for the session if your app offers that, and stay near. For hands-off runs, use the quick-apply sites.
 
-**Setup asks questions I already answered, or loops.**
-Why: a required field in `personal_data/profile.md` or `personal_data/form_answers.md` still contains bracketed placeholder text, or the resume is missing at `personal_data/resume.pdf`.
-Do this: open those files, replace any remaining `[bracketed placeholders]` in required fields, store optional unknowns as `None`, confirm the resume file exists, then type `start`.
+**"Browser connection lost. The run is paused."** The browser closed, the computer slept, or the browser extension lost its connection. Open the browser with one window, check the extension, keep the computer awake and plugged in, then reply `ready`. It tries once more, then ends the run cleanly.
 
-**Counts look wrong or there seem to be two records for one day.**
-Why: only `applied/YYYY-MM-DD/applications.md` is the live record. The legacy `tracking/applied_jobs.csv` is read-only history.
-Do this: check the Application Plan table in today's file. Never create a second daily file. If two sessions ran on the same date, both must have written to the same file.
+**Many windows or tabs, and a slow computer.** Stop the run, close the extra windows and tabs, keep one window, and type `start`. A run uses at most two more tabs than it has plan items.
 
-**The run is slow.**
-Why: this is by design. One job at a time, full job read, first-submit `ok` approval, a 120-second cooldown per platform, and file re-reads before every application. Fifty applications takes several hours.
-Do this: request 10 to 15 per platform per session, select 3 to 5 platforms so the cooldowns overlap, and let the 4-hour session limit end the run cleanly.
+**The run stopped after about 4 hours.** That is the session limit. Type `start` in a new chat to continue the same day. To change it, edit `Session time limit (hours)` in `personal_data/profile.md`.
 
-## 🔗 Optional: Career Companion sync
+**It keeps asking me to sign in.** The site is signed out. Sign in yourself in that tab, then reply `done`.
 
-Career Companion is a separate app that tracks your job applications. With sync on, the agent records each job there as it finishes, so you can see where you applied, with the job link and your answers, in one place. It needs a Career Companion account and an integration token. Sync is off by default and nothing changes until you turn it on.
+**A site stopped for the day after a CAPTCHA or "unusual activity".** That is a site stop. Nothing more on that site today; the other sites go on. Try it again tomorrow.
 
-**What is sent**
-- For each application (right after it is recorded in today's file): company, job title, platform, job link, apply page link, job ID, where the job was found, location, work mode, submitted time, the site's confirmation, the resume file name, and every submitted question and answer (including salary and notice period).
-- For each job not applied to (`skipped` or `needs_user`, at the end of the session): company, job title, platform, job link, the reason and the time.
-- Never sent: passwords or other credentials, the resume file or its content, and plan, limit or session state.
+**Setup asks again, or loops.** A required field in `personal_data/profile.md` or `personal_data/form_answers.md` still has a `[bracketed placeholder]`, or `personal_data/resume.pdf` is missing. Fill it in, or write `None` for an optional field, then type `start`.
 
-**Set up once**
-1. In Career Companion, open **Automation → Setup** and create a token. Copy it; it is shown once.
-2. Add the server to your AI app's **user-level** MCP settings (never a file inside this repository), with the server address from the Setup tab and the header `Authorization: Bearer <token>`. If your app cannot send headers, use the `mcp-remote` bridge: `npx mcp-remote <server address>/mcp --header "Authorization: Bearer <token>"`.
-3. Allow the two tools: `record_application_submission` and `record_not_submitted_job`.
-4. In `personal_data/profile.md`, set `Career Companion server:` to the address the Setup tab shows (the same line it shows you).
+**Counts look wrong.** Only the entries in `applied/YYYY-MM-DD/applications.md` count, and there is never a second file for the same day. The table at the top of that file is brought up to date at the start and the end of each session, not after every job.
 
-The agent wakes the server at the start of each run (a free host can sleep when idle), retries a failed send once, and resends failed sends at the end of the session. To send a missed day later, say "sync Career Companion for YYYY-MM-DD". Tokens expire: when the agent says the tools are not available, create a new token and replace it in your AI app's settings.
+**The run is slow.** It applies to one job at a time, reads each job, waits for your first `ok`, and leaves 2 minutes between applications on one site. Choose 3 to 5 sites, so the waits overlap, and 10 to 15 jobs per site.
 
-## 🔒 Practical safeguards
-
-The workflow keeps fit checks, scoped duplicate checks, no-guessing rules, prefilled-data verification, first-submit approval, additional host-app approvals, 120-second same-platform/workflow cooldowns with platform rotation, CAPTCHA/security stop rules, unsupported-upload handling, account-record reuse, and confirmation-before-success. Freshness follows the visible-controls rule in `AGENTS.md`.
-
-No live application testing is claimed by this repository update.
+**"NorthList sync is on, but its tools are not available."** The token has probably expired. Create a new one under Automation › Setup in NorthList and replace it in your AI app's settings.
