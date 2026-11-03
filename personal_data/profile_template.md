@@ -67,10 +67,10 @@ Use one subsection per education record.
 - **Lower Daily Limit Per Site (Optional):** [Lower than the framework maximum, or None]
 - **Session time limit (hours):** 4
 
-## Career Companion (optional)
-- **Career Companion server:** None
+## NorthList (optional)
+- **NorthList server:** None
 
-> Leave `None` unless you use Career Companion. To turn sync on, put the server address shown on its Automation page here, for example `https://your-app.example.com`, and follow the README setup. See `AGENTS.md` section 11A.
+> Leave `None` unless you use NorthList. To turn sync on, put the server address shown in NorthList under Automation › Setup here, for example `https://your-app.example.com`, and follow the README. See `instructions/northlist_sync.md`.
 
 ## Notes
 - Keep factual profile data here as the single authoritative source.

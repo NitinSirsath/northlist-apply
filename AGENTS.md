@@ -1,231 +1,169 @@
 All paths in this project are relative to this folder, not the computer's root.
 
-# AI-Native Job Application Framework
+# NorthList Apply
 
-This repository is a markdown-only job application framework. The AI agent uses the files in this folder as its instructions and personal-data source while applying through the browser tool.
+These instructions let an AI agent apply to jobs for the user through the browser, one job at a time. This file holds the rules for every run. Read another file only when a step here says so.
 
-## 1. Operating model
+Never run setup, collect personal details or apply to jobs just because this repository is being edited. These instructions are the product itself.
 
-Use three modes:
+## 1. Commands
 
-- **SETUP** — create and complete the reusable personal files. Never apply for jobs in this mode.
-- **PLAN** — after setup is complete, collect today's platforms and requested counts, create or resume today's application record, and verify any conditional prerequisites.
-- **START** — runs when the user types `start` and setup plus today's plan are ready. Apply one job at a time and append the outcome immediately.
+- `start`: check setup (section 3), agree today's plan (section 4), then apply.
+- `ready`: the user's answer to the check before a run (section 4), or to the browser checklist (section 9), where it only retries the connection.
+- `ok`: the user's approval of the session's first application (section 7).
+- `done`: the user finished a step in the browser, such as a sign-in, an upload or an email link.
+- `sync NorthList for YYYY-MM-DD`: send that day's entries to NorthList again (`instructions/northlist_sync.md`). The older wording `sync Career Companion for YYYY-MM-DD` means the same.
 
-Never run SETUP, collect personal information, or submit applications merely because this repository is being edited. These instructions are the product itself.
+## 2. Files
 
-## 2. State files and authority
+Personal data (never committed):
+- `personal_data/resume.pdf`: the user's resume.
+- `personal_data/profile.md`: the **authoritative source** for identity, contact details, employment, education, salary, notice period, job preferences, work modes, locations, relocation, and work authorization and sponsorship.
+- `personal_data/form_answers.md`: common screening answers, plus contextual and learned answers.
+- `personal_data/credentials.md`: the standard login for company job portals. Never write a password into the daily record.
 
-### Personal data
-- `personal_data/resume.pdf` — the user's current resume.
-- `personal_data/profile.md` — the **authoritative source** for identity, contact details, employment, education, salary facts, notice period, job preferences, work modes, locations, relocation, and work authorization/sponsorship.
-- `personal_data/form_answers.md` — reusable common screening answers plus contextual answers that are only reusable when their recorded context matches.
-- `personal_data/credentials.md` — reusable company-portal credential information. Never copy passwords into application reports.
+Records (never committed):
+- `applied/YYYY-MM-DD/applications.md`: the one record for that local date (section 8). Every new entry goes here.
+- `tracking/created_accounts.csv`: company portal accounts, with the header `"date","company","portal_url","login_email","password","email_verified"`.
+- `tracking/applied_jobs.csv`: old history from before the daily records, if present. Read-only: only searched for duplicates. Never add to it, change it, move it or delete it.
 
-`Career Companion server` in `profile.md` is optional: `None` (the default) means Career Companion sync is off. It is never a SETUP question and never blocks START.
+If two sources disagree about the same fact, do not pick one. Mark the job `needs_user`, ask the user, and save the answer in the authoritative file at once.
 
-If two sources disagree about the same factual field, do not choose one silently. Mark the job `needs_user`, ask the user to resolve the conflict, and save the resolved answer immediately to the authoritative source.
+Always use the user's local date and time, never UTC.
 
-### Runtime records
-- `setup_checklist.md` — local, ignored setup progress. It is a convenience aid, not proof that setup is complete.
-- `applied/YYYY-MM-DD/applications.md` — the single live application record for that local date.
-- `tracking/created_accounts.csv` — the existing separate account record for reusable company-portal accounts. Keep it separate from application reports and never repeat passwords in daily records.
-- `tracking/applied_jobs.csv` — legacy application history only. If present, treat it as read-only input. Never append new applications to it, delete it, or migrate it destructively.
+## 3. Setup check
 
-The live application source of truth for NEW records is always the daily Markdown file.
+At every `start`, check the real files:
+- `personal_data/resume.pdf` exists and is not empty;
+- `personal_data/profile.md` and `personal_data/form_answers.md` exist and have no `[bracketed placeholders]` in required fields (empty `## Contextual Answers` and `## Learned Answers` sections are fine);
+- every required fact is present, and every optional one that is unknown says `None`.
 
-## 3. SETUP mode — resumable, one topic at a time
+If anything is missing, read `instructions/setup.md` and finish setup first. Never apply before this check passes.
 
-Run SETUP when the required personal files are missing or still contain bracketed placeholder text. Do not treat the `Where to Apply` planning choice as a SETUP completeness requirement because PLAN collects the live daily plan afterward.
+`None` means "not provided". Never type it into a form, and never turn it into a guess.
 
-Before setup begins, recommend the strongest/current-vendor tier. Do not hard-code a model name or version and do not claim the agent can switch itself.
+## 4. Today's plan and the `ready` check
 
-### Create missing files first
-1. Create `personal_data/profile.md` from `personal_data/profile_template.md` if missing.
-2. Create `personal_data/form_answers.md` from `personal_data/form_answers_template.md` if missing.
-3. Create `personal_data/credentials.md` from `personal_data/credentials_template.md` if missing.
-4. Create `setup_checklist.md` from the checklist below if missing.
-5. Never replace a completed file with a fresh copy. Preserve existing answers and learned answers.
+1. If today's record exists, resume it and keep its plan, unless the user asks to change it.
+2. Otherwise take the plan of the most recent record and offer it in one line, for example "Same as last time: linkedin 10, naukri 10. To change it, tell me." With no earlier record, ask which plan items and how many of each.
+3. Plan items, kept in the order the user gives:
+   - sites: `linkedin`, `indeed`, `naukri`, `wellfound`, `instahyre`, `workday`;
+   - `company_direct` (company career pages saved in `profile.md`) and `discovery` (web search);
+   - job sources: `the_reliable_jobs`, `teksystems`, `teksands`, `d4hire`, `supersourcing`, `we_work_remotely`.
 
-### Collect setup topics in this order
-Ask one topic at a time and save the answer immediately before moving on:
+   For quick-apply sites (LinkedIn, Indeed, Naukri, Wellfound, Instahyre) offer 10 or 15. Never plan more than the limits in section 5 or a lower limit in `profile.md`. `company_direct` needs career page URLs in `profile.md`; the others do not.
+4. If the plan has `workday`, `company_direct`, `discovery` or a job source:
+   - say in one sentence that the AI app may ask for browser permission once for each new company site, so the user should stay near the computer;
+   - check that `personal_data/credentials.md` has no placeholders; if it has, finish that part of setup (`instructions/setup.md`) now.
+5. Model advice for this run, once per session, in one or two sentences: a light model of the user's current AI app is enough when the plan has only quick-apply sites; a medium model is better when it has `workday`, `company_direct`, `discovery` or a job source. Never name a model or version, never claim to switch models, and never stop a run to ask for a switch.
+6. Show the plan, the advice and this check together, then wait for exactly `ready`:
 
-1. **Resume** — ask for the resume file or a local path. Copy it to exactly `personal_data/resume.pdf`. Do not invent a resume path. If the environment cannot access the path, ask the user to provide/upload the file through the current app.
-2. **Basic/contact information** — names, email, phone, location, and address when needed.
-3. **Employment and education** — current role, total experience, employment history, education, core stack, notice period, and salary with amount, currency, and period.
-4. **Work authorization** — country/countries, work authorization, and sponsorship now/future.
-5. **Job preferences** — target titles, locations, work modes, relocation preference, skip companies, and company career URLs.
-6. **Common screening answers** — populate reusable answers in `form_answers.md`.
-7. **Credential readiness** — prepare the standard application credential only when needed for later company-portal use. Reusable account records remain in `tracking/created_accounts.csv`.
+   > **Before the run starts.** It can take up to your session limit (default 4 hours). If the computer sleeps, the browser disconnects and the run stops; entries already written are safe.
+   > 1. The computer is plugged in.
+   > 2. Sleep is off for this run (how: README, "Before a run").
+   > 3. The lid stays open.
+   > 4. The browser is open with one window.
+   > 5. You will not use the computer for other work during the run.
+   >
+   > Reply `ready` when all five are true. Please stay until I show you the first application: I send it only after your `ok`.
 
-For every topic, inspect the existing files first. Never ask a question whose answer is already present.
+   Show it at every `start`, also in a new chat that resumes the day. If the reply is not `ready`, answer it, then show the check again. If the reply changes the plan, go back to step 3 with the new plan; it goes into today's record after `ready`.
+7. After `ready`:
+   - create today's record if needed (section 8) and add `- Started HH:MM:SS — limit N h` under `## Sessions`;
+   - when `profile.md` has `NorthList server:` (or the older `Career Companion server:`) with an address, read `instructions/northlist_sync.md` and follow it;
+   - open the browser (section 9) and start with the first plan item.
 
-### Optional answers
-An optional answer may be stored as `None`. `None` means “unavailable / not provided”; it is never a value to submit into a required application field.
+## 5. Limits, counts, duplicates and pacing
 
-When the user skips a value:
-- save `None` immediately;
-- mark the corresponding optional checklist item as skipped;
-- do not ask the same question again;
-- never turn `None` into a guessed answer later.
+**Daily maximums** per local date, all sessions together: linkedin 20, indeed 20, naukri 25, wellfound 10, instahyre 10, workday 5, company_direct and discovery together 10, all together 50. The plan's numbers and a lower limit in `profile.md` can only make these smaller.
 
-### Setup checklist
-Create `setup_checklist.md` with this exact checklist when it does not exist:
+**What counts.** A confirmed application counts once toward its plan item (`Selected plan choice`), once toward the site where it was actually submitted (`Platform`: any Workday form counts as `workday`; a job source counts where its job was submitted), and once toward the total. A site that is not in the plan may still receive a routed job, within its own limit.
 
-- [ ] Resume file copied to `personal_data/resume.pdf`
-- [ ] Basic/contact information complete
-- [ ] Employment history and current role complete
-- [ ] Education complete
-- [ ] Salary facts complete or explicitly `None` where optional
-- [ ] Notice period complete
-- [ ] Work authorization and sponsorship complete in `profile.md`
-- [ ] Job titles, locations, work modes, relocation, and skip-company preferences complete
-- [ ] `personal_data/form_answers.md` created and common screening answers reviewed
-- [ ] Optional unanswered items explicitly stored as `None`
-- [ ] Conditional credential readiness recorded when a selected plan later requires it
+**Counting without re-reading.** At `start`, and when a new chat resumes the day, search today's record once for its `### ` entry headings and its `- Platform:`, `- Selected plan choice:` and `- Status:` lines. From that one search, count the entries by status, per plan item and per site, note each site's last entry time, and bring the `## Application Plan` counts up to date. During the run, keep the counts in the chat. Never re-read the whole record to count.
 
-The checkboxes never prove readiness by themselves.
+**Duplicates.** As soon as a job's ID or URL is known (often already in the results list), search all of `applied/` and `tracking/applied_jobs.csv` (if present) for its ID, or for its URL when there is no ID (ignore a trailing slash). Read only the matching entries; a match is the same job only when its site and company match too. Then:
+- any match `applied` or `skipped`: never apply again, except a job skipped only because its site was stopped, its site was at its daily limit, or its workflow was stopped for the session; such a job may be tried on a later day;
+- only `needs_user` matches: apply again only after the missing answer is saved.
 
-### Actual setup verification on every `start`
-Before allowing PLAN or START, verify all of the following from the actual files:
+Never read whole records for this.
 
-- `personal_data/resume.pdf` exists and is non-empty.
-- `personal_data/profile.md` exists and contains no unresolved `[bracketed placeholders]` in required fields.
-- `personal_data/form_answers.md` exists and contains no unresolved bracketed placeholders in required fields, **except that empty `## Contextual Answers` and `## Learned Answers` sections are valid and expected until real contextual/learned questions arise**.
-- Required factual values are present in their authoritative source, or an optional field is explicitly `None`.
-- `setup_checklist.md` may contain stale checkboxes; the actual files above are authoritative.
-- If a later application plan needs company-portal credentials, verify `personal_data/credentials.md` is ready before the first such application.
-- If an existing `tracking/created_accounts.csv` exists, verify it can be read before creating a new company account.
+**Pacing.**
+- One job at a time: never two applications in parallel, never two unfinished forms.
+- Leave at least 2 minutes between two submit actions on the same site (`Platform`; company_direct and discovery share one gap). Naukri's one-click **Apply** is a submit action. Keep each site's last submit time in the chat; after a new chat, or if unsure, use the time of that site's last entry.
+- Work on one plan item at a time, in plan order. Before opening a job's form, check its site's gap. If the 2 minutes have not passed, do one job from the next plan item, in plan order, whose gap has passed and that still has work, then come back. If no plan item can go ahead, wait out the rest of the shortest gap, not a new 2 minutes.
+- Once a form is open, finish it. If you reach its submit before the 2 minutes have passed, wait out the rest, then submit.
+- Waiting never makes a job `skipped`.
 
-If any required setup item is incomplete, resume SETUP at the first unfinished topic. Do not begin applications.
+**Before each application**, check:
+- the date: after midnight, update the old record's `## Application Plan` counts, start the new date's record with the same plan, copy this session's `Started` line into its `## Sessions`, and use the new date's limits;
+- the session limit (section 6);
+- `## Site Stops` in today's record, for that site;
+- the counts and limits above. A plan item whose own site is stopped or at its limit is finished for the day. A job that leads to another site that is stopped or at its limit (for example a job source's job on a Workday form) is skipped alone: a `skipped` entry with the reason, then go on with the plan item's other jobs.
 
-When SETUP is complete, do not force a new chat. Recommend the strongest/current-vendor tier for setup if appropriate. Continue in the current chat unless a real handoff is necessary.
+A plan item is finished when its number is reached or no suitable jobs remain. Report a shortfall; never widen the search to older jobs to fill it.
 
-## 4. PLAN mode — choose today's application plan
+## 6. Session limit
 
-After setup is complete, ask which platforms to use and how many applications to attempt on each platform.
+- `Session time limit (hours)` in `profile.md`; default 4, also when it is missing or not a positive number. Never store `None` for it.
+- It counts per chat session, from this session's `Started` line.
+- When it is reached: open no new job; finish and submit only a job that is already in a form; add its entry; do the end of session (section 12); tell the user the limit was reached and that `start` in a new chat continues the same day.
+- Never record `skipped` because of the limit. Do not wait out a 2-minute gap that would pass the limit; end the session instead.
+- If a new chat is needed for any reason, everything is already in the files: tell the user to type `start` there.
 
-Supported choices:
-- LinkedIn
-- Indeed
-- Naukri
-- Wellfound
-- Instahyre
-- Workday
-- company career pages (`company_direct`)
-- web discovery (`discovery`)
-- The Reliable Jobs
-- TEKsystems
-- Teksands
-- D4hire
-- Supersourcing
-- We Work Remotely
+## 7. Applying, one job at a time
 
-The six job-source choices are source selectors, not new independent application-limit buckets. Route each selected source to the actual application destination at runtime and apply the existing destination limits. For quick-apply platforms, offer 10 or 15 as convenient starting counts when the limits permit. For `company_direct`, require company career URLs from `personal_data/profile.md` when applicable. `discovery` and the listed job sources do not require saved career URLs.
+1. **Fit from the results list.** Pass over jobs whose title, location or work mode clearly does not match `profile.md`, without opening them. Write no entry for them; only count them for the end-of-session summary.
+2. **Duplicates** (section 5), as soon as the job's ID or URL is known.
+3. **Read the post** of a job that looks right. Check again: title, location, work mode, required (not preferred) years of experience, and the companies to skip. If it does not fit, add a `skipped` entry with the reason.
+4. **Limits** (section 5), before any sign-in, account creation or form.
+5. **Fill the form** only from `profile.md`, `form_answers.md` and the resume:
+   - compare every prefilled or parsed value with `profile.md`; correct a material difference from it, or mark the job `needs_user`;
+   - reuse a contextual answer only when its recorded context matches this job; never turn one employer's or country's answer into a general one;
+   - a required question with no saved answer: never guess; add a `needs_user` entry with the exact question, and ask the user at the end of the session;
+   - never submit `[placeholders]`, sample values, `None` or guessed numbers;
+   - upload `personal_data/resume.pdf`; if the site needs a manual upload, ask the user to upload that file in the current tab and reply `done`, then check the upload.
+6. **First application of the session.** Before the first submit action (Naukri's one-click **Apply** included), show the user the job and every filled answer or pitch, then wait for exactly `ok`. After that, still check each form's final values before submitting. Also follow every approval the AI app itself asks for.
+7. **Submit**, keeping the 2-minute gap (section 5).
+8. **Applied only after the site shows a confirmation.** Never invent one.
+9. **Add the entry** to today's record at once (section 8).
+10. A form that keeps failing after two tries: add a `skipped` entry with the reason and go on.
 
-For each selected platform:
-- ask for the requested application count;
-- respect any lower user limit already stored in `profile.md`;
-- never exceed the hard limits in this file;
-- save today's platform plan and current progress in `applied/YYYY-MM-DD/applications.md`.
+When the user answers a question, save it in `form_answers.md` at once: under `## Contextual Answers` when it holds only for an employer, country, role or portal, otherwise under `## Learned Answers`, each with its context and the exact question. A job left as `needs_user` may then be tried again; the retry gets a new entry, and the old one stays. Use this format, and add a record only when a real question comes up:
 
-Requested source targets and destination limits:
-- Each application belongs to one selected source/plan choice. Record that exact saved-plan key in `Selected plan choice`. A confirmed application advances only that choice's requested target.
-- The same confirmed application also consumes the actual application's destination daily allowance and cooldown, and counts once toward the all-platform global limit.
-- Before applying, check both the selected source's remaining requested target and the actual destination/global limits.
-- Store only one job record for the application.
-- A blank `Requested` value for an unselected destination does not block an application routed there; destination limits still apply.
-- Example: if the user requests 2 We Work Remotely applications and both route to Workday, confirmations make WWR progress 2/2, consume 2 Workday applications, and consume 2 global applications. Stop the WWR plan at 2/2 even if Workday still has remaining capacity.
-- If Workday's daily limit is already exhausted before a WWR job reaches the application form, do not apply; the WWR target remains unadvanced and the destination limit blocks that application.
-
-Use the user's local date, not UTC.
-
-If today's file already exists, resume it instead of creating a second file or asking for the plan again unless the user wants to change the plan.
-
-Keep the selected platforms/source choices in the saved plan order. That order is the rotation order used during START.
-### Daily file layout
-
-Use exactly one file:
-
-```
-applied/
-  YYYY-MM-DD/
-    applications.md
+```md
+- Context: Employer=<value or Any>; Country=<value or Any>; Role=<value or Any>; Portal/ATS=<value or Any>
+- Exact question: <verbatim question>
+- Answer: <saved answer>
+- Reuse scope: <exact context only | broader context explicitly approved by the user>
 ```
 
-Inside that file, use platform sections. Do not create separate application files by platform or session.
+## 8. The daily record
 
-Start the file with:
+One file per local date: `applied/YYYY-MM-DD/applications.md`. Never make a second file for the same date, also not for a second session. Add entries only at the end of `## Entries`; never rewrite or reorder earlier entries, except to add or update their `- NorthList sync:` line. The sections above the entries (`## Application Plan`, `## Site Stops`, `## Sessions`) are updated in place.
+
+A new record starts like this, with only today's plan items in the table:
 
 ```md
 # Applications — YYYY-MM-DD
 
 ## Application Plan
 
-| Platform | Requested | Applied | Skipped | Needs User |
+| Plan item | Requested | Applied | Skipped | Needs User |
 | --- | ---: | ---: | ---: | ---: |
-| linkedin |  | 0 | 0 | 0 |
-| indeed |  | 0 | 0 | 0 |
-| naukri |  | 0 | 0 | 0 |
-| wellfound |  | 0 | 0 | 0 |
-| instahyre |  | 0 | 0 | 0 |
-| workday |  | 0 | 0 | 0 |
-| company_direct |  | 0 | 0 | 0 |
-| discovery |  | 0 | 0 | 0 |
-| the_reliable_jobs |  | 0 | 0 | 0 |
-| teksystems |  | 0 | 0 | 0 |
-| teksands |  | 0 | 0 | 0 |
-| d4hire |  | 0 | 0 | 0 |
-| supersourcing |  | 0 | 0 | 0 |
-| we_work_remotely |  | 0 | 0 | 0 |
+| linkedin | 10 | 0 | 0 | 0 |
 
 ## Site Stops
 
 - None
 
-## Submit Cooldowns
-
-Store one `Next submit after` timestamp per actual platform/workflow here. Use the actual submit-capable action time plus 120 seconds. Preserve unfinished timestamps when resuming; do not reset them because of a new chat or midnight. Keep this state in this daily file only.
-
-| Platform/workflow | Next submit after |
-| --- | --- |
-| linkedin | |
-| indeed | |
-| naukri | |
-| wellfound | |
-| instahyre | |
-| workday | |
-| company_direct/discovery | |
-
 ## Sessions
 
-- Started HH:MM:SS — limit N h
-
-## Browser Tabs
-
-| Platform | Anchor tab URL |
-| --- | --- |
-
-## linkedin
-
-## indeed
-
-## naukri
-
-## wellfound
-
-## instahyre
-
-## workday
-
-## company_direct
-
-## discovery
+## Entries
 ```
 
-Update the plan counts as outcomes are appended. Do not reset earlier entries.
+Update the table's counts at the start and at the end of each session, not after every job.
 
-For each job, append immediately after the outcome:
+Each entry is added at the end of the file, right after the job's outcome:
 
 ```md
 ### HH:MM:SS — Company — Job Title
@@ -247,411 +185,79 @@ For each job, append immediately after the outcome:
 - Status: applied | skipped | needs_user
 - Confirmation shown:
 - Skip reason / unanswered question / next action:
-- Career Companion sync:
 ```
 
-For `applied`, populate the actual confirmation shown by the site. Never invent a confirmation.
-
-`Apply page URL` is the full address of the page where the form was submitted, not only its host. `Career Companion sync` is filled only when sync is on (section 11A); otherwise leave the line out.
-
-For `skipped` and `needs_user`, populate the reason or unanswered question/next action. If a site stop occurs, also add a dated entry under **Site Stops** such as `- 16:10 — linkedin — site stopped: CAPTCHA`.
-
-The daily file is the single destination for all NEW application records.
-## 4A. Power and sleep warning — `ready` gate
-
-- At every START, before the first browser action of the session, print the following warning verbatim and then wait for the user to reply exactly `ready`. Ask once per session. Do not start browsing before `ready`.
-
-**STOP. Read this before the run starts.**
-This run can take up to the configured session time limit (default 4 hours).
-If your computer sleeps, the browser disconnects and the run fails.
-Applications already recorded in today's file are safe. Unfinished ones are lost.
-Before replying `ready`, make sure ALL of these are true:
-1. The laptop or PC is plugged into power. Do not run on battery.
-2. Sleep is turned OFF for this run:
-   - macOS: System Settings → Lock Screen → "Turn display off when inactive" → Never.
-     Also System Settings → Battery → Options (or Displays → Advanced) →
-     "Prevent automatic sleeping on power adapter when the display is off" → On.
-   - Windows 11: Settings → System → Power & battery → Screen and sleep →
-     "When plugged in, put my device to sleep after" → Never, and
-     "When plugged in, turn off my screen after" → Never.
-3. The laptop lid stays open for the whole run.
-4. Chrome (or the browser your AI app controls) is already open with ONE window.
-5. Do not use this computer for other work while the run is active.
-Reply `ready` when all five are true.
-
-- If the user replies anything other than `ready`, do not start. Answer the question or repeat the checklist.
-- When a new chat resumes the same daily file, re-issue this warning and wait for `ready` again because sleep settings may have been reset.
-
-## 5. Daily limits, counting, duplicates, retries, and midnight
-
-Hard maximum applications per local day:
-- LinkedIn: 20
-- Indeed: 20
-- Naukri: 25
-- Wellfound: 10
-- Workday: 5
-- Instahyre: 10
-- company direct + discovery combined: 10
-- all platforms combined: 50
-
-Requested session counts and lower user-defined limits must also be respected.
-
-Before EVERY application:
-1. Re-read today's daily Markdown file.
-2. If `tracking/applied_jobs.csv` exists, re-read today's CSV rows from that legacy history.
-3. Recount today's `applied` outcomes for the platform across both sources.
-4. Recount today's all-platform `applied` outcomes across both sources.
-5. Recount company_direct + discovery together across both sources.
-6. Re-check the user's requested count for that platform.
-7. Re-check the current local date/time. If the date crossed midnight, stop using the old day's limits and create/resume the new date's file.
-8. Compare the current local time with the session start time. If the session time limit in section 5C is reached, follow section 5C.
-9. Check today's Site Stops in Markdown and today's legacy CSV notes. A legacy row with status `skipped` and notes beginning exactly `site stopped:` stops that platform for the current local date. A stop from an earlier local date does not block today.
-
-Do not count the same application twice. The preferred application key is:
-`local date + platform + company + portal + job_id`.
-If a reliable job ID is unavailable, use `local date + platform + company + job title + job URL`.
-
-For duplicate/count decisions across Markdown and the legacy CSV:
-- Match equivalent applications by the preferred key; when a key is unavailable, use the fallback key above and normalize obvious URL trailing-slash differences before comparing.
-- An application present in both today's Markdown and today's legacy CSV counts once.
-- Today's legacy `applied` rows count toward today's platform and global limits.
-- Today's legacy `skipped` row with notes beginning `site stopped:` is a platform stop for today's local date.
-- Yesterday's or any earlier legacy stop does not block today's work.
-- `applied` or `skipped` means do not apply again for that job.
-- `needs_user` is retryable after the unanswered question has been resolved.
-
-Preserve existing CSV history as read-only input. Never delete it, append to it, or modify it in any other way. Write all NEW application records only to the current daily Markdown file.
-
-## 5A. Two-minute cooldown and platform rotation
-
-- Apply one job at a time.
-- After completing an application, move to the next selected platform/source choice in the saved plan order.
-- Example: LinkedIn → Indeed → Naukri → repeat until each requested count is reached or suitable jobs are exhausted.
-- Skip only the current job/application when its actual destination limit is reached or blocked for an existing skip reason. A cooldown never causes a job to be recorded as `skipped`.
-- Continue checking other eligible jobs from the same selected source/plan choice; a source is exhausted only when no eligible results remain or its requested target is complete.
-- If the current actual destination is cooling down, defer the current job and check the next selected platform/source choice. Keep the deferred job eligible for later.
-- Wait only when no other eligible selected platform/source choice can proceed. Wait for the remaining cooldown, not a fresh two minutes, then continue the same deferred job.
-- Time spent reading jobs, filling forms, checking answers, and working on another platform/source counts toward the elapsed cooldown.
-- Immediately before every submit-capable action, check the clock against that actual destination's `Next submit after` timestamp. This includes Naukri's potentially instant Apply click.
-- When the submit-capable action occurs, set that actual destination/workflow timestamp to the action time plus 120 seconds. Do not base it on later confirmation or report-writing time.
-- A cooldown expires after its remaining time. CAPTCHA, restriction, unusual-activity, security, and other site-stop conditions remain governed by the existing site-stop rules; they are not cooldowns.
-- Preserve or recover an unfinished cooldown when resuming. Restarting a chat or crossing midnight must not erase it.
-- Use the actual application platform/workflow classification for cooldowns. Discovering a job through another source must not create a separate cooldown for the same destination. Preserve the combined company-direct/discovery rule and the source-to-destination routing rules above.
-- Do not introduce parallel applications, multiple unfinished forms, background workers, another remaining-count tracker, or a complex scheduling algorithm.
-- If a new local date starts with an unexpired cooldown from the previous daily record, carry that dated `Next submit after` timestamp into the new daily record before another submission. Then use the new date's limits.
-
-## 5B. Simple newest-first job search
-
-Use the website's visible controls. The model must not perform its own job-date ranking.
-
-Shared freshness rule:
-> Select Newest / Most recent and Past 24 hours when those controls are available. Verify that the selected controls are active, then review results from top to bottom using the existing fit and duplicate checks.
-
-- Inspect the current website UI; labels may vary. Never invent controls.
-- Recheck the selected controls after changing searches or filters.
-- If no suitable jobs remain under those filters, report the shortfall and continue to another selected platform/source choice.
-- Do not automatically widen the search to Past week, seven days, older postings, or All time.
-- If freshness controls are unavailable or cannot be verified, clearly report that limitation rather than claiming the results are newest-first or within 24 hours.
-- Do not add manual date calculations, age scoring, cross-platform date comparisons, posting-date tracking columns, or a separate freshness queue.
-
-Keep this workflow short: select visible filters → verify them → follow results top to bottom → check fit → apply.
-
-## 5C. Session time limit
-
-- `personal_data/profile.md` holds `Session time limit (hours):` with default `4`. The user may change it. If the value is missing, blank, or not a positive number, use 4. Never store `None` for this field.
-- The limit is per session (per chat run), not per local day.
-- At START, after `ready`, record the session start time in the daily file under the new `## Sessions` list, for example `- Started 09:14:03 — limit 4 h`.
-- Before EVERY application, compare the current local time with the session start time. If the elapsed time is at or past the limit:
-  1. do not open any new job;
-  2. finish only the job that is already mid-form, if any, using all normal rules;
-  3. append its outcome;
-  4. run the end-of-session behaviour in section 11;
-  5. stop and tell the user the time limit was reached and how to continue (type `start` again in a new session; the same daily file will be resumed).
-- The time limit never causes a job to be recorded as `skipped`.
-- A cooldown wait that would cross the time limit is not waited out; end the session instead.
-
-## 6. Fit checks, duplicates, and factual answers
-
-### Fit check
-Apply only when:
-- job title matches target titles;
-- location matches accepted locations;
-- work mode matches the authoritative `profile.md` value;
-- required years of experience are compatible;
-- company is not on the skip list.
-
-If fit fails, log `skipped` immediately with the reason.
-
-### Duplicate check
-Skip when the same job is already `applied` or `skipped` in historical daily records or legacy history. A `needs_user` record may be retried after its blocker is answered.
-
-### Never guess
-Use factual information only from:
-- `personal_data/profile.md`
-- `personal_data/form_answers.md`
-- the user's resume.
-
-Before submission, compare any prefilled, parsed, or portal-supplied factual information against the saved authoritative data. If it differs materially, correct it from the authoritative source or mark `needs_user`; do not silently accept or overwrite user facts.
-
-For contextual questions:
-- save employer-, country-, role-, or portal-specific answers with explicit context;
-- reuse a contextual answer only when the context recorded for it matches the current application;
-- do not turn one employer's or country's answer into a global answer automatically;
-- if the question is required and no matching answer exists, do not guess. Log `needs_user`.
-
-When a real contextual answer is recorded, use this concise format:
-```md
-- Context: Employer=<value or Any>; Country=<value or Any>; Role=<value or Any>; Portal/ATS=<value or Any>
-- Exact question: <verbatim question>
-- Answer: <saved answer>
-- Reuse scope: <exact context only | broader context explicitly approved by the user>
-```
-Keep `## Contextual Answers` and `## Learned Answers` empty until a real question is answered. Do not create placeholder records.
-
-Store new unanswered questions under `## Learned Answers` in `form_answers.md` immediately after the user answers them. Include the relevant context and the exact question. Add a **Contextual Answer** record only when a real contextual question arises; do not pre-populate placeholder contextual records.
-
-Never submit square-bracket placeholders, sample values, or guessed years.
-
-## 7. Submission safeguards
-
-- Apply one job at a time.
-- Read the job post before applying.
-- Perform fit and scoped duplicate checks before opening account-creation flows.
-- Before the first action in the session that can submit an application, show the user the exact job plus the filled answers/pitch that will be submitted and wait for the user to reply exactly `ok`.
-- This approval gate applies before Naukri's potentially instant **Apply** click.
-- Continue honoring any additional approval required by the host application.
-- After the first approval, still review each application's final values before submission.
-- Submit one application at a time.
-- Follow the shared cooldown/rotation rule in section 5A; do not add a separate fixed wait here.
-- Record `applied` only after the site shows confirmation.
-- If a site asks the user to upload a file manually because automated upload is unsupported, ask the user to upload `personal_data/resume.pdf` in the current tab, wait for `done`, then verify the upload before continuing.
-- If a form is broken or keeps failing after two tries, log it as `skipped` with the reason and continue.
-- Never bypass CAPTCHA, anti-bot, 2FA, or security checks.
-### Site-stop and retry rules
-If a site shows a daily-limit, unusual-activity, CAPTCHA, security check, or restriction message:
-- stop that site for the day;
-- log the dated stop under **Site Stops** and add a `skipped` record with notes `site stopped: <message>`;
-- do not retry that site later the same day.
-
-A normal signed-out or login-required prompt is **not** a site stop. When the site merely requires ordinary login:
-- ask the user to sign in in the current tab and reply `done`;
-- after `done`, verify that the site is signed in;
-- continue the current application workflow.
-
-Authentication language means a stop only when it is accompanied by an actual security restriction, CAPTCHA, unusual-activity warning, daily-limit message, or equivalent access restriction. Do not treat ordinary login as a security stop.
-
-A CAPTCHA on an employer's own form skips that job only unless the employer portal itself blocks further use.
-
-Email verification required to continue is not a permanent stop. Use:
-"Please sign in / create the account / click the email verification link in this tab, then reply done"
-
-Continue only after the user replies `done`.
-
-## 7A. Browser usage rules
-
-Strategy files never override these rules.
-
-1. Pre-flight at START, right after `ready` and before anything else in the browser: list the open tabs with the host's tab-list tool. If a browser window is already open, reuse it. Never open a second browser window. If the host tool can only start a new window, open exactly ONE at session start and reuse it for the whole session.
-2. Do not start a new browser task or browser sub-agent per job. Use one browser task per platform batch (all jobs for one selected platform until its requested count is reached, its cooldown defers it, or its suitable results are exhausted). Rotation between platforms happens inside the same window.
-3. Anchor tabs: keep ONE anchor tab per selected platform. It holds that platform's search results / job list. Never close an anchor tab during the session. Never close the last remaining tab in the window.
-4. Work tab: a job page may open in a new tab because that is the site's default link behaviour. Allow it. Do all form steps in that tab. When the job's outcome has been appended to the daily file, close the work tab and focus the platform's anchor tab. If the job opened inside the anchor tab instead, navigate the anchor tab back to the saved search-results URL after recording the outcome.
-5. Never use the browser Back button. Inside a multi-step form, use the form's own Back/Previous control. Otherwise re-open the needed URL directly.
-6. Tab cap = number of selected platforms + 2. Before opening any tab, count open tabs. At the cap, close the oldest work tab first. Never exceed the cap. The anchor tabs are the only tabs that survive from one job to the next.
-7. Track tabs in the daily file under `## Browser Tabs`: one row per platform with the anchor tab's search-results URL. Update the row when the search URL changes. When a new chat resumes the day, read this table and the live tab list, and reuse existing tabs instead of opening new ones.
-8. Do not open pages unrelated to the current job flow.
-9. Prefer reading the page as text / accessibility tree. Take a screenshot only when a control cannot be found from the text read. This keeps runs faster and lighter.
-10. End of session: close all work tabs, keep the anchor tabs (logged-in sessions) open, do not close the window.
-11. Fail fast on browser connection problems. If a browser action fails to connect, or the tab list cannot be read, twice in a row: stop the run, do not keep retrying, and print this checklist verbatim:
-
-    **Browser connection lost. The run is paused.**
-    Check these, then reply `ready` to retry once:
-    1. Is the browser open with exactly one window?
-    2. Is the browser extension your AI app uses enabled and connected?
-    3. Did the computer sleep or the lid close? Wake it and keep it awake.
-    4. Is the computer plugged into power?
-    Nothing was recorded as `applied` without a confirmation shown by the site.
-
-    After `ready`, retry once. If it fails again, run the end-of-session behaviour and stop.
-12. Permission prompts: some AI apps ask for browser permission per new website. The five quick-apply platforms use fixed domains, so prompts are few. `company_direct`, `discovery`, and Workday open a new company domain for almost every job, so expect a prompt per company there. At PLAN time, when any of those three is selected, tell the user this in one sentence so they know to stay near the computer.
-## 8. Model guidance
-
-Never hard-code model names or versions.
-
-Tiers:
-- **Strongest/current-vendor tier:** SETUP.
-- **Light/current-vendor tier:** LinkedIn, Indeed, Naukri, Wellfound, and Instahyre quick applications.
-- **Medium/current-vendor tier:** Workday, company direct, and discovery.
-
-When a tier matters:
-- recommend the appropriate tier from the same vendor the user is already using;
-- ask the user to select/switch to that tier when needed;
-- never pretend that the agent changed its own model.
-
-Do not force a new chat merely because a different tier is preferred. If a handoff is genuinely needed, save all progress to the local files first and explain exactly how to resume.
-
-If the same form step fails on three jobs in a row, stop that workflow and recommend the medium tier from the same vendor.
-
-## 9. Logins and account creation
-
-Keep the existing separate account record for reusable company-portal accounts:
-
-`tracking/created_accounts.csv`
-
-Header:
-
-`"date","company","portal_url","login_email","password","email_verified"`
-
-Before creating a Workday or other company account, check this file first. If a record for that company exists, use **Sign In** instead of creating another account.
-
-`credentials.md` is for reusable standard company-portal credentials. Daily application reports must never contain passwords.
-
-When a platform or ATS simply shows a signed-out/login-required state, ask the user to sign in in the current tab and reply `done`, then verify sign-in and resume the current flow. Do not stop the platform for the day unless the page also shows a security restriction, CAPTCHA, unusual-activity warning, daily-limit message, or equivalent restriction.
-
-If the browser/app blocks automated sign-in or account creation, use:
-"Please sign in / create the account / click the email verification link in this tab, then reply done"
-
-Pause until `done`.
-
-## 10. Platform and strategy routing
-
-For each selected platform, read its strategy file before browsing.
-
-- LinkedIn → `instructions/platforms/linkedin_strategy.md`
-- Indeed → `instructions/platforms/indeed_strategy.md`
-- Naukri → `instructions/platforms/naukri_strategy.md`
-- Wellfound → `instructions/platforms/wellfound_strategy.md`
-- Instahyre → `instructions/platforms/instahyre_strategy.md`
-- Workday → `instructions/platforms/workday_strategy.md`
-- company_direct → `instructions/advanced_strategies/company_direct_apply.md`
-- discovery → `instructions/advanced_strategies/web_search_discovery.md`
-
-Strategy files never override the rules in this file.
-
-### Workday classification
-Any application that uses a Workday application form counts as **workday**, regardless of whether the job was found through Workday search, discovery, a company URL, or another source.
-
-### Job-source routing
-The following selectable sources reuse existing flows and do not create new automation systems:
-- **The Reliable Jobs** → use discovery. The current public route may lead to an external application form; inspect the actual job and continue only through a supported destination.
-- **TEKsystems** → use company_direct from the careers page. If the actual job opens a Workday form, hand off to Workday and count it as workday.
-- **Teksands** → use company_direct for the current Teksands/Hire4X candidate route. Inspect the actual form and use the custom/proprietary ATS rules; do not assume fields beyond what the page shows.
-- **D4hire** → currently source-only unless a specific candidate job/application route is discoverable. The public site is a recruitment-agency site; if no job/application route exists, report the source as unavailable and do not invent an application flow.
-- **Supersourcing** → use company_direct for the current developer/job route and inspect the actual candidate form; treat any profile/talent registration as incomplete until a specific job application is confirmed.
-- **We Work Remotely** → use discovery. Inspect the job's **Apply for this position** destination. If it opens an ATS/company form, use the corresponding existing flow. If it provides only an email application, report that route as unavailable; do not send recruiter/application emails automatically.
-
-For every selected source:
-1. Record the selected source in the daily record.
-2. Inspect the actual job/application destination before applying.
-3. Record the actual destination URL/host in the daily record.
-4. Route to the existing flow based on the actual destination, not the source name.
-5. Count only a confirmed application to a specific job. A talent registration, profile creation, account creation, or Apply-button click without confirmed submission is not `applied`.
-6. Preserve all existing duplicate, daily-limit, approval, login/upload fallback, security-stop, pacing, and confirmation rules.
-
-Do not enable or use a source site's independent auto-apply service, and do not send recruiter emails automatically.
-
-### Discovery handoff
-Discovery must continue the currently discovered job's application flow:
-- do not restart another platform's search;
-- do not require a saved career URL just because the job was discovered on the web;
-- if the discovered application is Workday, continue the Workday form at the current job and count it as workday;
-- if the discovered application is Greenhouse, Lever, Ashby, or another supported direct ATS, continue the company-direct form flow at the current job;
-- otherwise inspect the actual current page and use the closest supported form flow without inventing UI behavior.
-
-## 11. End-of-session behavior
-
-At the end of a session:
-- when Career Companion sync is on, run its end-of-session steps first (section 11A);
-- summarize today's outcomes from the daily file;
-- include applied, skipped, and needs_user jobs;
-- include any site stops;
-- when Career Companion sync is on, include how many entries were sent and list any still `failed`;
-- ask the user unresolved questions;
-- when the user answers a new question, save it immediately under `## Learned Answers`.
-
-Never create a second daily application file for another session on the same local date.
-
-## 11A. Career Companion sync (optional)
-
-Career Companion is a separate app that tracks job applications. When sync is on, the agent records each outcome there through its MCP tools, so a stopped session has already sent everything applied so far. The daily file stays the source of truth: sync never blocks, delays, or changes applying.
-
-**Sync is on** only when `Career Companion server` in `personal_data/profile.md` holds an address (not `None`). Otherwise skip this whole section: no tool calls, no messages, no sync lines.
-
-**At START, right after `ready`:**
-1. Wake the server: it may sleep when idle and take 30–60 seconds to wake. Request `<server>/health` once with a web-fetch or terminal tool (for example `curl -s -m 90 <server>/health`), without waiting for the answer. Never open it in a browser tab. If no such tool exists, skip this step.
-2. Check that the MCP tools `record_application_submission` and `record_not_submitted_job` (server `career-companion`) are available. If they are not, tell the user once: "Career Companion sync is on, but its tools are not available. Check the MCP server in your AI app's settings. An expired token makes the tools disappear without an error." Then continue applying; every send this session is marked `failed (tools not available)`.
-
-**Right after each `applied` entry is appended** (only after the site showed a confirmation), call `record_application_submission` once for that entry, with values copied from it. Leave out any field that is empty or `None`.
-
-| Tool field | Value from the entry |
-| --- | --- |
-| `sourceRecordRef` | `YYYY-MM-DD/HH:MM:SS`: the date folder of the daily file, `/`, and the time in the entry heading. Copy it exactly; never invent or reformat it. |
-| `platform` | One of `linkedin`, `indeed`, `naukri`, `wellfound`, `instahyre`, `workday`, `company_direct`, `discovery`: the application workflow actually used. Workday wins whenever a Workday form was used. Never a job-source name. |
-| `company`, `jobTitle` | `Company`, `Job title`. |
-| `submittedAt` | `Local date/time` as ISO 8601 with the local UTC offset, for example `2026-10-20T14:14:05+05:30` (offset from `date +%z`). |
-| `jobUrl` | `Job URL`. |
-| `applyUrl` | `Apply page URL` (the full address). |
-| `destinationHost` | The host name of `Apply page URL` (or of `Actual application destination`), for example `jobs.lever.co`. |
-| `portalJobId` | `Job ID`. |
-| `discoverySource` | `Discovery source`, for example `we_work_remotely`. |
-| `location` | `Location`. |
-| `workMode` | `remote`, `hybrid` or `onsite`; leave it out for anything else. |
-| `confirmationText` | `Confirmation shown`. |
-| `resumeFilename` | `Resume filename`: the file name only. |
-| `submittedAnswers` | Every `Question: Answer` line under `Submitted answers`, as `{ "question": ..., "answer": ... }`, in order. |
-
-Never send a password, a credential, the resume file or its content, or plan, limit, cooldown, tab or session state.
-
-**Then add the sync line to that entry:**
-- `- Career Companion sync: sent` for the results `created`, `linked`, `needs_review` or `recorded`;
-- `- Career Companion sync: already recorded` for `already_recorded`;
-- `- Career Companion sync: failed (<reason>)` for an error or no answer, for example `failed (unavailable)`, `failed (invalid_input: platform)` or `failed (rate_limited)`.
-
-**One retry.** When a send fails with `unavailable`, a timeout or a connection error, try that entry once more at the first point between jobs at least 60 seconds later (the server may have been waking up), and update its line. Never pause or slow applying for it. Do not retry `invalid_input` (fix the entry first) or `rate_limited` (retry the next day).
-
-**At the end of a session** (section 11, also when the session time limit in section 5C ends it):
-1. For each `skipped` or `needs_user` entry in today's file that has a company and a job title and no sync line (this includes entries left by an earlier session that stopped early), call `record_not_submitted_job` once with: `sourceRecordRef` (as above), `outcome` (`skipped` or `needs_user`), `platform` (as above; use `discovery` when the entry names a job source), `company`, `jobTitle`, `loggedAt` (`Local date/time` as ISO 8601 with the offset), `reason` (`Skip reason / unanswered question / next action`), and `jobUrl` when known. Add the sync line as above. These jobs never become applications in Career Companion.
-2. Resend every entry of today's file whose sync line is `failed (...)`, except `invalid_input` and `rate_limited`, and update the line. Entries marked `sent` or `already recorded` are never sent again.
-
-**Replay on request:** when the user says "sync Career Companion for YYYY-MM-DD", read that day's file and send every entry whose sync line is missing or `failed`, with the matching tool, then update the lines. Repeats are safe: the same `sourceRecordRef` is recorded once, and a repeat only fills details Career Companion does not have yet.
-
-## 12. Walkthrough checklist for verification
-
-The instructions must support these scenarios without contradictions:
-
-1. **Fresh setup** — missing files are created, resume is copied, topics are collected one at a time, empty contextual/learned sections are accepted, and no applications start before verification.
-2. **Interrupted setup** — existing answers and checklist state are preserved, including already learned answers, and SETUP resumes at the first unfinished topic.
-3. **Skipped optional fields** — `None` is stored once and does not cause a setup loop.
-4. **Normal sign-in request** — an ordinary signed-out/login-required prompt asks the user to sign in in the current tab, wait for `done`, verify sign-in, and resume rather than stopping the platform.
-5. **Real security restriction** — CAPTCHA, unusual activity, security restriction, or daily-limit messaging still stops the platform for that local date.
-6. **First instant-submit application** — preview + `ok` happens before a submit-capable click, including Naukri Apply.
-7. **Unsupported upload** — user uploads in the current tab, replies `done`, and the file is verified.
-8. **Discovery into Lever** — the discovered Lever form is continued directly using the company-direct form rules; no saved career URL is required.
-9. **Discovery into Workday** — continue the current Workday form and count it as workday.
-10. **Context-specific unanswered question and later retry** — the unanswered question becomes `needs_user`, gets stored with context after the user answers, and the same job may then be retried.
-11. **Two sessions on one date** — both sessions write to the same daily file.
-12. **New local date/midnight** — a new date file is used for limits while historical duplicate checks remain active; any unexpired cooldown from the previous daily record is carried forward by its dated `Next submit after` timestamp before another submission.
-13. **Cooldown rotation** — one selected platform/source choice is cooling down while another eligible choice proceeds; if nothing else is eligible, wait only for the remaining interval. A suitable job encountered during cooldown remains eligible and is revisited without a cooldown-related `skipped` record.
-14. **Only one eligible choice** — when only one selected platform/source choice can proceed, wait for its remaining cooldown rather than restarting a full 120 seconds, then continue the same job.
-15. **Freshness controls** — Newest/Most recent and Past 24 hours are available and verified; unavailable controls are reported; exhausted suitable results are reported; no older range is introduced automatically.
-16. **Partly used limits + site stop** — today's counts and dated stop records persist in today's file and today's legacy CSV rows are included.
-17. **Source with mixed destinations** — one selected source has a blocked Workday job and an eligible Lever job; skip only the blocked job and continue with the eligible job.
-18. **Overlapping source selections** — discovery finds a We Work Remotely listing; the record's `Selected plan choice` identifies which requested target advances, while the actual destination controls its limit/cooldown and the global total counts once.
-19. **Legacy site stop by date** — a today's legacy skipped row whose notes begin `site stopped:` blocks that platform today; an earlier-date stop does not.
-20. **Overlapping legacy + Markdown application** — the same application recorded in both sources is counted once.
-21. **New-chat/model handoff** — all progress is saved first; the user can resume without repeating completed setup or today's plan.
-22. **Selectable job sources** — each new source can be selected in PLAN; the source is recorded, the actual destination is inspected, and routing follows the existing discovery/company-direct/Workday flow.
-23. **Unconfirmed source action** — profile/talent registration or an Apply-button click without a site confirmation is not counted as `applied`.
-24. **Source-route unavailable** — an unsupported destination or email-only route is reported as unavailable without inventing a flow or sending an automatic email.
-25. **Power warning gate** — START prints the warning and waits for `ready` before any browser action; a new chat on the same day prints it again.
-26. **Existing browser window** — a window is already open; the agent reuses it, opens no second window, and one browser task covers a platform batch.
-27. **Job opens in a new tab** — the work tab is used for the form, closed after the outcome is recorded, and the anchor tab remains; the Back button is never used.
-28. **Tab cap reached** — with three platforms selected the cap is 5; the oldest work tab is closed before a new one opens.
-29. **Browser disconnects mid-run** — two consecutive failures print the checklist, wait for `ready`, retry once, then end the session cleanly.
-30. **Session time limit** — the limit is read from `profile.md` (default 4 h); when reached, only the mid-form job is finished, the summary is written, and the session stops without recording `skipped`.
-31. **Career Companion sync off** — `Career Companion server: None`: no tool call, no message, no sync lines; the session behaves exactly as before.
-32. **Career Companion sync on** — after `ready` the server is woken; each `applied` entry is sent right after it is appended and gets `sent`; a stopped session keeps what was already sent; at the end the `skipped` and `needs_user` entries are sent with their reason.
-33. **Server asleep or down** — a send fails, is retried once at least 60 seconds later, and if it still fails is resent at the end of the session; applying never waits for it.
-34. **Sync tools missing** — sync is on but the tools are absent (for example an expired token): one message at START, sends marked `failed (tools not available)`, applying continues.
-35. **Replay** — "sync Career Companion for YYYY-MM-DD" twice: only entries not marked `sent` or `already recorded` are sent the first time; the second time nothing new is recorded.
-
-Do not claim live application testing. These walkthroughs are static instruction/workflow checks unless an actual browser session is separately performed.
+- `Platform`: the workflow actually used: `linkedin`, `indeed`, `naukri`, `wellfound`, `instahyre`, `workday`, `company_direct` or `discovery`; `workday` whenever a Workday form was used.
+- `Selected plan choice`: the plan item the job was found under.
+- `Discovery source`: the job source or website it was found on, when there is one.
+- `Actual application destination`: the address or host where the form was sent.
+- `Apply page URL`: the full address of the page where the form was sent, not only its host.
+- `Submitted answers`: every question and the answer given, one `Question: Answer` line each.
+- `Confirmation shown`: the site's own words, for `applied`.
+- Leave a field empty when it does not apply. Never write a password into the record. With NorthList sync on, its file adds a `- NorthList sync:` line.
+
+Records made before this version have per-site sections and more tables. Leave them as they are. If today's record is one of them, add new entries at its end.
+
+## 9. Browser
+
+1. After `ready`, before anything else in the browser, list the open tabs with the AI app's tab tool. Reuse the open window and never open a second one. If the app can only start a new window, open exactly one and use it for the whole session.
+2. One browser task per plan item's batch of jobs, never one per job.
+3. Keep one anchor tab per plan item, holding its search results. Never close an anchor tab or the last tab of the window.
+4. A job may open in a new work tab: fill its form there and close the tab after its entry is added. If the job opened in the anchor tab, open the search results address again afterwards.
+5. Never use the browser's Back button. Inside a form, use its own Back control; otherwise open the address again.
+6. At most (plan items + 2) tabs. Before opening a tab at that number, close the oldest work tab.
+7. In a new chat, read the live tab list and reuse its tabs instead of opening new ones.
+8. Open only pages of the current job flow. Read pages as text or through the accessibility tree; take a screenshot only when a control cannot be found that way.
+9. Search with the site's own controls: choose Newest or Most recent and Past 24 hours when the site has them, check that they are active (again after changing the search), then go through the results from the top. Never widen to older jobs by yourself, and never rank dates yourself. If those controls are missing or cannot be checked, tell the user in the chat instead of calling the results fresh. Never invent a control the page does not show.
+10. At the end of a session, close the work tabs and keep the anchor tabs and the window open.
+11. If a browser action, or reading the tab list, fails twice in a row, stop and show:
+
+    > **Browser connection lost. The run is paused.**
+    > Check these, then reply `ready` to retry once:
+    > 1. Is the browser open with exactly one window?
+    > 2. Is the browser extension your AI app uses enabled and connected?
+    > 3. Did the computer sleep or the lid close? Wake it and keep it awake.
+    > 4. Is the computer plugged into power?
+    >
+    > Nothing was recorded as `applied` without a confirmation shown by the site.
+
+    After `ready`, retry once. If it fails again, do the end of session (section 12) and stop.
+
+## 10. Sign-ins, accounts and stops
+
+- **Signed out, or a normal login page:** ask the user to sign in in the current tab and reply `done`. Check that the sign-in worked, then continue the same job. This is not a site stop.
+- **Company portal accounts** (Workday and other company systems): check `tracking/created_accounts.csv` first. If the company has a record, sign in with it; never create a second account. If not, create one with `personal_data/credentials.md` and add its record at once.
+- If the app blocks a sign-in, an account creation or an email check, say exactly: "Please sign in / create the account / click the email verification link in this tab, then reply done". Wait for `done`.
+- **Site stop:** a daily-limit, unusual-activity, CAPTCHA, security-check or access-restriction message on a job site (or on a company portal that blocks all further use). Stop that site for the rest of the local date: add `- HH:MM — site — site stopped: <message>` under `## Site Stops`, and a `skipped` entry whose reason starts with `site stopped:`. Never retry that site the same day. Tell the user in one line, and go on with the other plan items. A stop from an earlier date does not count today.
+- Login wording alone is not a stop. A CAPTCHA on one employer's own form skips only that job, unless the portal blocks all further use.
+- Never bypass a CAPTCHA, anti-bot check, 2FA or security check.
+- **Same step fails three times:** if the same form step fails on three jobs in a row, stop using that workflow (its `Platform`, for example `workday`) for this session; skip jobs that lead to it, with that reason, go on with everything else, and in the session summary suggest a medium or stronger model for it next time.
+
+## 11. Plan item instructions
+
+Before working on a plan item, read its file. When one of its jobs is routed to another workflow, also read that workflow's file:
+- `linkedin`: `instructions/platforms/linkedin_strategy.md`
+- `indeed`: `instructions/platforms/indeed_strategy.md`
+- `naukri`: `instructions/platforms/naukri_strategy.md`
+- `wellfound`: `instructions/platforms/wellfound_strategy.md`
+- `instahyre`: `instructions/platforms/instahyre_strategy.md`
+- `workday`: `instructions/platforms/workday_strategy.md`
+- `company_direct`: `instructions/advanced_strategies/company_direct_apply.md`
+- `discovery` and every job source: `instructions/advanced_strategies/web_search_discovery.md`
+
+These files add only the steps of their site. They never override this file.
+
+For every plan item:
+- Route by where the job is actually submitted, not where it was found: a Workday form follows the Workday steps and counts as `workday`; Greenhouse, Lever, Ashby or another company form follows the company_direct steps. Continue a found job where it is; never restart a search for it.
+- Count only a confirmed application to one specific job. A profile, a talent sign-up, an account or an Apply click without a confirmation is not `applied`.
+- Never turn on a site's own auto-apply service, and never send applications or emails to recruiters. A job that can only be applied to by email is reported as unavailable.
+- Another kind of form: use the closest of these steps, without inventing anything. If none fits, report the destination as unavailable.
+
+## 12. End of session
+
+1. With NorthList sync on, do its end-of-session steps first (`instructions/northlist_sync.md`).
+2. Update the counts in today's `## Application Plan`.
+3. Sum up today from your counts (one search of the record if unsure; never a full re-read): applied, skipped and needs_user jobs, site stops, and how many jobs were passed over in the results lists; with sync on, how many entries were sent and which failed.
+4. Ask the user the open questions. Save each answer at once, as section 7 says.
+
+Checks for whoever edits these instructions are in `docs/walkthroughs.md`. They are not part of a run.
