@@ -67,22 +67,23 @@ Once per run, it tells you which kind of model fits today's plan; it never names
 [NorthList](https://northlist.site/automation) tracks your job applications. Connected, each job this automation applies to shows up there with its links and the answers it sent, and mail from the company moves it on. Without it nothing changes: the daily record in this folder is enough.
 
 **Set up once:**
-1. In NorthList, open **Automation › Setup** and create a token. Copy it: it is shown once.
-2. In your AI app's **user-level** MCP settings (never a file inside this folder), add NorthList as a server with the server address from the Setup tab (it ends in `/mcp`) and the header `Authorization: Bearer <token>`. If your app cannot send headers, use the `mcp-remote` bridge with that same address: `npx mcp-remote <server address> --header "Authorization: Bearer <token>"`.
-3. Allow its two tools: `record_application_submission` and `record_not_submitted_job`.
-4. In `personal_data/profile.md`, set the profile line the Setup tab shows, `- NorthList server: <address>` (without `/mcp`). An older `- Career Companion server: <address>` line works the same.
+1. In NorthList, open **Automation › Setup** and create your setup prompt. Copy it: it is shown once.
+2. Paste it into a chat in this folder, in Claude Code, Codex or Antigravity. Your AI app adds NorthList to its own settings and asks you to allow the change. Your token goes only into those settings, never into this folder.
+3. When it says so, open a new chat or restart the app, then type `start`. The first time it uses NorthList, your app asks: allow it for good.
+
+**By hand instead:** add NorthList as an MCP server in your AI app's **user-level** settings (never a file inside this folder), with the server address from the Setup tab (it ends in `/mcp`) and the header `Authorization: Bearer <token>`. If your app cannot send headers, use the `mcp-remote` bridge with that same address: `npx mcp-remote <server address> --header "Authorization: Bearer <token>"`. Allow its two tools, `record_application_submission` and `record_not_submitted_job`, and set the profile line the Setup tab shows, `- NorthList server: <address>` (without `/mcp`), in `personal_data/profile.md`. An older `- Career Companion server: <address>` line works the same.
 
 **What NorthList gets:**
 - For each job it applied to: the company, job title, site, job and apply page links, the apply site's address, the job ID, where the job was found, location, work mode, time, the site's confirmation, your resume's file name and the answers it sent.
 - For each job it opened but did not apply to: the company, job title, site, job link, whether it skipped the job or left it for you, the reason and the time.
 - Never: your passwords, your resume file or its text, or your plan and limits.
 
-Each application is sent right after it is recorded, so a stopped run keeps what was sent. Jobs it did not apply to are sent at the end of the run, and failed sends are tried again then. To send a day again later, say `sync NorthList for YYYY-MM-DD`. If you delete an application in NorthList, what this automation sent for it goes too. Tokens expire: when it says the tools are not available, create a new token and replace it in your AI app's settings.
+Each application is sent right after it is recorded, so a stopped run keeps what was sent. Jobs it did not apply to are sent at the end of the run, and failed sends are tried again then. To send a day again later, say `sync NorthList for YYYY-MM-DD`. If you delete an application in NorthList, what this automation sent for it goes too. Tokens expire: when it says the tools are not available, create a new setup prompt and paste it again.
 
 ## Files
 
 - `AGENTS.md`: the rules for every run (`CLAUDE.md` loads it for Claude Code).
-- `instructions/`: setup, NorthList sync, and one file per site, each read only when needed.
+- `instructions/`: setup, connecting and syncing NorthList, and one file per site, each read only when needed.
 - `personal_data/*_template.md`: templates for your profile, saved answers and portal login.
 - `docs/walkthroughs.md`: checks for anyone who changes the instructions.
 
@@ -108,4 +109,4 @@ Made while running and ignored by Git: your files in `personal_data/` (profile, 
 
 **The run is slow.** It applies to one job at a time, reads each job, waits for your first `ok`, and leaves 2 minutes between applications on one site. Choose 3 to 5 sites, so the waits overlap, and 10 to 15 jobs per site.
 
-**"NorthList sync is on, but its tools are not available."** The token has probably expired. Create a new one under Automation › Setup in NorthList and replace it in your AI app's settings.
+**"NorthList sync is on, but its tools are not available."** If you just connected, open a new chat or restart your AI app first. Otherwise the token has probably expired: create a new setup prompt under Automation › Setup in NorthList and paste it into your AI app.
