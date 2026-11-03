@@ -69,3 +69,13 @@ After any change to `AGENTS.md`, `instructions/` or the templates, walk through 
 46. **Tools missing.** One message at start; sends are marked `failed (tools not available)`; applying goes on.
 47. **Server named differently.** The tools are found by name even when the server is called `northlist` in the AI app.
 48. **Replay.** `sync NorthList for YYYY-MM-DD` twice: the first time only entries not marked `sent` or `already recorded` are sent; the second time nothing new is recorded. The old wording `sync Career Companion for YYYY-MM-DD` works the same.
+
+## Connect NorthList
+
+49. **Claude Code.** The pasted setup prompt leads to `instructions/northlist_connect.md`: one `claude mcp add --transport http --scope user northlist <server>/mcp --header ...` (an older `northlist` entry removed first), the profile line set, and the user told to open a new chat, then `start`, and to allow each NorthList tool for good the first time it runs. The app's permission settings are never changed by the agent. The token is never written into the folder or repeated, and `claude mcp get` is never run.
+50. **Codex.** `~/.codex/config.toml` gets `[mcp_servers.northlist]` with `url` and `http_headers`, replacing an older table; one approval; then a restart; the tools are allowed on first use.
+51. **Antigravity.** `~/.gemini/config/mcp_config.json` gets `northlist` with `serverUrl` and `headers`, kept valid JSON; never the folder's `.agents/mcp_config.json`; then Refresh.
+52. **Another app.** The user is told the address and header to add by hand; the profile line is still set.
+53. **Before setup.** With no `personal_data/profile.md`, it is created from the template with only the NorthList line set; `start` then runs setup.
+54. **Reconnect.** A new prompt after a token expired replaces the old `northlist` entry; other servers stay; at `start` the tools are found again.
+55. **Old profile line.** A `Career Companion server:` line becomes the NorthList line with the new address.

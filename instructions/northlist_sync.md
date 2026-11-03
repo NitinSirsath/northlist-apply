@@ -7,7 +7,7 @@ NorthList is a separate app that tracks job applications. With sync on, each out
 ## At start, right after `ready`
 
 1. **Wake the server.** It may sleep when idle and take 30 to 60 seconds to wake. Request `<server>/health` once with a web-fetch or terminal tool, for example `curl -s -m 90 <server>/health`, without waiting for the answer when your tool allows that. Never open it in a browser tab. If no such tool exists, skip this step.
-2. **Check the tools.** Look for `record_application_submission` and `record_not_submitted_job` by these names, whatever the server is called in the AI app's settings. If they are missing, tell the user once: "NorthList sync is on, but its tools are not available. Check the MCP server in your AI app's settings. An expired token makes the tools disappear without an error." Then keep applying; every send this session is marked `failed (tools not available)`.
+2. **Check the tools.** Look for `record_application_submission` and `record_not_submitted_job` by these names, whatever the server is called in the AI app's settings. If they are missing, tell the user once: "NorthList sync is on, but its tools are not available. If you just connected NorthList, open a new chat or restart the app. An expired token makes the tools disappear without an error: create a new setup prompt in NorthList (Automation › Setup) and paste it here." Then keep applying; every send this session is marked `failed (tools not available)`.
 
 ## After each `applied` entry
 

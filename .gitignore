@@ -20,3 +20,5 @@
 
 # MCP client settings may contain a NorthList token; never commit them.
 .agents/mcp_config.json
+.mcp.json
+.codex/
