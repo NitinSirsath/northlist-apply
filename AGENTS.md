@@ -13,6 +13,7 @@ Never run setup, collect personal details or apply to jobs just because this rep
 - `ok`: the user's approval of the session's first application (section 7).
 - `done`: the user finished a step in the browser, such as a sign-in, an upload or an email link.
 - `sync NorthList for YYYY-MM-DD`: send that day's entries to NorthList again (`instructions/northlist_sync.md`). The older wording `sync Career Companion for YYYY-MM-DD` means the same.
+- A setup prompt from NorthList ("Connect this NorthList Apply folder to my NorthList account", with a server address and a token), or `connect NorthList`: follow `instructions/northlist_connect.md`. It may come before setup is finished.
 
 ## 2. Files
 
