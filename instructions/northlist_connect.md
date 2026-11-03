@@ -70,4 +70,4 @@ In a few short lines, without the token:
 - Then type `start`. At `start`, the NorthList check (`instructions/northlist_sync.md`) confirms that the two tools are there. If setup is not finished, `start` does setup first.
 - The first time each NorthList tool runs (after the first application, and at the end of the first session), the app asks. Allow it for good: "Yes, and don't ask again" in Claude Code, "Allow and don't ask me again" in Codex, "Always allow" in Antigravity.
 
-**Reconnect.** When a token expires or is revoked, the user creates a new setup prompt in NorthList (Automation › Setup) and pastes it here.
+**Reconnect.** When a token expires or is revoked, the user creates a new setup prompt in NorthList (Automation › Setup) and pastes it here. The same steps replace the old token.
