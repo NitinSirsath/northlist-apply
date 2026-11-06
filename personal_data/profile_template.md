@@ -70,7 +70,7 @@ Use one subsection per education record.
 ## NorthList (optional)
 - **NorthList server:** None
 
-> Leave `None` unless you use NorthList. To turn sync on, put the server address shown in NorthList under Automation › Setup here, for example `https://your-app.example.com`, and follow the README. See `instructions/northlist_sync.md`.
+> Connecting NorthList in your AI app turns sync on (README, "Connect NorthList"). This line only holds NorthList's server address: NorthList's setup prompt fills it in with the address shown under Automation › Setup, for example `https://your-app.example.com`, and a run then wakes NorthList before its first send. To turn sync off, remove NorthList from your AI app. See `instructions/northlist_sync.md`.
 
 ## Notes
 - Keep factual profile data here as the single authoritative source.
