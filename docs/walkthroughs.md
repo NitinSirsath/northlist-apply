@@ -62,20 +62,26 @@ After any change to `AGENTS.md`, `instructions/` or the templates, walk through 
 
 ## NorthList sync
 
-42. **Sync off.** `NorthList server: None`: no tool call, no message, no sync line.
+42. **Sync off.** The AI app has no NorthList tools and the profile says `NorthList server: None`: no tool call, no message, no sync line.
 43. **Old profile line.** A profile that still says `Career Companion server: <address>` turns sync on the same way.
-44. **Sync on.** After `ready` the server is woken; each `applied` entry is sent right after it is added and gets `sent`; a stopped session keeps what was sent; at the end, the `skipped` (opened and turned down) and `needs_user` entries are sent with their reason.
-45. **Server asleep or down.** A send fails, is retried once with the next send, and if it still fails is resent at the end of the session; applying never waits for it. An `invalid_input` answer is never retried by the agent; the user hears which entry and field, and can fix it and ask for a replay.
-46. **Tools missing.** One message at start; sends are marked `failed (tools not available)`; applying goes on.
-47. **Server named differently.** The tools are found by name even when the server is called `northlist` in the AI app.
+44. **Sync on.** After `ready` the server is woken (when the profile has an address) and the user hears once that NorthList is connected; each `applied` entry is sent right after it is added, before the next job is opened, and gets `sent`; a stopped session keeps what was sent; at the end, the `skipped` (opened and turned down) and `needs_user` entries are sent with their reason.
+45. **Server asleep or down.** A send fails, is retried once with the first later send that comes at least 60 seconds after the failure, and if it still fails is resent at the end of the session; applying never waits for it. An `invalid_input` answer is never retried by the agent; the user hears which entry and field, and can fix it and ask for a replay.
+46. **Tools missing.** The profile has an address but the tools are not there, or a listed tool cannot be loaded: one message at start; sends are marked `failed (tools not available)`; applying goes on.
+47. **Server named differently.** The tools are found by name even when the server is called `northlist` in the AI app, and also when the app lists them by name and loads them only on request.
 48. **Replay.** `sync NorthList for YYYY-MM-DD` twice: the first time only entries not marked `sent` or `already recorded` are sent; the second time nothing new is recorded. The old wording `sync Career Companion for YYYY-MM-DD` works the same.
+49. **Connected, profile line `None`.** The tools are there, and the profile line says `None` or is missing: sync is on; no wake request; the user hears once that NorthList is connected; every `applied` entry is sent.
+50. **No send skipped.** Before each new job, the last `applied` entry has its sync line; if it has none, it is sent first. Sends are never left for later, and the agent never waits for the user to ask.
+51. **Missed send in an earlier chat.** A new chat resumes the day while some `applied` entries have no sync line: they are sent right after `ready`, before the first job.
+52. **Long run.** Late in a long run, or after the AI app shortened the chat, the field table is no longer at hand: the agent reads `instructions/northlist_sync.md` again before the next send, and every `applied` entry still gets its send and its line.
+53. **End of session.** Any `applied` entry still without a sync line is sent first; the summary says how many of today's applications NorthList has, and names each failed or unsent entry with `sync NorthList for YYYY-MM-DD`.
+54. **User says stop.** The user asks to stop sending to NorthList: nothing more is sent this session, including at its end; every entry of the session without a sync line, and every later one, gets `not sent (stopped by the user)`, so a later session does not send them; only a replay the user asks for does. The user hears once that removing NorthList from the AI app turns sync off for good.
 
 ## Connect NorthList
 
-49. **Claude Code.** The pasted setup prompt leads to `instructions/northlist_connect.md`: one `claude mcp add --transport http --scope user northlist <server>/mcp --header ...` (an older `northlist` entry removed first), the profile line set, and the user told to open a new chat, then `start`, and to allow each NorthList tool for good the first time it runs. The app's permission settings are never changed by the agent. The token is never written into the folder or repeated, and `claude mcp get` is never run.
-50. **Codex.** `~/.codex/config.toml` gets `[mcp_servers.northlist]` with `url` and `http_headers`, replacing an older table; one approval; then a restart; the tools are allowed on first use.
-51. **Antigravity.** `~/.gemini/config/mcp_config.json` gets `northlist` with `serverUrl` and `headers`, kept valid JSON; never the folder's `.agents/mcp_config.json`; then Refresh.
-52. **Another app.** The user is told the address and header to add by hand; the profile line is still set.
-53. **Before setup.** With no `personal_data/profile.md`, it is created from the template with only the NorthList line set; `start` then runs setup.
-54. **Reconnect.** A new prompt after a token expired replaces the old `northlist` entry; other servers stay; at `start` the tools are found again.
-55. **Old profile line.** A `Career Companion server:` line becomes the NorthList line with the new address.
+55. **Claude Code.** The pasted setup prompt leads to `instructions/northlist_connect.md`: one `claude mcp add --transport http --scope user northlist <server>/mcp --header ...` (an older `northlist` entry removed first), the profile line set, and the user told to open a new chat, then `start`, and to allow each NorthList tool for good the first time it runs. The app's permission settings are never changed by the agent. The token is never written into the folder or repeated, and `claude mcp get` is never run.
+56. **Codex.** `~/.codex/config.toml` gets `[mcp_servers.northlist]` with `url` and `http_headers`, replacing an older table; one approval; then a restart; the tools are allowed on first use.
+57. **Antigravity.** `~/.gemini/config/mcp_config.json` gets `northlist` with `serverUrl` and `headers`, kept valid JSON; never the folder's `.agents/mcp_config.json`; then Refresh.
+58. **Another app.** The user is told the address and header to add by hand; the profile line is still set.
+59. **Before setup.** With no `personal_data/profile.md`, it is created from the template with only the NorthList line set; `start` then runs setup.
+60. **Reconnect.** A new prompt after a token expired replaces the old `northlist` entry; other servers stay; at `start` the tools are found again.
+61. **Old profile line.** A `Career Companion server:` line becomes the NorthList line with the new address.
