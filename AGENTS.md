@@ -71,7 +71,7 @@ If anything is missing, read `instructions/setup.md` and finish setup first. Nev
    Show it at every `start`, also in a new chat that resumes the day. If the reply is not `ready`, answer it, then show the check again. If the reply changes the plan, go back to step 3 with the new plan; it goes into today's record after `ready`.
 7. After `ready`:
    - create today's record if needed (section 8) and add `- Started HH:MM:SS — limit N h` under `## Sessions`;
-   - when `profile.md` has `NorthList server:` (or the older `Career Companion server:`) with an address, read `instructions/northlist_sync.md` and follow it;
+   - **NorthList check.** Look for the tools `record_application_submission` and `record_not_submitted_job` by these names, whatever the server is called in the AI app. A tool the app lists by name but loads only on request (for example through a tool search) counts as there: load it now. **Sync is on** when they are there (the user connected NorthList), or when `profile.md` has `NorthList server:` (or the older `Career Companion server:`) with an address. With sync on, read `instructions/northlist_sync.md` and follow it for the whole session. With neither, sync is off: no tool calls, no messages, no sync lines. If the user asks to stop sending to NorthList, nothing more is sent this session (`instructions/northlist_sync.md`, rule 5);
    - open the browser (section 9) and start with the first plan item.
 
 ## 5. Limits, counts, duplicates and pacing
@@ -80,7 +80,7 @@ If anything is missing, read `instructions/setup.md` and finish setup first. Nev
 
 **What counts.** A confirmed application counts once toward its plan item (`Selected plan choice`), once toward the site where it was actually submitted (`Platform`: any Workday form counts as `workday`; a job source counts where its job was submitted), and once toward the total. A site that is not in the plan may still receive a routed job, within its own limit.
 
-**Counting without re-reading.** At `start`, and when a new chat resumes the day, search today's record once for its `### ` entry headings and its `- Platform:`, `- Selected plan choice:` and `- Status:` lines. From that one search, count the entries by status, per plan item and per site, note each site's last entry time, and bring the `## Application Plan` counts up to date. During the run, keep the counts in the chat. Never re-read the whole record to count.
+**Counting without re-reading.** At `start`, and when a new chat resumes the day, search today's record once for its `### ` entry headings and its `- Platform:`, `- Selected plan choice:`, `- Status:` and `- NorthList sync:` lines (or the older `- Career Companion sync:`). From that one search, count the entries by status, per plan item and per site, note each site's last entry time and each `applied` entry that has no sync line, and bring the `## Application Plan` counts up to date. During the run, keep the counts in the chat. Never re-read the whole record to count.
 
 **Duplicates.** As soon as a job's ID or URL is known (often already in the results list), search all of `applied/` and `tracking/applied_jobs.csv` (if present) for its ID, or for its URL when there is no ID (ignore a trailing slash). Read only the matching entries; a match is the same job only when its site and company match too. Then:
 - any match `applied` or `skipped`: never apply again, except a job skipped only because its site was stopped, its site was at its daily limit, or its workflow was stopped for the session; such a job may be tried on a later day;
@@ -99,6 +99,7 @@ Never read whole records for this.
 - the date: after midnight, update the old record's `## Application Plan` counts, start the new date's record with the same plan, copy this session's `Started` line into its `## Sessions`, and use the new date's limits;
 - the session limit (section 6);
 - `## Site Stops` in today's record, for that site;
+- with sync on, that the last `applied` entry has its `- NorthList sync:` line. If it has none, send it now (section 7, step 10), before anything else;
 - the counts and limits above. A plan item whose own site is stopped or at its limit is finished for the day. A job that leads to another site that is stopped or at its limit (for example a job source's job on a Workday form) is skipped alone: a `skipped` entry with the reason, then go on with the plan item's other jobs.
 
 A plan item is finished when its number is reached or no suitable jobs remain. Report a shortfall; never widen the search to older jobs to fill it.
@@ -107,7 +108,7 @@ A plan item is finished when its number is reached or no suitable jobs remain. R
 
 - `Session time limit (hours)` in `profile.md`; default 4, also when it is missing or not a positive number. Never store `None` for it.
 - It counts per chat session, from this session's `Started` line.
-- When it is reached: open no new job; finish and submit only a job that is already in a form; add its entry; do the end of session (section 12); tell the user the limit was reached and that `start` in a new chat continues the same day.
+- When it is reached: open no new job; finish and submit only a job that is already in a form; add its entry and, with sync on, send it (section 7, steps 9 and 10); do the end of session (section 12); tell the user the limit was reached and that `start` in a new chat continues the same day.
 - Never record `skipped` because of the limit. Do not wait out a 2-minute gap that would pass the limit; end the session instead.
 - If a new chat is needed for any reason, everything is already in the files: tell the user to type `start` there.
 
@@ -127,7 +128,8 @@ A plan item is finished when its number is reached or no suitable jobs remain. R
 7. **Submit**, keeping the 2-minute gap (section 5).
 8. **Applied only after the site shows a confirmation.** Never invent one.
 9. **Add the entry** to today's record at once (section 8).
-10. A form that keeps failing after two tries: add a `skipped` entry with the reason and go on.
+10. **Send it to NorthList** (sync on, `applied` entries): at once, before you open the next job, call `record_application_submission` for this entry and add its `- NorthList sync:` line, as `instructions/northlist_sync.md` says. If that file's field table is no longer in this chat, read the file again first. This step is part of every application: never skip it or leave it for later; the user does not have to ask for it. A failed send gets its `failed (...)` line, and applying goes on.
+11. A form that keeps failing after two tries: add a `skipped` entry with the reason and go on.
 
 When the user answers a question, save it in `form_answers.md` at once: under `## Contextual Answers` when it holds only for an employer, country, role or portal, otherwise under `## Learned Answers`, each with its context and the exact question. A job left as `needs_user` may then be tried again; the retry gets a new entry, and the old one stays. Use this format, and add a record only when a real question comes up:
 
@@ -195,7 +197,7 @@ Each entry is added at the end of the file, right after the job's outcome:
 - `Apply page URL`: the full address of the page where the form was sent, not only its host.
 - `Submitted answers`: every question and the answer given, one `Question: Answer` line each.
 - `Confirmation shown`: the site's own words, for `applied`.
-- Leave a field empty when it does not apply. Never write a password into the record. With NorthList sync on, its file adds a `- NorthList sync:` line.
+- Leave a field empty when it does not apply. Never write a password into the record. With sync on, each entry also gets a `- NorthList sync:` line: an `applied` entry at once (section 7, step 10), the others at the end of the session.
 
 Records made before this version have per-site sections and more tables. Leave them as they are. If today's record is one of them, add new entries at its end.
 
@@ -256,9 +258,9 @@ For every plan item:
 
 ## 12. End of session
 
-1. With NorthList sync on, do its end-of-session steps first (`instructions/northlist_sync.md`).
+1. With sync on, do its end-of-session steps first (`instructions/northlist_sync.md`). The first of them sends every `applied` entry of today that still has no sync line.
 2. Update the counts in today's `## Application Plan`.
-3. Sum up today from your counts (one search of the record if unsure; never a full re-read): applied, skipped and needs_user jobs, site stops, and how many jobs were passed over in the results lists; with sync on, how many entries were sent and which failed.
+3. Sum up today from your counts (one search of the record if unsure; never a full re-read): applied, skipped and needs_user jobs, site stops, and how many jobs were passed over in the results lists; with sync on, how many of today's applications NorthList has, and each entry that failed or is still unsent.
 4. Ask the user the open questions. Save each answer at once, as section 7 says.
 
 Checks for whoever edits these instructions are in `docs/walkthroughs.md`. They are not part of a run.

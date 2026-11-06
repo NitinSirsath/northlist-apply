@@ -43,4 +43,4 @@ When the user skips an optional question, save `None` at once and never ask it a
 
 Run the setup check again (`AGENTS.md` section 3). If something is still missing, continue at the first missing item. When it passes, go on to today's plan (`AGENTS.md` section 4) in the same chat.
 
-Never ask about NorthList during setup. Sync stays off until the user adds the server line (README).
+Never ask about NorthList during setup. Sync turns on by itself once NorthList is connected in the AI app (README).
