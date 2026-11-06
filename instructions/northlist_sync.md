@@ -18,7 +18,7 @@ NorthList is a separate app that tracks job applications. With sync on, each out
 2. **Check the tools.** Look for `record_application_submission` and `record_not_submitted_job` by these names, whatever the server is called in the AI app's settings. A tool the app lists by name but loads only on request counts as there: load it now.
    - If they are there, tell the user once, in one line: "NorthList is connected: each application goes to NorthList right after the site confirms it. If your app asks to allow a NorthList tool, allow it for good."
    - If they are missing, or a listed tool cannot be loaded, tell the user once: "NorthList sync is on, but its tools are not available. If you just connected NorthList, open a new chat or restart the app. An expired token makes the tools disappear without an error: create a new setup prompt in NorthList (Automation › Setup) and paste it here." Then keep applying; every send this session is marked `failed (tools not available)`.
-3. **Send what was missed.** Every `applied` entry of today's record that has no sync line is sent now, before the first job, as below.
+3. **Send what was missed.** Every `applied` entry of today's record that has no sync line is sent now, before the first job, as below. The start search (`AGENTS.md` section 5) shows them, for example after a chat that stopped between an entry and its send.
 
 ## After each `applied` entry
 
