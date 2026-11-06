@@ -57,6 +57,7 @@ Most applications per day: LinkedIn 20, Indeed 20, Naukri 25, Wellfound 10, Inst
 - Stops a site for the day at a CAPTCHA, a security check or a limit message, and never tries to get around it.
 - Never emails recruiters, and never turns on a site's own auto-apply.
 - Keeps one record per day in `applied/YYYY-MM-DD/applications.md`, and never applies to the same job twice.
+- With NorthList connected, sends each application to NorthList right after the site confirms it, before the next job.
 
 ## Which model
 
@@ -78,7 +79,7 @@ Once per run, it tells you which kind of model fits today's plan; it never names
 - For each job it opened but did not apply to: the company, job title, site, job link, whether it skipped the job or left it for you, the reason and the time.
 - Never: your passwords, your resume file or its text, or your plan and limits.
 
-Each application is sent right after it is recorded, so a stopped run keeps what was sent. Jobs it did not apply to are sent at the end of the run, and failed sends are tried again then. To send a day again later, say `sync NorthList for YYYY-MM-DD`. If you delete an application in NorthList, what this automation sent for it goes too. Tokens expire: when it says the tools are not available, create a new setup prompt and paste it again.
+Sync is on whenever NorthList is connected in your AI app, with or without the profile line; the line only lets a run wake NorthList before its first send. To stop sending, tell the run, or remove NorthList from your AI app's settings to turn it off for good. Each application is sent right after the site confirms it, before the next job starts, so a stopped run keeps what was sent. A send that was missed goes before the next job, at the next `start`, or at the end of the run, and the run's summary says how many of today's applications NorthList has. Jobs it did not apply to are sent at the end of the run, and failed sends are tried again then. To send a day again later, say `sync NorthList for YYYY-MM-DD`. If you delete an application in NorthList, what this automation sent for it goes too. Tokens expire: when it says the tools are not available, create a new setup prompt and paste it again.
 
 ## Files
 
@@ -110,3 +111,5 @@ Made while running and ignored by Git: your files in `personal_data/` (profile, 
 **The run is slow.** It applies to one job at a time, reads each job, waits for your first `ok`, and leaves 2 minutes between applications on one site. Choose 3 to 5 sites, so the waits overlap, and 10 to 15 jobs per site.
 
 **"NorthList sync is on, but its tools are not available."** If you just connected, open a new chat or restart your AI app first. Otherwise the token has probably expired: create a new setup prompt under Automation › Setup in NorthList and paste it into your AI app.
+
+**Applications are missing in NorthList.** Type `sync NorthList for YYYY-MM-DD` (the day of the run) in a chat in this folder: it sends that day's missing entries, and repeats are safe. If the run never said "NorthList is connected" after `ready`, your AI app did not have NorthList in that chat: connect it (Automation › Setup), open a new chat and sync the day.
