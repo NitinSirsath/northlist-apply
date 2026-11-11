@@ -36,12 +36,21 @@
 
 ### 1.4 Greenhouse (`job-boards.greenhouse.io`)
 - **Status:** Fully functional & verified via Web Search Discovery.
-- **Workflow:**
+- **Workflow:** 
   - Direct ATS application discovery.
   - Single-page form: technical screening questionnaires (experience levels, state management, testing frameworks, architectural summaries), notice period, CTC, work mode confirmation.
   - Successful submission receipt captured.
   - Synced to NorthList tracker.
 - **Tested Employer:** Capco (a Wipro company) — React.JS Developer (Sarjapur, Bengaluru).
+
+### 1.5 Ashby (`jobs.ashbyhq.com`)
+- **Status:** Fully functional & verified via Company Career Page / Direct Apply.
+- **Workflow:**
+  - Modern Next.js SPA form integration.
+  - Direct file upload for `resume.pdf`, profile URLs, and customized company-specific statement.
+  - Successful submission receipt captured ("Success - Your application was successfully submitted").
+  - Synced to NorthList tracker.
+- **Tested Employer:** Sarvam AI — Frontend Engineer, Chanakya (Bengaluru).
 
 ---
 
@@ -57,5 +66,4 @@
 
 ## 3. Pending / Next Platforms for Testing ⏳
 - **Lever** (`jobs.lever.co`)
-- **Ashby** (`jobs.ashbyhq.com`)
 - **Company Direct Career Pages**
