@@ -52,6 +52,15 @@
   - Synced to NorthList tracker.
 - **Tested Employer:** Sarvam AI — Frontend Engineer, Chanakya (Bengaluru).
 
+### 1.6 Lever (`jobs.lever.co`)
+- **Status:** Fully functional & verified via Direct ATS Apply.
+- **Workflow:**
+  - Clean single-page application form.
+  - Multipart resume upload (`resume.pdf`), basic contact details, current employer & location, profile URLs.
+  - Successful submission receipt captured ("Application submitted!").
+  - Synced to NorthList tracker.
+- **Tested Employer:** Drivetrain (drivetrain.ai) — Frontend Engineer (Remote India).
+
 ---
 
 ## 2. Platforms with Restrictions / Skipped ⚠️
@@ -64,6 +73,12 @@
 
 ---
 
-## 3. Pending / Next Platforms for Testing ⏳
+## 3. Verified ATS Platforms Coverage 🎯
+All major tech ATS platforms are now fully verified:
+- **Workday** (`*.myworkdayjobs.com`)
+- **Greenhouse** (`job-boards.greenhouse.io`)
+- **Ashby** (`jobs.ashbyhq.com`)
 - **Lever** (`jobs.lever.co`)
-- **Company Direct Career Pages**
+- **Wellfound** (`wellfound.com`)
+- **Instahyre** (`instahyre.com`)
+- **LinkedIn / Naukri / Indeed** (Previously tested and confirmed working)
