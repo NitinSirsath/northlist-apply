@@ -57,6 +57,8 @@
 - **Workflow:**
   - Clean single-page application form.
   - Multipart resume upload (`resume.pdf`), basic contact details, current employer & location, profile URLs.
+  - Asynchronous client-side resume validation and city auto-complete supported cleanly.
+  - Clean redirect to `/thanks` route upon submission.
   - Successful submission receipt captured ("Application submitted!").
   - Synced to NorthList tracker.
 - **Tested Employer:** Drivetrain (drivetrain.ai) — Frontend Engineer (Remote India).
