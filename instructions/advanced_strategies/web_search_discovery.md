@@ -14,7 +14,7 @@ These plan items only find jobs. Each job is applied to where it is actually sub
 - **Teksands** (`https://teksands.ai/`): company_direct steps for its current Teksands or Hire4X job form; treat it as a custom system and fill only what the page shows.
 - **D4hire** (`https://d4hire.in/`): a recruitment agency site. If it shows no specific job with an application route, report the source as unavailable.
 - **Supersourcing** (`https://supersourcing.com/`): company_direct steps for one specific job's form. A profile or talent sign-up alone is not an application.
-- **We Work Remotely** (`https://weworkremotely.com/`): open the job's **Apply for this position** link and continue with the matching steps. A job that only takes email applications is unavailable.
+- **We Work Remotely** (`https://weworkremotely.com/`): not supported yet. Its **Apply for this position** link needs a job-seeker account, and the sign-up page has a security check. Never use it as a plan item and never open its jobs. When search finds a job there, look for the same job on the company's own career page and apply there, or leave it.
 
 ## Every found job
 1. Open the job and look at its real application page.

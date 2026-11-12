@@ -43,7 +43,9 @@ A run can take up to your session limit (4 hours by default). If the computer sl
 ## Sites and limits
 
 - **Tried:** LinkedIn (Easy Apply), Naukri, Indeed.
-- **Written up, not tested yet:** Wellfound, Instahyre, Workday, company career pages (`company_direct`), web search (`discovery`), and the job sources The Reliable Jobs, TEKsystems, Teksands, D4hire, Supersourcing and We Work Remotely. Job sources only find jobs; each job is applied to on the site where its form is.
+- **Tried on 11 Nov 2026, with one to three applications each:** Wellfound, Instahyre, Workday, and company forms on Greenhouse, Lever and Ashby, found through company career pages (`company_direct`) and web search (`discovery`). Results: `docs/platform_test_results.md`.
+- **Not supported yet:** We Work Remotely. Its Apply button needs a We Work Remotely job-seeker account, and the sign-up page has a security check. The agent leaves it out of the plan and does not open its jobs.
+- **Written up, not tested yet:** other company form systems, and the job sources The Reliable Jobs, TEKsystems, Teksands, D4hire and Supersourcing. Job sources only find jobs; each job is applied to on the site where its form is.
 
 Most applications per day: LinkedIn 20, Indeed 20, Naukri 25, Wellfound 10, Instahyre 10, Workday 5, company career pages and web search together 10, all sites together 50. Your plan's numbers, and an optional lower limit in your profile, can only make these smaller.
 
@@ -87,6 +89,7 @@ Sync is on whenever NorthList is connected in your AI app, with or without the p
 - `instructions/`: setup, connecting and syncing NorthList, and one file per site, each read only when needed.
 - `personal_data/*_template.md`: templates for your profile, saved answers and portal login.
 - `docs/walkthroughs.md`: checks for anyone who changes the instructions.
+- `docs/platform_test_results.md`: what was found when each site was tried.
 
 Made while running and ignored by Git: your files in `personal_data/` (profile, saved answers, portal login, resume), `applied/` (one record per day) and `tracking/` (company portal accounts).
 
