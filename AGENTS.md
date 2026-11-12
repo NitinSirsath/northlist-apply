@@ -50,7 +50,7 @@ If anything is missing, read `instructions/setup.md` and finish setup first. Nev
 3. Plan items, kept in the order the user gives:
    - sites: `linkedin`, `indeed`, `naukri`, `wellfound`, `instahyre`, `workday`;
    - `company_direct` (company career pages saved in `profile.md`) and `discovery` (web search);
-   - job sources: `the_reliable_jobs`, `teksystems`, `teksands`, `d4hire`, `supersourcing`, `we_work_remotely`.
+   - job sources: `the_reliable_jobs`, `teksystems`, `teksands`, `d4hire`, `supersourcing`. `we_work_remotely` is not supported yet: if the user asks for it, say so in one line and leave it out of the plan.
 
    For quick-apply sites (LinkedIn, Indeed, Naukri, Wellfound, Instahyre) offer 10 or 15. Never plan more than the limits in section 5 or a lower limit in `profile.md`. `company_direct` needs career page URLs in `profile.md`; the others do not.
 4. If the plan has `workday`, `company_direct`, `discovery` or a job source:
