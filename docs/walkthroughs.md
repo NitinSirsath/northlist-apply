@@ -41,9 +41,9 @@ After any change to `AGENTS.md`, `instructions/` or the templates, walk through 
 24. **Waiting with other work.** The gap is checked before a job's form is opened. While that site waits, the agent does one job from the next plan item whose gap has passed, then comes back. A form that is already open is finished, and its submit waits for the rest of the gap. No job is `skipped` because of a wait, and there are never two unfinished forms.
 25. **Only one plan item.** It waits only the rest of each gap, then continues.
 26. **Limits.** Per-site, company_direct plus discovery, and total limits hold across sessions; a lower limit in the profile and the plan's numbers only lower them.
-27. **Selectable job sources.** Each of the six can be a plan item; the source is recorded, the real application page is looked at, and the job follows the discovery, company_direct or Workday steps by where it is submitted.
+27. **Selectable job sources.** Each of the five supported ones can be a plan item; the source is recorded, the real application page is looked at, and the job follows the discovery, company_direct or Workday steps by where it is submitted.
 28. **Source with mixed destinations.** A job source gives one job going to Workday while Workday is at its limit (that job is `skipped` with the reason) and one going to Lever (applied): only the blocked job is skipped.
-29. **Overlapping sources.** Discovery finds a We Work Remotely job: `Selected plan choice` decides which plan item counts it, `Platform` which site limit, and the total counts it once.
+29. **Overlapping sources.** Discovery finds a Supersourcing job: `Selected plan choice` decides which plan item counts it, `Platform` which site limit, and the total counts it once.
 30. **Discovery into Lever.** The found Lever form is continued where it is with the company_direct steps; no saved career URL is needed.
 31. **Discovery into Workday.** The current Workday form is continued with the Workday steps and counts as `workday`.
 32. **Unconfirmed action.** A profile, a talent sign-up, an account or an Apply click without a confirmation is never `applied`.
@@ -85,3 +85,7 @@ After any change to `AGENTS.md`, `instructions/` or the templates, walk through 
 59. **Before setup.** With no `personal_data/profile.md`, it is created from the template with only the NorthList line set; `start` then runs setup.
 60. **Reconnect.** A new prompt after a token expired replaces the old `northlist` entry; other servers stay; at `start` the tools are found again.
 61. **Old profile line.** A `Career Companion server:` line becomes the NorthList line with the new address.
+
+## Job sources
+
+62. **We Work Remotely not supported yet.** The user asks for `we_work_remotely`: told in one line, left out of the plan. Discovery finds a job there: its page is not opened; the same job on the company's own career page is used instead, or it is left. No sign-up is ever opened.
