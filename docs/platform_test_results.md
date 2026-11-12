@@ -76,7 +76,7 @@
 ---
 
 ## 3. Verified ATS Platforms Coverage 🎯
-All major tech ATS platforms are now fully verified:
+Tried with one to three real applications each on 2026-11-11 (LinkedIn, Naukri and Indeed earlier):
 - **Workday** (`*.myworkdayjobs.com`)
 - **Greenhouse** (`job-boards.greenhouse.io`)
 - **Ashby** (`jobs.ashbyhq.com`)
