@@ -10,6 +10,7 @@ Never run setup, collect personal details or apply to jobs just because this rep
 
 - `start`: check setup (section 3), agree today's plan (section 4), then apply.
 - `ready`: the user's answer to the check before a run (section 4), or to the browser checklist (section 9), where it only retries the connection.
+- `sign in`: at the check before a run, open job sites so the user can sign in to them first (section 4, step 6).
 - `ok`: the user's approval of the session's first application (section 7).
 - `done`: the user finished a step in the browser, such as a sign-in, an upload or an email link.
 - `sync NorthList for YYYY-MM-DD`: send that day's entries to NorthList again (`instructions/northlist_sync.md`). The older wording `sync Career Companion for YYYY-MM-DD` means the same.
@@ -57,22 +58,26 @@ If anything is missing, read `instructions/setup.md` and finish setup first. Nev
    - say in one sentence that the AI app may ask for browser permission once for each new company site, so the user should stay near the computer;
    - check that `personal_data/credentials.md` has no placeholders; if it has, finish that part of setup (`instructions/setup.md`) now.
 5. Model advice for this run, once per session, in one or two sentences: a light model of the user's current AI app is enough when the plan has only quick-apply sites; a medium model is better when it has `workday`, `company_direct`, `discovery` or a job source. Never name a model or version, never claim to switch models, and never stop a run to ask for a switch.
-6. Show the plan, the advice and this check together, then wait for exactly `ready`:
+6. Pick the browser for this session (section 9, "Which browser"). Show the plan, the advice and this check together, then wait for exactly `ready` (`sign in` and its `done` may come first, see below):
 
    > **Before the run starts.** It can take up to your session limit (default 4 hours). If the computer sleeps, the browser disconnects and the run stops; entries already written are safe.
    > 1. The computer is plugged in.
    > 2. Sleep is off for this run (how: README, "Before a run").
    > 3. The lid stays open.
-   > 4. The browser is open with one window.
+   > 4. You are signed in to <sites> in the AI app's own browser. NorthList Apply recommends this browser, and it does not share sign-ins with your usual browser. Not signed in there yet? Reply `sign in` and I will open each site for you.
    > 5. You will not use the computer for other work during the run.
    >
    > Reply `ready` when all five are true. Please stay until I show you the first application: I send it only after your `ok`.
 
-   Show it at every `start`, also in a new chat that resumes the day. If the reply is not `ready`, answer it, then show the check again. If the reply changes the plan, go back to step 3 with the new plan; it goes into today's record after `ready`.
+   `<sites>` names today's **new** job sites that need the user's account: LinkedIn, Indeed, Naukri, Wellfound or Instahyre in today's plan that no record in `applied/` (today's included) has in its `## Application Plan` table yet. Find them with one search of those tables. Workday and company portals are never named: their accounts are made per company during the run (section 10). With no new site, item 4 says: "This run uses the AI app's own browser, so there is nothing for you to open." With the extension backup, item 4 says instead: "This app has no built-in browser, so this run uses your browser through the AI app's browser extension. Your browser is open with one window and the extension is connected. You are signed in there to <sites>; not signed in yet? Reply `sign in` and I will open each site for you." With no new site, leave out its last sentence.
+
+   **`sign in`.** The sites are the ones item 4 names; when it names none, the user may still ask, and then they are all of today's sites that need the user's account. First list the open tabs (section 9, rule 1): use the one open window, and reuse a tab already on one of these sites. Open the home page of each one that has no tab yet, one tab per site, and say: "Please sign in in each tab, then reply `done`." Never type these sites' passwords yourself, and never ask for them in the chat. After `done`, check every one of these tabs and say which still show a sign-in page, or that all are signed in; then show the check again. If the user replies `ready` while a site is still signed out, start anyway: that site asks for its sign-in when it is reached (section 10). If the plan changes, close the tabs of sites no longer in it. Keep the other tabs: after `ready` each one becomes its plan item's anchor tab and opens that site's search (section 9). This is the only browser use before `ready`.
+
+   Show the check at every `start`, also in a new chat that resumes the day. If the reply is not `ready`, answer it, then show the check again. If the reply changes the plan, go back to step 3 with the new plan; it goes into today's record after `ready`.
 7. After `ready`:
    - create today's record if needed (section 8) and add `- Started HH:MM:SS — limit N h` under `## Sessions`;
    - **NorthList check.** Look for the tools `record_application_submission` and `record_not_submitted_job` by these names, whatever the server is called in the AI app. A tool the app lists by name but loads only on request (for example through a tool search) counts as there: load it now. **Sync is on** when they are there (the user connected NorthList), or when `profile.md` has `NorthList server:` (or the older `Career Companion server:`) with an address. With sync on, read `instructions/northlist_sync.md` and follow it for the whole session. With neither, sync is off: no tool calls, no messages, no sync lines. If the user asks to stop sending to NorthList, nothing more is sent this session (`instructions/northlist_sync.md`, rule 5);
-   - open the browser (section 9) and start with the first plan item.
+   - open the browser if it is not open yet (section 9), and start with the first plan item.
 
 ## 5. Limits, counts, duplicates and pacing
 
@@ -123,7 +128,7 @@ A plan item is finished when its number is reached or no suitable jobs remain. R
    - reuse a contextual answer only when its recorded context matches this job; never turn one employer's or country's answer into a general one;
    - a required question with no saved answer: never guess; add a `needs_user` entry with the exact question, and ask the user at the end of the session;
    - never submit `[placeholders]`, sample values, `None` or guessed numbers;
-   - upload `personal_data/resume.pdf`; if the site needs a manual upload, ask the user to upload that file in the current tab and reply `done`, then check the upload.
+   - upload `personal_data/resume.pdf`; if the site or the browser cannot take the file (some built-in browsers have no upload tool), ask the user to upload that file in the current tab and reply `done`, then check the upload. Never add the file by running a script in the page.
 6. **First application of the session.** Before the first submit action (Naukri's one-click **Apply** included), show the user the job and every filled answer or pitch, then wait for exactly `ok`. After that, still check each form's final values before submitting. Also follow every approval the AI app itself asks for.
 7. **Submit**, keeping the 2-minute gap (section 5).
 8. **Applied only after the site shows a confirmation.** Never invent one.
@@ -203,6 +208,8 @@ Records made before this version have per-site sections and more tables. Leave t
 
 ## 9. Browser
 
+**Which browser.** Use the AI app's own built-in browser, the one that runs inside the app. A browser extension that drives the user's own browser (for example Claude in Chrome) is only the backup: use it only when the app has no built-in browser. Pick the browser once, before the check in section 4, from the tools the app has: never open a page to pick it, because nothing is opened before `ready` except the `sign in` tabs (section 4). Use it for the whole session, and never switch browsers during a session: sign-ins are not shared between them. A built-in browser that fails is a lost connection (rule 11 below), not a reason to use the extension.
+
 1. After `ready`, before anything else in the browser, list the open tabs with the AI app's tab tool. Reuse the open window and never open a second one. If the app can only start a new window, open exactly one and use it for the whole session.
 2. One browser task per plan item's batch of jobs, never one per job.
 3. Keep one anchor tab per plan item, holding its search results. Never close an anchor tab or the last tab of the window.
@@ -217,8 +224,8 @@ Records made before this version have per-site sections and more tables. Leave t
 
     > **Browser connection lost. The run is paused.**
     > Check these, then reply `ready` to retry once:
-    > 1. Is the browser open with exactly one window?
-    > 2. Is the browser extension your AI app uses enabled and connected?
+    > 1. Does the AI app's own browser still work? (Extension backup: is your browser open with exactly one window?)
+    > 2. Extension backup only: is the browser extension enabled and connected?
     > 3. Did the computer sleep or the lid close? Wake it and keep it awake.
     > 4. Is the computer plugged into power?
     >

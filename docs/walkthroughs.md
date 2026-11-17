@@ -13,10 +13,10 @@ After any change to `AGENTS.md`, `instructions/` or the templates, walk through 
 
 ## Plan and start
 
-5. **Same plan as last time.** With an earlier record and none today, `start` offers that plan in one line, with the model advice and the `ready` check; `ready` starts the run. A normal day takes three replies: `start`, `ready`, `ok`.
+5. **Same plan as last time.** With an earlier record and none today, `start` offers that plan in one line, with the model advice and the `ready` check; `ready` starts the run. A normal day takes three replies: `start`, `ready`, `ok` (two more, `sign in` and `done`, when a site needs signing in first).
 6. **First run ever.** With no earlier record, the plan is asked first, then the check is shown.
 7. **Plan change at the check.** A change in the reply goes back through the plan steps (limits, permission sentence, portal login, model advice), becomes today's plan (written to the record after `ready`), and the check is shown again.
-8. **Power check.** Shown at every `start` and in a new chat that resumes the day; nothing happens in the browser before `ready`.
+8. **Power check.** Shown at every `start` and in a new chat that resumes the day; nothing happens in the browser before `ready` (picking the browser only looks at the app's tools), except the sign-in tabs after `sign in`.
 9. **Model advice.** Given once before `ready`, from the plan: light for quick-apply sites only, medium with Workday, company sites, discovery or a job source. It never names a model, and the run never stops to ask for a switch.
 10. **Permission prompts.** With `workday`, `company_direct`, `discovery` or a job source in the plan, one sentence says the AI app may ask once per company site.
 11. **New chat or model handoff.** Everything is already in the files; `start` in the new chat resumes today's record without repeating setup or the plan.
@@ -53,10 +53,10 @@ After any change to `AGENTS.md`, `instructions/` or the templates, walk through 
 ## Records, browser and session
 
 35. **Old record today.** A record made before this version is resumed by adding entries at its end; earlier entries change only in their sync line.
-36. **Existing browser window.** The open window is reused; no second window; one browser task per plan item's batch.
+36. **Existing browser window.** The open window of the browser in use (the AI app's own, or the extension backup) is reused; no second window; one browser task per plan item's batch.
 37. **Job opens in a new tab.** The form is done in the work tab, which is closed after the entry is added; the anchor tab stays; the Back button is never used.
 38. **Tab cap.** With three plan items the cap is 5; the oldest work tab is closed first.
-39. **Browser disconnects.** Two failures in a row show the checklist, wait for `ready`, and retry once without starting a new session; a second failure ends the session cleanly.
+39. **Browser disconnects.** Two failures in a row show the checklist, wait for `ready`, and retry once without starting a new session; a second failure ends the session cleanly. The checklist asks about the extension only with the extension backup.
 40. **Session limit.** Read from the profile (default 4 hours). When reached, only the job already in a form is finished and submitted, the summary is given, nothing is `skipped` because of it, and `start` in a new chat continues the day.
 41. **Same step fails three times.** That workflow (for example `workday`) stops for the session; jobs that lead to it are skipped with that reason and may be tried on a later day; everything else goes on; the session summary suggests a stronger model for it next time.
 
@@ -89,3 +89,14 @@ After any change to `AGENTS.md`, `instructions/` or the templates, walk through 
 ## Job sources
 
 62. **We Work Remotely not supported yet.** The user asks for `we_work_remotely`: told in one line, left out of the plan. Discovery finds a job there: its page is not opened; the same job on the company's own career page is used instead, or it is left. No sign-up is ever opened.
+
+## Which browser
+
+63. **App with a built-in browser.** The run uses the AI app's own browser, picked from the app's tools before the check; check item 4 names it; no browser extension is used, even when one is installed. A new chat picks again, with the same result in the same app.
+64. **App without one.** For example Claude Code in a terminal: the run uses the browser extension as the backup; item 4 says so, asks for one browser window and a connected extension, and offers `sign in` for the plan's sites.
+65. **No switch during a session.** The built-in browser fails twice, also right after `ready`: the checklist (without the extension line), one retry, then the end of the session. The run never moves to the extension because the built-in browser fails.
+66. **Signed out in the built-in browser.** The user is signed in to a site in their usual browser but not in the app's own: the run asks them to sign in in that tab and reply `done`; this is not a site stop.
+67. **No upload tool.** The browser cannot take the resume file: the user is asked to upload `personal_data/resume.pdf` in the current tab and reply `done`, and the upload is checked. No script is run in the page to add the file.
+68. **Sign in first.** First run, plan linkedin 10, naukri 10, workday 3: check item 4 names LinkedIn and Naukri (not Workday) and offers `sign in`. The user replies `sign in`: one tab per site opens on its home page; the user signs in and replies `done`; the agent says which tab still shows a sign-in page and shows the check again; it never types a job site's password. After `ready`, those tabs are reused as anchor tabs. A second `sign in`, or one in a new chat, reuses tabs already on those sites; the user may still reply `ready` with a site signed out, and that site asks for its sign-in when reached.
+69. **Nothing to sign in to.** A plan with only `workday`, `company_direct`, `discovery` or job sources: item 4 says the run uses the AI app's own browser and there is nothing to open; no site list and no `sign in` offer.
+70. **Only new sites.** Earlier records have `linkedin` in their plan; today's plan adds `naukri`: item 4 names only Naukri. A day with no new site shows the short line ("…nothing for you to open"); `sign in` still opens all of today's account sites when the user asks for it.
