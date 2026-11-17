@@ -2,15 +2,15 @@
 
 Your own AI app applies to jobs for you, one at a time, with your OK first.
 
-NorthList Apply is a set of written instructions, not a program. Open this folder in an AI app that can use your browser, such as Codex, Claude Code or Antigravity, and type `start`. It finds jobs that fit on the sites you choose, fills in the forms from your profile, saved answers and resume, and keeps a daily record in this folder. Connect [NorthList](https://northlist.site/automation) if you like, and every application sits next to the mails that follow.
+NorthList Apply is a set of written instructions, not a program. Open this folder in an AI app that can use a browser, such as Codex, Claude Code or Antigravity, and type `start`. It uses the app's own built-in browser when the app has one, and a browser extension otherwise. It finds jobs that fit on the sites you choose, fills in the forms from your profile, saved answers and resume, and keeps a daily record in this folder. Connect [NorthList](https://northlist.site/automation) if you like, and every application sits next to the mails that follow.
 
 In beta. Tried so far on LinkedIn Easy Apply, Naukri and Indeed. Like any AI, it can make mistakes, so watch its first runs.
 
 ## What you need
 
-- An AI app that can read files and use your browser, for example Codex, or Claude Code with its browser extension.
+- An AI app that can read files and has its own built-in browser, for example Antigravity, or Claude Code in the Claude desktop app. An app without one, such as Claude Code in a terminal, uses a browser extension instead (for example Claude in Chrome); that is only the backup.
 - Your resume as a PDF.
-- Your accounts on the job sites you want, signed in in that browser.
+- Your accounts on the job sites you want. The app's own browser keeps its own sign-ins, so the first run asks you to sign in to each site there once.
 
 ## Get started
 
@@ -37,7 +37,7 @@ A run can take up to your session limit (4 hours by default). If the computer sl
    - **macOS:** System Settings › Lock Screen › "Turn display off when inactive" › Never. Also System Settings › Battery › Options (or Displays › Advanced) › "Prevent automatic sleeping on power adapter when the display is off" › On.
    - **Windows 11:** Settings › System › Power & battery › Screen and sleep: set "When plugged in, put my device to sleep after" and "When plugged in, turn off my screen after" to Never.
 3. Keep the lid open.
-4. Open the browser your AI app controls, with one window.
+4. The run uses your AI app's own browser, so there is nothing to open. Extension backup only: open your browser with one window.
 5. Don't use the computer for other work during the run.
 
 ## Sites and limits
@@ -97,13 +97,15 @@ Made while running and ignored by Git: your files in `personal_data/` (profile, 
 
 **Many browser permission prompts.** Many AI apps ask once per new website, and Workday, company career pages, web search and the job sources open a new company site for almost every job. Allow it for the session if your app offers that, and stay near. For hands-off runs, use the quick-apply sites.
 
-**"Browser connection lost. The run is paused."** The browser closed, the computer slept, or the browser extension lost its connection. Open the browser with one window, check the extension, keep the computer awake and plugged in, then reply `ready`. It tries once more, then ends the run cleanly.
+**"Browser connection lost. The run is paused."** The browser closed, the computer slept, or (extension backup) the browser extension lost its connection. Make sure the AI app's browser works again (extension backup: your browser open with one window, and the extension connected), keep the computer awake and plugged in, then reply `ready`. It tries once more, then ends the run cleanly.
 
 **Many windows or tabs, and a slow computer.** Stop the run, close the extra windows and tabs, keep one window, and type `start`. A run uses at most two more tabs than it has plan items.
 
 **The run stopped after about 4 hours.** That is the session limit. Type `start` in a new chat to continue the same day. To change it, edit `Session time limit (hours)` in `personal_data/profile.md`.
 
-**It keeps asking me to sign in.** The site is signed out. Sign in yourself in that tab, then reply `done`.
+**It keeps asking me to sign in.** The site is signed out in the browser the run uses. The AI app's own browser does not share sign-ins with your usual browser: sign in once in that tab, then reply `done`.
+
+**It asks me to upload my resume.** Some built-in browsers cannot upload files for the AI. Upload `personal_data/resume.pdf` yourself in that tab, then reply `done`.
 
 **A site stopped for the day after a CAPTCHA or "unusual activity".** That is a site stop. Nothing more on that site today; the other sites go on. Try it again tomorrow.
 
