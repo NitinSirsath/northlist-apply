@@ -10,7 +10,7 @@ In beta. Tried so far on LinkedIn Easy Apply, Naukri and Indeed. Like any AI, it
 
 - An AI app that can read files and has its own built-in browser, for example Antigravity, or Claude Code in the Claude desktop app. An app without one, such as Claude Code in a terminal, uses a browser extension instead (for example Claude in Chrome); that is only the backup.
 - Your resume as a PDF.
-- Your accounts on the job sites you want. The app's own browser keeps its own sign-ins, so the first run asks you to sign in to each site there once.
+- Your accounts on the job sites you want, signed in in your AI app's own browser. It keeps its own sign-ins, apart from your usual browser, so sign in to each site there once. The first time a site is in your plan, the check asks you to: reply `sign in` and it opens the site for you.
 
 ## Get started
 
@@ -23,8 +23,9 @@ The first time, it asks for your resume and fills in your profile from it. It sh
 ## A normal run
 
 1. **`start`**: it checks your setup and shows today's plan, for example "Same as last time: linkedin 10, naukri 10", with a short check (see "Before a run"). Tell it if you want a different plan.
-2. **`ready`**: once the check is done. It opens the browser and starts.
-3. **`ok`**: it shows you the first application of the run, with every answer, and sends it only after your OK. Then it goes on, one job at a time.
+2. **`sign in`** (first run, or a new site in your plan): it opens each job site that is new in your plan and needs your account (LinkedIn, Indeed, Naukri, Wellfound, Instahyre) in the AI app's own browser. Sign in there, then reply `done`.
+3. **`ready`**: once the check is done. It starts.
+4. **`ok`**: it shows you the first application of the run, with every answer, and sends it only after your OK. Then it goes on, one job at a time.
 
 When a site asks you to sign in, it waits for you: sign in in that tab and reply `done`. At the end, it sums up the run and asks you the questions it could not answer, and saves your answers for next time.
 
@@ -37,7 +38,7 @@ A run can take up to your session limit (4 hours by default). If the computer sl
    - **macOS:** System Settings › Lock Screen › "Turn display off when inactive" › Never. Also System Settings › Battery › Options (or Displays › Advanced) › "Prevent automatic sleeping on power adapter when the display is off" › On.
    - **Windows 11:** Settings › System › Power & battery › Screen and sleep: set "When plugged in, put my device to sleep after" and "When plugged in, turn off my screen after" to Never.
 3. Keep the lid open.
-4. The run uses your AI app's own browser, so there is nothing to open. Extension backup only: open your browser with one window.
+4. Sign in to the job sites in your plan inside your AI app's own browser. NorthList Apply recommends that browser, and it does not share sign-ins with your usual browser. Reply `sign in` at the check and it opens each site in its own tab: sign in, then reply `done`. Once per site is usually enough; the browser keeps you signed in. The check reminds you only for sites new to your plan, but you can reply `sign in` at any check to open all of today's sites. Extension backup only: open your browser with one window, signed in to those sites.
 5. Don't use the computer for other work during the run.
 
 ## Sites and limits
@@ -103,7 +104,7 @@ Made while running and ignored by Git: your files in `personal_data/` (profile, 
 
 **The run stopped after about 4 hours.** That is the session limit. Type `start` in a new chat to continue the same day. To change it, edit `Session time limit (hours)` in `personal_data/profile.md`.
 
-**It keeps asking me to sign in.** The site is signed out in the browser the run uses. The AI app's own browser does not share sign-ins with your usual browser: sign in once in that tab, then reply `done`.
+**It keeps asking me to sign in.** The site is signed out in the browser the run uses. The AI app's own browser does not share sign-ins with your usual browser: sign in once in that tab, then reply `done`. Next time, reply `sign in` at the check to sign in before the run starts.
 
 **It asks me to upload my resume.** Some built-in browsers cannot upload files for the AI. Upload `personal_data/resume.pdf` yourself in that tab, then reply `done`.
 
