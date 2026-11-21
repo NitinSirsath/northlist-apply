@@ -60,7 +60,7 @@ Workday and other company portals need an account, made per company (`AGENTS.md`
 | `madeBy` | `northlist_apply` when the record has a password, `user` when its password is empty (the user made the account in the browser). |
 | `createdOn` | `date` when it is `YYYY-MM-DD`; otherwise leave it out. |
 
-3. The user decides. If the user asks not to send portal passwords, save `- NorthList portal passwords: off` in `personal_data/profile.md` and say so once; from then on, in every session and replay, `password` is left out (the rest of `portalAccount` is still sent). If the user asks not to send portal accounts at all, save `- NorthList portal accounts: off` instead, and `portalAccount` is left out. Read these lines before each send. Only the user's own words turn them back on.
+3. **The user decides.** If the user asks not to send portal passwords, save `- NorthList portal passwords: off` in `personal_data/profile.md` and say so once; from then on, in every session and replay, `password` is left out (the rest of `portalAccount` is still sent). If the user asks not to send portal accounts at all, save `- NorthList portal accounts: off` instead, and `portalAccount` is left out. Read these lines before each send. Only the user's own words turn them back on.
 4. The password is never written into the daily record, a sync line, a message or the summary, also not when a send fails.
 
 Then add the sync line to that entry:
