@@ -40,8 +40,28 @@ Right after the entry is added (only after the site showed a confirmation), and 
 | `confirmationText` | `Confirmation shown`. |
 | `resumeFilename` | `Resume filename`: the file name only. |
 | `submittedAnswers` | Every `Question: Answer` line under `Submitted answers`, as `{ "question": ..., "answer": ... }`, in order. |
+| `portalAccount` | The company-portal account used for this application, from `tracking/created_accounts.csv`: see "The portal account" below. Leave it out when no portal account was used. |
 
-Never send a password, a credential, the resume file or its content, or plan, limit, pacing, tab or session details.
+The only password ever sent is a company-portal account's, inside `portalAccount`. Never send any other password or credential: job-site sign-ins (LinkedIn, Indeed, Naukri, Wellfound, Instahyre) are the user's and never sent. Never send the resume file or its content, or plan, limit, pacing, tab or session details.
+
+### The portal account
+
+Workday and other company portals need an account, made per company (`AGENTS.md` section 10) and kept in `tracking/created_accounts.csv`. NorthList stores it so the user can sign in from NorthList; it keeps the password encrypted and shows it only to the user.
+
+1. **When.** Only for an `applied` entry whose `Platform` is `workday`, `company_direct` or `discovery`. Find the record in `tracking/created_accounts.csv` whose `company` is this entry's company and whose `portal_url` has the same host as `Apply page URL` (when that is empty, `Actual application destination`). If two records match, use the one with the latest `date`. With no such record, leave `portalAccount` out. One search of the file is enough; never guess an account.
+2. **Fields**, copied from that record:
+
+| `portalAccount` field | Value from the record |
+| --- | --- |
+| `signInUrl` | `portal_url` (the full address). |
+| `loginEmail` | `login_email`. |
+| `password` | `password`, exactly as written. Leave it out when the column is empty. |
+| `emailVerified` | `true` for `yes`/`true`, `false` for `no`/`false`; leave it out for anything else. |
+| `madeBy` | `northlist_apply` when the record has a password, `user` when its password is empty (the user made the account in the browser). |
+| `createdOn` | `date` when it is `YYYY-MM-DD`; otherwise leave it out. |
+
+3. The user decides. If the user asks not to send portal passwords, save `- NorthList portal passwords: off` in `personal_data/profile.md` and say so once; from then on, in every session and replay, `password` is left out (the rest of `portalAccount` is still sent). If the user asks not to send portal accounts at all, save `- NorthList portal accounts: off` instead, and `portalAccount` is left out. Read these lines before each send. Only the user's own words turn them back on.
+4. The password is never written into the daily record, a sync line, a message or the summary, also not when a send fails.
 
 Then add the sync line to that entry:
 - `- NorthList sync: sent` for the results `created`, `linked`, `needs_review` or `recorded`;
@@ -64,3 +84,5 @@ Also when the session limit ends it (`AGENTS.md` section 6):
 ## Replay on request
 
 When the user says `sync NorthList for YYYY-MM-DD` (or `sync Career Companion for YYYY-MM-DD`), read that day's record and send every entry whose sync line is missing, `failed` or `not sent`, with the matching tool, then update the lines. Repeats are safe: the same `sourceRecordRef` is recorded once, and a repeat only fills details NorthList does not have yet.
+
+When the user says `send portal accounts for YYYY-MM-DD`, send that day's `applied` entries that used a portal account again, with `portalAccount` (section "The portal account"), whatever their sync line says, and leave the lines as they are. This adds the account to applications sent before this version; NorthList keeps each application once.
