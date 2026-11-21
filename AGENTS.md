@@ -14,6 +14,7 @@ Never run setup, collect personal details or apply to jobs just because this rep
 - `ok`: the user's approval of the session's first application (section 7).
 - `done`: the user finished a step in the browser, such as a sign-in, an upload or an email link.
 - `sync NorthList for YYYY-MM-DD`: send that day's entries to NorthList again (`instructions/northlist_sync.md`). The older wording `sync Career Companion for YYYY-MM-DD` means the same.
+- `send portal accounts for YYYY-MM-DD`: send that day's company-portal accounts to NorthList with their applications (`instructions/northlist_sync.md`, "Replay on request").
 - A setup prompt from NorthList ("Connect this NorthList Apply folder to my NorthList account", with a server address and a token), or `connect NorthList`: follow `instructions/northlist_connect.md`. It may come before setup is finished.
 
 ## 2. Files
@@ -133,7 +134,7 @@ A plan item is finished when its number is reached or no suitable jobs remain. R
 7. **Submit**, keeping the 2-minute gap (section 5).
 8. **Applied only after the site shows a confirmation.** Never invent one.
 9. **Add the entry** to today's record at once (section 8).
-10. **Send it to NorthList** (sync on, `applied` entries): at once, before you open the next job, call `record_application_submission` for this entry and add its `- NorthList sync:` line, as `instructions/northlist_sync.md` says. If that file's field table is no longer in this chat, read the file again first. This step is part of every application: never skip it or leave it for later; the user does not have to ask for it. A failed send gets its `failed (...)` line, and applying goes on.
+10. **Send it to NorthList** (sync on, `applied` entries): at once, before you open the next job, call `record_application_submission` for this entry, with the portal account it used (Workday and company portals), and add its `- NorthList sync:` line, as `instructions/northlist_sync.md` says. If that file's field table is no longer in this chat, read the file again first. This step is part of every application: never skip it or leave it for later; the user does not have to ask for it. A failed send gets its `failed (...)` line, and applying goes on.
 11. A form that keeps failing after two tries: add a `skipped` entry with the reason and go on.
 
 When the user answers a question, save it in `form_answers.md` at once: under `## Contextual Answers` when it holds only for an employer, country, role or portal, otherwise under `## Learned Answers`, each with its context and the exact question. A job left as `needs_user` may then be tried again; the retry gets a new entry, and the old one stays. Use this format, and add a record only when a real question comes up:
@@ -200,7 +201,7 @@ Each entry is added at the end of the file, right after the job's outcome:
 - `Discovery source`: the job source or website it was found on, when there is one.
 - `Actual application destination`: the address or host where the form was sent.
 - `Apply page URL`: the full address of the page where the form was sent, not only its host.
-- `Submitted answers`: every question and the answer given, one `Question: Answer` line each.
+- `Submitted answers`: every question and the answer given, one `Question: Answer` line each. An answer that is a password, PIN or security answer is written as `(not recorded)`.
 - `Confirmation shown`: the site's own words, for `applied`.
 - Leave a field empty when it does not apply. Never write a password into the record. With sync on, each entry also gets a `- NorthList sync:` line: an `applied` entry at once (section 7, step 10), the others at the end of the session.
 
@@ -237,7 +238,7 @@ Records made before this version have per-site sections and more tables. Leave t
 
 - **Signed out, or a normal login page:** ask the user to sign in in the current tab and reply `done`. Check that the sign-in worked, then continue the same job. This is not a site stop.
 - **Company portal accounts** (Workday and other company systems): check `tracking/created_accounts.csv` first. If the company has a record, sign in with it; never create a second account. If not, create one with `personal_data/credentials.md` and add its record at once.
-- If the app blocks a sign-in, an account creation or an email check, say exactly: "Please sign in / create the account / click the email verification link in this tab, then reply done". Wait for `done`.
+- If the app blocks a sign-in, an account creation or an email check, say exactly: "Please sign in / create the account / click the email verification link in this tab, then reply done". Wait for `done`. When the user made a company portal account this way, add its record at once: `portal_url` the portal's sign-in page (else the page where the account was made), the login email the page shows (else the profile email), the `password` column empty and `email_verified` `no`; never ask for that password. After an email check is done, set that record's `email_verified` to `yes`.
 - **Site stop:** a daily-limit, unusual-activity, CAPTCHA, security-check or access-restriction message on a job site (or on a company portal that blocks all further use). Stop that site for the rest of the local date: add `- HH:MM — site — site stopped: <message>` under `## Site Stops`, and a `skipped` entry whose reason starts with `site stopped:`. Never retry that site the same day. Tell the user in one line, and go on with the other plan items. A stop from an earlier date does not count today.
 - Login wording alone is not a stop. A CAPTCHA on one employer's own form skips only that job, unless the portal blocks all further use.
 - Never bypass a CAPTCHA, anti-bot check, 2FA or security check.
