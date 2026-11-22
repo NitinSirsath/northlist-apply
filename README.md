@@ -93,7 +93,7 @@ Made while running and ignored by Git: your files in `personal_data/` (profile, 
 
 ## Troubleshooting
 
-**Many browser permission prompts.** Many AI apps ask once per new website, and Workday, company career pages, web search and the job sources open a new company site for almost every job. Allow it for the session if your app offers that, and stay near. For hands-off runs, use the quick-apply sites.
+**Many browser permission prompts.** Many AI apps ask once per new website, and Workday, company career pages, web search and the job sources open a new company site for almost every job. Choose always allow (or allow for the session) when your app offers it, and stay near. The run asks your app for permission instead of asking you to do a step yourself, so each Allow keeps it hands-free. For hands-off runs, use the quick-apply sites.
 
 **"Browser connection lost. The run is paused."** The browser closed, the computer slept, or (extension backup) the browser extension lost its connection. Make sure the AI app's browser works again (extension backup: your browser open with one window, and the extension connected), keep the computer awake and plugged in, then reply `ready`. It tries once more, then ends the run cleanly.
 
@@ -103,7 +103,7 @@ Made while running and ignored by Git: your files in `personal_data/` (profile, 
 
 **It keeps asking me to sign in.** The site is signed out in the browser the run uses. The AI app's own browser does not share sign-ins with your usual browser: sign in once in that tab, then reply `done`. Next time, reply `sign in` at the check to sign in before the run starts.
 
-**It asks me to upload my resume.** Some built-in browsers cannot upload files for the AI. Upload `personal_data/resume.pdf` yourself in that tab, then reply `done`.
+**It asks to allow a tool for the resume upload.** The run uploads `personal_data/resume.pdf` itself; your AI app may ask you to allow the tool it uses. Choose always allow. Only if every way fails does it ask you to upload the file in that tab and reply `done`.
 
 **A site stopped for the day after a CAPTCHA or "unusual activity".** That is a site stop. Nothing more on that site today; the other sites go on. Try it again tomorrow.
 
