@@ -94,10 +94,8 @@ Never read whole records for this.
 
 **Pacing.**
 - One job at a time: never two applications in parallel, never two unfinished forms.
-- Leave at least 2 minutes between two submit actions on the same site (`Platform`; company_direct and discovery share one gap). Naukri's one-click **Apply** is a submit action. Keep each site's last submit time in the chat; after a new chat, or if unsure, use the time of that site's last entry.
-- Work on one plan item at a time, in plan order. Before opening a job's form, check its site's gap. If the 2 minutes have not passed, do one job from the next plan item, in plan order, whose gap has passed and that still has work, then come back. If no plan item can go ahead, wait out the rest of the shortest gap, not a new 2 minutes.
-- Once a form is open, finish it. If you reach its submit before the 2 minutes have passed, wait out the rest, then submit.
-- Waiting never makes a job `skipped`.
+- Work through the plan items in order.
+- Leave at least 30 seconds between two submit actions on the same site (Naukri's one-click **Apply** counts). If you reach a submit sooner, wait out the rest. Waiting never makes a job `skipped`.
 
 **Before each application**, check:
 - the date: after midnight, update the old record's `## Application Plan` counts, start the new date's record with the same plan, copy this session's `Started` line into its `## Sessions`, and use the new date's limits;
@@ -113,7 +111,7 @@ A plan item is finished when its number is reached or no suitable jobs remain. R
 - `Session time limit (hours)` in `profile.md`; default 4, also when it is missing or not a positive number. Never store `None` for it.
 - It counts per chat session, from this session's `Started` line.
 - When it is reached: open no new job; finish and submit only a job that is already in a form; add its entry and, with sync on, send it (section 7, steps 9 and 10); do the end of session (section 12); tell the user the limit was reached and that `start` in a new chat continues the same day.
-- Never record `skipped` because of the limit. Do not wait out a 2-minute gap that would pass the limit; end the session instead.
+- Never record `skipped` because of the limit.
 - If a new chat is needed for any reason, everything is already in the files: tell the user to type `start` there.
 
 ## 7. Applying, one job at a time
@@ -129,7 +127,7 @@ A plan item is finished when its number is reached or no suitable jobs remain. R
    - never submit `[placeholders]`, sample values, `None` or guessed numbers;
    - upload `personal_data/resume.pdf`; if the site or the browser cannot take the file (some built-in browsers have no upload tool), ask the user to upload that file in the current tab and reply `done`, then check the upload. Never add the file by running a script in the page.
 6. **Check before submitting.** Before every submit action (Naukri's one-click **Apply** included), check the form's final values. Never wait for the user's approval of an application: after `ready` the run applies on its own. Still follow every approval the AI app itself asks for.
-7. **Submit**, keeping the 2-minute gap (section 5).
+7. **Submit**, keeping the 30-second gap (section 5).
 8. **Applied only after the site shows a confirmation.** Never invent one.
 9. **Add the entry** to today's record at once (section 8).
 10. **Send it to NorthList** (sync on, `applied` entries): at once, before you open the next job, call `record_application_submission` for this entry, with the portal account it used (Workday and company portals), and add its `- NorthList sync:` line, as `instructions/northlist_sync.md` says. If that file's field table is no longer in this chat, read the file again first. This step is part of every application: never skip it or leave it for later; the user does not have to ask for it. A failed send gets its `failed (...)` line, and applying goes on.
