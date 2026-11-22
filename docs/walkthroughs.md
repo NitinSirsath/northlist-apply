@@ -13,7 +13,7 @@ After any change to `AGENTS.md`, `instructions/` or the templates, walk through 
 
 ## Plan and start
 
-5. **Same plan as last time.** With an earlier record and none today, `start` offers that plan in one line, with the model advice and the `ready` check; `ready` starts the run. A normal day takes three replies: `start`, `ready`, `ok` (two more, `sign in` and `done`, when a site needs signing in first).
+5. **Same plan as last time.** `start` asks which sites and how many today and shows the last plan in one line, with nothing else; nothing happens until the user answers. `same` keeps it; then the model advice and the `ready` check follow, and `ready` starts the run. A resumed day asks the same way, showing what is done so far. A normal day takes three replies: `start`, `same` and `ready` (two more, `sign in` and `done`, when a site needs signing in first).
 6. **First run ever.** With no earlier record, the plan is asked first, then the check is shown.
 7. **Plan change at the check.** A change in the reply goes back through the plan steps (limits, permission sentence, portal login, model advice), becomes today's plan (written to the record after `ready`), and the check is shown again.
 8. **Power check.** Shown at every `start` and in a new chat that resumes the day; nothing happens in the browser before `ready` (picking the browser only looks at the app's tools), except the sign-in tabs after `sign in`.
@@ -27,7 +27,7 @@ After any change to `AGENTS.md`, `instructions/` or the templates, walk through 
 13. **Opened and turned down.** A job that was opened and then fails the fit check (required, not preferred, experience included) gets a `skipped` entry with the reason.
 14. **Normal sign-in request.** A signed-out or login page: the user signs in in the current tab and replies `done`; the sign-in is checked and the same job continues. Not a site stop.
 15. **Real security restriction.** A CAPTCHA, unusual activity, a security check, a restriction or a daily-limit message on a job site stops that site for the local date, with a `## Site Stops` line and a `skipped` entry whose reason starts with `site stopped:`. That plan item is finished for the day; later jobs get no entries of their own. A CAPTCHA on one employer's own form skips only that job.
-16. **First instant submit.** The preview (the job and the profile details Naukri will send) and `ok` come before Naukri's one-click Apply.
+16. **Instant submit.** The final values are checked before Naukri's one-click Apply; there is no preview and no `ok`, also for the first job of a run.
 17. **Unsupported upload.** The user uploads `personal_data/resume.pdf` in the current tab and replies `done`; the upload is checked.
 18. **Missing answer, later retry.** A required question without a saved answer gives `needs_user`; the answer is saved with its context (under `## Contextual Answers` when it holds only for an employer, country, role or portal, otherwise under `## Learned Answers`); the job may then be tried again, as a new entry.
 19. **Prefilled facts differ.** A portal's prefilled value that differs from `profile.md` is corrected from it, or the job becomes `needs_user`.
@@ -37,9 +37,9 @@ After any change to `AGENTS.md`, `instructions/` or the templates, walk through 
 20. **Counting.** At `start` and in a new chat, one search of today's headings and `- Platform:`, `- Selected plan choice:` and `- Status:` lines gives the counts, each site's last entry time and the plan table's counts; during the run the counts are kept in the chat; the whole record is never re-read.
 21. **Duplicates.** A job is looked up by its ID, or its URL, with a search across `applied/` and the old `tracking/applied_jobs.csv`; a match counts only when its site and company match too. Any `applied` or `skipped` match: never again, except a job skipped only because its site was stopped or at its daily limit, which may be tried on a later day. Only `needs_user` matches: only after the answer is saved.
 22. **Two sessions on one date.** Both add to the same record; the counts include both; each session has its own `Started` line.
-23. **Midnight.** The old record's table is brought up to date; a new record starts with the same plan and the new date's limits, with this session's `Started` line copied; duplicate searches still cover earlier days; the 2-minute gap is still measured from the last submit.
-24. **Waiting with other work.** The gap is checked before a job's form is opened. While that site waits, the agent does one job from the next plan item whose gap has passed, then comes back. A form that is already open is finished, and its submit waits for the rest of the gap. No job is `skipped` because of a wait, and there are never two unfinished forms.
-25. **Only one plan item.** It waits only the rest of each gap, then continues.
+23. **Midnight.** The old record's table is brought up to date; a new record starts with the same plan and the new date's limits, with this session's `Started` line copied; duplicate searches still cover earlier days.
+24. **Short gap.** A submit less than 30 seconds after the last one on the same site waits out the rest. No job is `skipped` because of a wait, and there are never two unfinished forms.
+25. **Plan order.** Plan items are worked in the order given; the run does not switch sites to fill a wait.
 26. **Limits.** Per-site, company_direct plus discovery, and total limits hold across sessions; a lower limit in the profile and the plan's numbers only lower them.
 27. **Selectable job sources.** Each of the five supported ones can be a plan item; the source is recorded, the real application page is looked at, and the job follows the discovery, company_direct or Workday steps by where it is submitted.
 28. **Source with mixed destinations.** A job source gives one job going to Workday while Workday is at its limit (that job is `skipped` with the reason) and one going to Lever (applied): only the blocked job is skipped.

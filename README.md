@@ -1,6 +1,6 @@
 # NorthList Apply
 
-Your own AI app applies to jobs for you, one at a time, with your OK first.
+Your own AI app applies to jobs for you, one at a time.
 
 NorthList Apply is a set of written instructions, not a program. Open this folder in an AI app that can use a browser, such as Codex, Claude Code or Antigravity, and type `start`. It uses the app's own built-in browser when the app has one, and a browser extension otherwise. It finds jobs that fit on the sites you choose, fills in the forms from your profile, saved answers and resume, and keeps a daily record in this folder. Connect [NorthList](https://northlist.site/automation) if you like, and every application sits next to the mails that follow.
 
@@ -22,10 +22,9 @@ The first time, it asks for your resume and fills in your profile from it. It sh
 
 ## A normal run
 
-1. **`start`**: it checks your setup and shows today's plan, for example "Same as last time: linkedin 10, naukri 10", with a short check (see "Before a run"). Tell it if you want a different plan.
+1. **`start`**: it checks your setup and asks which sites and how many jobs today, with last time's plan, for example "Last time: linkedin 10, naukri 10". Reply `same` to keep it, or name new sites and counts. Nothing starts before you answer. Then it shows a short check (see "Before a run").
 2. **`sign in`** (first run, or a new site in your plan): it opens each job site that is new in your plan and needs your account (LinkedIn, Indeed, Naukri, Wellfound, Instahyre) in the AI app's own browser. Sign in there, then reply `done`.
-3. **`ready`**: once the check is done. It starts.
-4. **`ok`**: it shows you the first application of the run, with every answer, and sends it only after your OK. Then it goes on, one job at a time.
+3. **`ready`**: once the check is done. It starts and applies on its own, one job at a time.
 
 When a site asks you to sign in, it waits for you: sign in in that tab and reply `done`. At the end, it sums up the run and asks you the questions it could not answer, and saves your answers for next time.
 
@@ -50,10 +49,9 @@ Most applications per day: LinkedIn 20, Indeed 20, Naukri 25, Wellfound 10, Inst
 
 ## What it always does
 
-- Applies to one job at a time, with at least 2 minutes between two applications on the same site.
+- Applies to one job at a time, with at least 30 seconds between two applications on the same site.
 - Applies only to jobs that match your titles, places and work modes, and skips the companies you list.
 - Fills in only facts from your profile, saved answers and resume. When a question has no saved answer, it asks you instead of guessing.
-- Shows you the first application of each run and waits for your `ok`.
 - Counts a job as applied only after the site confirms it.
 - Stops a site for the day at a CAPTCHA, a security check or a limit message, and never tries to get around it.
 - Never emails recruiters, and never turns on a site's own auto-apply.
@@ -113,7 +111,7 @@ Made while running and ignored by Git: your files in `personal_data/` (profile, 
 
 **Counts look wrong.** Only the entries in `applied/YYYY-MM-DD/applications.md` count, and there is never a second file for the same day. The table at the top of that file is brought up to date at the start and the end of each session, not after every job.
 
-**The run is slow.** It applies to one job at a time, reads each job, waits for your first `ok`, and leaves 2 minutes between applications on one site. Choose 3 to 5 sites, so the waits overlap, and 10 to 15 jobs per site.
+**The run is slow.** It applies to one job at a time and reads each job before it applies. Choose 10 to 15 jobs per site.
 
 **"NorthList sync is on, but its tools are not available."** If you just connected, open a new chat or restart your AI app first. Otherwise the token has probably expired: create a new setup prompt under Automation › Setup in NorthList and paste it into your AI app.
 
