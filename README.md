@@ -49,7 +49,7 @@ Most applications per day: LinkedIn 20, Indeed 20, Naukri 25, Wellfound 10, Inst
 
 ## What it always does
 
-- Applies to one job at a time, with at least 2 minutes between two applications on the same site.
+- Applies to one job at a time, with at least 30 seconds between two applications on the same site.
 - Applies only to jobs that match your titles, places and work modes, and skips the companies you list.
 - Fills in only facts from your profile, saved answers and resume. When a question has no saved answer, it asks you instead of guessing.
 - Counts a job as applied only after the site confirms it.
@@ -111,7 +111,7 @@ Made while running and ignored by Git: your files in `personal_data/` (profile, 
 
 **Counts look wrong.** Only the entries in `applied/YYYY-MM-DD/applications.md` count, and there is never a second file for the same day. The table at the top of that file is brought up to date at the start and the end of each session, not after every job.
 
-**The run is slow.** It applies to one job at a time, reads each job and leaves 2 minutes between applications on one site. Choose 3 to 5 sites, so the waits overlap, and 10 to 15 jobs per site.
+**The run is slow.** It applies to one job at a time and reads each job before it applies. Choose 10 to 15 jobs per site.
 
 **"NorthList sync is on, but its tools are not available."** If you just connected, open a new chat or restart your AI app first. Otherwise the token has probably expired: create a new setup prompt under Automation › Setup in NorthList and paste it into your AI app.
 
