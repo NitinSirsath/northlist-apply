@@ -9,7 +9,7 @@ Adds only Naukri's steps to `AGENTS.md`; if the two ever conflict, `AGENTS.md` w
 
 ## Apply
 1. Review the profile details Naukri will send with the application.
-2. Naukri's **Apply** can submit at once, so it is a submit action: keep the 2-minute gap before it.
+2. Naukri's **Apply** can submit at once, so it is a submit action: keep the 30-second gap before it.
 3. Click **Apply**. If questions appear, answer from the saved data and matching contextual answers, and compare prefilled values before the final submit.
 4. Wait for Naukri's confirmation.
 
