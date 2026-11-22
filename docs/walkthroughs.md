@@ -13,7 +13,7 @@ After any change to `AGENTS.md`, `instructions/` or the templates, walk through 
 
 ## Plan and start
 
-5. **Same plan as last time.** With an earlier record and none today, `start` offers that plan in one line, with the model advice and the `ready` check; `ready` starts the run. A normal day takes two replies: `start` and `ready` (two more, `sign in` and `done`, when a site needs signing in first).
+5. **Same plan as last time.** `start` asks which sites and how many today and shows the last plan in one line, with nothing else; nothing happens until the user answers. `same` keeps it; then the model advice and the `ready` check follow, and `ready` starts the run. A resumed day asks the same way, showing what is done so far. A normal day takes three replies: `start`, `same` and `ready` (two more, `sign in` and `done`, when a site needs signing in first).
 6. **First run ever.** With no earlier record, the plan is asked first, then the check is shown.
 7. **Plan change at the check.** A change in the reply goes back through the plan steps (limits, permission sentence, portal login, model advice), becomes today's plan (written to the record after `ready`), and the check is shown again.
 8. **Power check.** Shown at every `start` and in a new chat that resumes the day; nothing happens in the browser before `ready` (picking the browser only looks at the app's tools), except the sign-in tabs after `sign in`.
