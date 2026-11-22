@@ -11,7 +11,6 @@ Never run setup, collect personal details or apply to jobs just because this rep
 - `start`: check setup (section 3), agree today's plan (section 4), then apply.
 - `ready`: the user's answer to the check before a run (section 4), or to the browser checklist (section 9), where it only retries the connection.
 - `sign in`: at the check before a run, open job sites so the user can sign in to them first (section 4, step 6).
-- `ok`: the user's approval of the session's first application (section 7).
 - `done`: the user finished a step in the browser, such as a sign-in, an upload or an email link.
 - `sync NorthList for YYYY-MM-DD`: send that day's entries to NorthList again (`instructions/northlist_sync.md`). The older wording `sync Career Companion for YYYY-MM-DD` means the same.
 - `send portal accounts for YYYY-MM-DD`: send that day's company-portal accounts to NorthList with their applications (`instructions/northlist_sync.md`, "Replay on request").
@@ -66,7 +65,7 @@ If anything is missing, read `instructions/setup.md` and finish setup first. Nev
    > 2. Turn off sleep for this run (how: README, "Before a run").
    > 3. You are signed in to <sites> in the AI app's own browser. NorthList Apply recommends this browser, and it does not share sign-ins with your usual browser. Not signed in there yet? Reply `sign in` and I will open each site for you. If a site needs you to sign in during the run, I will pause and ask you in that browser.
    >
-   > Reply `ready` when you are set. Please stay until I show you the first application: I send it only after your `ok`.
+   > Reply `ready` when you are set.
 
    `<sites>` names today's **new** job sites that need the user's account: LinkedIn, Indeed, Naukri, Wellfound or Instahyre in today's plan that no record in `applied/` (today's included) has in its `## Application Plan` table yet. Find them with one search of those tables. Workday and company portals are never named: their accounts are made per company during the run (section 10). With no new site, item 3 says: "This run uses the AI app's own browser, so there is nothing for you to open. If a site needs you to sign in during the run, I will pause and ask you in that browser." With the extension backup, item 3 says instead: "This app has no built-in browser, so this run uses your browser through the AI app's browser extension. Your browser is open with one window and the extension is connected. You are signed in there to <sites>; not signed in yet? Reply `sign in` and I will open each site for you. If a site needs you to sign in during the run, I will pause and ask you in that browser." With no new site, leave out its sentence that starts "You are signed in there".
 
@@ -128,7 +127,7 @@ A plan item is finished when its number is reached or no suitable jobs remain. R
    - a required question with no saved answer: never guess; add a `needs_user` entry with the exact question, and ask the user at the end of the session;
    - never submit `[placeholders]`, sample values, `None` or guessed numbers;
    - upload `personal_data/resume.pdf`; if the site or the browser cannot take the file (some built-in browsers have no upload tool), ask the user to upload that file in the current tab and reply `done`, then check the upload. Never add the file by running a script in the page.
-6. **First application of the session.** Before the first submit action (Naukri's one-click **Apply** included), show the user the job and every filled answer or pitch, then wait for exactly `ok`. After that, still check each form's final values before submitting. Also follow every approval the AI app itself asks for.
+6. **Check before submitting.** Before every submit action (Naukri's one-click **Apply** included), check the form's final values. Never wait for the user's approval of an application: after `ready` the run applies on its own. Still follow every approval the AI app itself asks for.
 7. **Submit**, keeping the 2-minute gap (section 5).
 8. **Applied only after the site shows a confirmation.** Never invent one.
 9. **Add the entry** to today's record at once (section 8).
