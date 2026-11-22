@@ -22,7 +22,7 @@ The first time, it asks for your resume and fills in your profile from it. It sh
 
 ## A normal run
 
-1. **`start`**: it checks your setup and shows today's plan, for example "Same as last time: linkedin 10, naukri 10", with a short check (see "Before a run"). Tell it if you want a different plan.
+1. **`start`**: it checks your setup and asks which sites and how many jobs today, with last time's plan, for example "Last time: linkedin 10, naukri 10". Reply `same` to keep it, or name new sites and counts. Nothing starts before you answer. Then it shows a short check (see "Before a run").
 2. **`sign in`** (first run, or a new site in your plan): it opens each job site that is new in your plan and needs your account (LinkedIn, Indeed, Naukri, Wellfound, Instahyre) in the AI app's own browser. Sign in there, then reply `done`.
 3. **`ready`**: once the check is done. It starts and applies on its own, one job at a time.
 
