@@ -11,6 +11,7 @@ Never run setup, collect personal details or apply to jobs just because this rep
 - `start`: check setup (section 3), agree today's plan (section 4), then apply.
 - `ready`: the user's answer to the check before a run (section 4), or to the browser checklist (section 9), where it only retries the connection.
 - `sign in`: at the check before a run, open job sites so the user can sign in to them first (section 4, step 6).
+- `same`: at the plan question, keep the plan it shows (section 4).
 - `done`: the user finished a step in the browser, such as a sign-in, an upload or an email link.
 - `sync NorthList for YYYY-MM-DD`: send that day's entries to NorthList again (`instructions/northlist_sync.md`). The older wording `sync Career Companion for YYYY-MM-DD` means the same.
 - `send portal accounts for YYYY-MM-DD`: send that day's company-portal accounts to NorthList with their applications (`instructions/northlist_sync.md`, "Replay on request").
@@ -46,8 +47,8 @@ If anything is missing, read `instructions/setup.md` and finish setup first. Nev
 
 ## 4. Today's plan and the `ready` check
 
-1. If today's record exists, resume it and keep its plan, unless the user asks to change it.
-2. Otherwise take the plan of the most recent record and offer it in one line, for example "Same as last time: linkedin 10, naukri 10. To change it, tell me." With no earlier record, ask which plan items and how many of each.
+1. **Ask for the plan first and wait.** At every `start`, ask which plan items and how many of each, in one line, then wait for the answer. Show nothing else in that message (no check, no advice) and never open a browser or apply before the answer. Show the last plan with it: "Which sites and how many today? Last time: linkedin 10, naukri 10. Reply `same` to keep it." When today's record exists, show its plan with what is already done instead ("Today so far: linkedin 4 of 10, naukri 0 of 10. Reply `same` to go on."). With no earlier record, ask without a last plan.
+2. The answer is `same` (keep that plan) or new plan items and counts. Only then go on with steps 3 to 6. Today's record keeps the plan the user confirmed.
 3. Plan items, kept in the order the user gives:
    - sites: `linkedin`, `indeed`, `naukri`, `wellfound`, `instahyre`, `workday`;
    - `company_direct` (company career pages saved in `profile.md`) and `discovery` (web search);
