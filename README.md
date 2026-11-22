@@ -31,15 +31,13 @@ When a site asks you to sign in, it waits for you: sign in in that tab and reply
 
 ## Before a run
 
-A run can take up to your session limit (4 hours by default). If the computer sleeps, the browser disconnects and the run stops. Jobs already in today's record are safe.
+A run can take up to your session limit (4 hours by default).
 
-1. Plug the computer in.
-2. Turn sleep off for the run:
+1. Keep the laptop on charging. It helps the run stay active.
+2. Turn off sleep for the run:
    - **macOS:** System Settings › Lock Screen › "Turn display off when inactive" › Never. Also System Settings › Battery › Options (or Displays › Advanced) › "Prevent automatic sleeping on power adapter when the display is off" › On.
    - **Windows 11:** Settings › System › Power & battery › Screen and sleep: set "When plugged in, put my device to sleep after" and "When plugged in, turn off my screen after" to Never.
-3. Keep the lid open.
-4. Sign in to the job sites in your plan inside your AI app's own browser. NorthList Apply recommends that browser, and it does not share sign-ins with your usual browser. Reply `sign in` at the check and it opens each site in its own tab: sign in, then reply `done`. Once per site is usually enough; the browser keeps you signed in. The check reminds you only for sites new to your plan, but you can reply `sign in` at any check to open all of today's sites. Extension backup only: open your browser with one window, signed in to those sites.
-5. Don't use the computer for other work during the run.
+3. Sign in to the job sites in your plan inside your AI app's own browser. NorthList Apply recommends that browser, and it does not share sign-ins with your usual browser. Reply `sign in` at the check and it opens each site in its own tab: sign in, then reply `done`. Once per site is usually enough; the browser keeps you signed in. The check reminds you only for sites new to your plan, but you can reply `sign in` at any check to open all of today's sites. Extension backup only: open your browser with one window, signed in to those sites.
 
 ## Sites and limits
 
