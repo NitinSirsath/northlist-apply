@@ -13,7 +13,7 @@ After any change to `AGENTS.md`, `instructions/` or the templates, walk through 
 
 ## Plan and start
 
-5. **Same plan as last time.** With an earlier record and none today, `start` offers that plan in one line, with the model advice and the `ready` check; `ready` starts the run. A normal day takes three replies: `start`, `ready`, `ok` (two more, `sign in` and `done`, when a site needs signing in first).
+5. **Same plan as last time.** With an earlier record and none today, `start` offers that plan in one line, with the model advice and the `ready` check; `ready` starts the run. A normal day takes two replies: `start` and `ready` (two more, `sign in` and `done`, when a site needs signing in first).
 6. **First run ever.** With no earlier record, the plan is asked first, then the check is shown.
 7. **Plan change at the check.** A change in the reply goes back through the plan steps (limits, permission sentence, portal login, model advice), becomes today's plan (written to the record after `ready`), and the check is shown again.
 8. **Power check.** Shown at every `start` and in a new chat that resumes the day; nothing happens in the browser before `ready` (picking the browser only looks at the app's tools), except the sign-in tabs after `sign in`.
@@ -27,7 +27,7 @@ After any change to `AGENTS.md`, `instructions/` or the templates, walk through 
 13. **Opened and turned down.** A job that was opened and then fails the fit check (required, not preferred, experience included) gets a `skipped` entry with the reason.
 14. **Normal sign-in request.** A signed-out or login page: the user signs in in the current tab and replies `done`; the sign-in is checked and the same job continues. Not a site stop.
 15. **Real security restriction.** A CAPTCHA, unusual activity, a security check, a restriction or a daily-limit message on a job site stops that site for the local date, with a `## Site Stops` line and a `skipped` entry whose reason starts with `site stopped:`. That plan item is finished for the day; later jobs get no entries of their own. A CAPTCHA on one employer's own form skips only that job.
-16. **First instant submit.** The preview (the job and the profile details Naukri will send) and `ok` come before Naukri's one-click Apply.
+16. **Instant submit.** The final values are checked before Naukri's one-click Apply; there is no preview and no `ok`, also for the first job of a run.
 17. **Unsupported upload.** The user uploads `personal_data/resume.pdf` in the current tab and replies `done`; the upload is checked.
 18. **Missing answer, later retry.** A required question without a saved answer gives `needs_user`; the answer is saved with its context (under `## Contextual Answers` when it holds only for an employer, country, role or portal, otherwise under `## Learned Answers`); the job may then be tried again, as a new entry.
 19. **Prefilled facts differ.** A portal's prefilled value that differs from `profile.md` is corrected from it, or the job becomes `needs_user`.
