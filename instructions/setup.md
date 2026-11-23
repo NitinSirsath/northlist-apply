@@ -4,6 +4,22 @@ Read this file only while the setup check in `AGENTS.md` section 3 fails, or whe
 
 Before starting, suggest in one sentence the strongest model of the user's current AI app for setup. Never name a model or version, and never claim to switch models.
 
+## 0. First: NorthList (only for a brand-new setup)
+
+When `personal_data/profile.md` does not exist yet and NorthList sync is off (`AGENTS.md` section 4, step 7: the tools are not there), say this once, before anything else, then wait:
+
+> **Before we set up: connect NorthList.**
+> See everything your AI applies to in one place: every job, where the application went, the answers it sent, and every reply from the company, sorted from your Gmail.
+> 1. Open app.northlist.site/automation?tab=setup and sign in (new here? sign up there).
+> 2. Create your setup prompt and paste it here.
+>
+> Reply `skip` to set up without it. You can connect any time.
+
+- The user pastes the setup prompt: follow `instructions/northlist_connect.md`. After the app restart, `start` goes on with setup; the offer is not shown again.
+- `skip`, or anything else: go on with setup.
+
+Right after the answer, create the missing files (section 1), so the offer is never shown again, also not in a new chat.
+
 ## 1. Missing files
 
 Create each missing file from its template. Never replace a file that already has answers.
@@ -11,27 +27,24 @@ Create each missing file from its template. Never replace a file that already ha
 - `personal_data/form_answers.md` from `personal_data/form_answers_template.md`
 - `personal_data/credentials.md` from `personal_data/credentials_template.md`
 
-## 2. The resume
+## 2. The setup page (the usual way)
 
-If `personal_data/resume.pdf` is missing, ask for the resume file or its path, and copy it to exactly `personal_data/resume.pdf`. Never invent a path. If you cannot reach the file, ask the user to upload it in the AI app.
+When the AI app has its own browser (`AGENTS.md` section 9) and the user has not asked to answer in the chat, read `instructions/setup_page.md` and follow it. It gets the resume, fills in what the resume says, and the user answers the rest on the page. Then go to section 5.
 
-## 3. Fill in from the resume
+## 3. In the chat instead
 
-Read the resume and fill in every `[placeholder]` in `profile.md` that the resume answers: names, email, phone, city and country, links, current job title, total years of experience, core skills, each employer (company, title, start and end month, main work) and each education entry. Never guess what the resume does not say.
+Use the chat when the app has no browser tool, the page cannot open, or the user asks to answer in the chat (for example "just ask me here").
 
-Then show the user what you filled in, as one short list, and ask them to correct anything. Save their corrections at once.
+1. **Resume.** If `personal_data/resume.pdf` is missing, ask for the file or its path and copy it there. Never invent a path.
+2. **From the resume.** Fill in every `[placeholder]` in `profile.md` that the resume answers, the same facts as `instructions/setup_page.md` step 2 (also notice period, salary, work modes, relocation and work permission when the resume says them). Never guess. Show what you filled in as one short list and ask for corrections; save them at once.
+3. **The rest, 3 to 5 numbered questions per message,** in this order, leaving out every question the files already answer:
+   - a. notice period; current salary; expected salary (amount, currency, per year or month);
+   - b. work permission and visa sponsorship for each country; work modes; cities; open to moving;
+   - c. job titles; companies to skip; company career page links;
+   - d. years per main skill; English level; what to answer for a skill not in the profile.
+   The user answers in one reply ("1. 30 days 2. …"). Save each answer at once. Ask only the missing ones again in the next message.
 
-## 4. Ask only what is still missing
-
-Ask for every `[placeholder]` that is left, one topic per message, in this order:
-1. contact details the resume does not have, such as the phone country code, or an address when needed;
-2. employment and education details the resume does not have;
-3. notice period, and current and expected salary: amount, currency, and annual or monthly;
-4. work authorization and sponsorship, for each country;
-5. job preferences: target job titles, locations, work modes, relocation, companies to skip, and company career page URLs;
-6. common screening answers in `form_answers.md`.
-
-Save each answer at once. Never ask about anything the files already answer.
+## 4. Portal login
 
 Ask for the company portal login in `credentials.md` only when today's plan has `workday`, `company_direct`, `discovery` or a job source.
 
@@ -41,6 +54,4 @@ When the user skips an optional question, save `None` at once and never ask it a
 
 ## 6. Finish
 
-Run the setup check again (`AGENTS.md` section 3). If something is still missing, continue at the first missing item. When it passes, go on to today's plan (`AGENTS.md` section 4) in the same chat.
-
-Never ask about NorthList during setup. Sync turns on by itself once NorthList is connected in the AI app (README).
+Run the setup check again (`AGENTS.md` section 3). If something is still missing, ask only that, in the chat. When it passes, go on to today's plan (`AGENTS.md` section 4) in the same chat.

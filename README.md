@@ -18,7 +18,9 @@ In beta. Tried so far on LinkedIn Easy Apply, Naukri and Indeed. Like any AI, it
 2. Open the folder in your AI app.
 3. Type `start`.
 
-The first time, it asks for your resume and fills in your profile from it. It shows you what it filled in, then asks only for what is still missing, such as your notice period, salary, work authorization and the jobs you want. Your profile, saved answers, portal login and resume stay in `personal_data/` on your computer, and Git ignores them, so they are never committed.
+The first time, it offers to connect NorthList (reply `skip` to set up without it), then opens the setup page in your AI app's browser: drop your resume there, check what your AI read from it, and answer the rest with a few taps, about 3 minutes. What your resume already says, such as your notice period or salary, is filled in for you. Rather answer in the chat? Say "just ask me here". Your profile, saved answers, portal login and resume stay in `personal_data/` on your computer, and Git ignores them, so they are never committed.
+
+**It keeps itself up to date.** At every `start` it checks this repository for a newer version. If there is one, it updates its own instruction files (with `git pull` in a cloned folder, by downloading them in a ZIP folder), shows you what is new, and goes on. It never changes your files in `personal_data/`, `applied/` or `tracking/`, and never updates in the middle of a run.
 
 ## A normal run
 
@@ -84,14 +86,19 @@ Sync is on whenever NorthList is connected in your AI app, with or without the p
 ## Files
 
 - `AGENTS.md`: the rules for every run (`CLAUDE.md` loads it for Claude Code).
-- `instructions/`: setup, connecting and syncing NorthList, and one file per site, each read only when needed.
+- `instructions/`: setup (and the setup page), updates, connecting and syncing NorthList, and one file per site, each read only when needed.
+- `VERSION` and `UPDATES.md`: this version, the files an update may change, and what is new in each version.
 - `personal_data/*_template.md`: templates for your profile, saved answers and portal login.
 - `docs/walkthroughs.md`: checks for anyone who changes the instructions.
 - `docs/platform_test_results.md`: what was found when each site was tried.
 
-Made while running and ignored by Git: your files in `personal_data/` (profile, saved answers, portal login, resume), `applied/` (one record per day) and `tracking/` (company portal accounts).
+Made while running and ignored by Git: your files in `personal_data/` (profile, saved answers, portal login, resume), `applied/` (one record per day), `tracking/` (company portal accounts) and `.update/` (only during an update).
 
 ## Troubleshooting
+
+**The setup page stays on "Your AI is reading it now".** Your AI could not find the file you dropped in Downloads, Desktop or Documents. Go back to the chat: it asks you to drag the resume in there. Nothing you answered on the page is lost, even if you close it.
+
+**"There is a new NorthList Apply version, but you changed some of its files."** You edited a rule file yourself, so the update did not overwrite it. Download the folder again from GitHub and copy your `personal_data/`, `applied/` and `tracking/` folders into it.
 
 **Many browser permission prompts.** Many AI apps ask once per new website, and Workday, company career pages, web search and the job sources open a new company site for almost every job. Choose always allow (or allow for the session) when your app offers it, and stay near. The run asks your app for permission instead of asking you to do a step yourself, so each Allow keeps it hands-free. For hands-off runs, use the quick-apply sites.
 
@@ -100,6 +107,8 @@ Made while running and ignored by Git: your files in `personal_data/` (profile, 
 **Many windows or tabs, and a slow computer.** Stop the run, close the extra windows and tabs, keep one window, and type `start`. A run uses at most two more tabs than it has plan items.
 
 **The run stopped after about 4 hours.** That is the session limit. Type `start` in a new chat to continue the same day. To change it, edit `Session time limit (hours)` in `personal_data/profile.md`.
+
+**It forgets an answer or repeats itself in a long chat.** A very long chat gets shortened by your AI app, and older details can get lost. Open a new chat and type `start`: nothing is lost, because today's run continues from your record. The run tells you when a chat is getting long. Use a new chat for each run.
 
 **It keeps asking me to sign in.** The site is signed out in the browser the run uses. The AI app's own browser does not share sign-ins with your usual browser: sign in once in that tab, then reply `done`. Next time, reply `sign in` at the check to sign in before the run starts.
 

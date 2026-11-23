@@ -1,0 +1,25 @@
+version: 2026.11.24
+files:
+AGENTS.md
+CLAUDE.md
+README.md
+docs/platform_test_results.md
+docs/walkthroughs.md
+instructions/advanced_strategies/company_direct_apply.md
+instructions/advanced_strategies/web_search_discovery.md
+instructions/northlist_connect.md
+instructions/northlist_sync.md
+instructions/platforms/indeed_strategy.md
+instructions/platforms/instahyre_strategy.md
+instructions/platforms/linkedin_strategy.md
+instructions/platforms/naukri_strategy.md
+instructions/platforms/wellfound_strategy.md
+instructions/platforms/workday_strategy.md
+instructions/setup.md
+personal_data/credentials_template.md
+personal_data/form_answers_template.md
+personal_data/profile_template.md
+UPDATES.md
+VERSION
+instructions/setup_page.md
+instructions/update.md

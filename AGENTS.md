@@ -34,9 +34,11 @@ If two sources disagree about the same fact, do not pick one. Mark the job `need
 
 Always use the user's local date and time, never UTC.
 
-## 3. Setup check
+## 3. Update check and setup check
 
-At every `start`, check the real files:
+**Update check, first at every `start`.** Read `VERSION` from `https://raw.githubusercontent.com/NitinSirsath/northlist-apply/master/VERSION` (this exact address, never another). If its `version:` is newer than the one in this folder's `VERSION`, read `instructions/update.md` and follow it. If it is the same, or the check fails (offline, any error), say nothing and go on. Never check or update during a run.
+
+Then, at every `start`, check the real files:
 - `personal_data/resume.pdf` exists and is not empty;
 - `personal_data/profile.md` and `personal_data/form_answers.md` exist and have no `[bracketed placeholders]` in required fields (empty `## Contextual Answers` and `## Learned Answers` sections are fine);
 - every required fact is present, and every optional one that is unknown says `None`.
@@ -47,7 +49,7 @@ If anything is missing, read `instructions/setup.md` and finish setup first. Nev
 
 ## 4. Today's plan and the `ready` check
 
-1. **Ask for the plan first and wait.** At every `start`, ask which plan items and how many of each, in one line, then wait for the answer. Show nothing else in that message (no check, no advice) and never open a browser or apply before the answer. Show the last plan with it: "Which sites and how many today? Last time: linkedin 10, naukri 10. Reply `same` to keep it." When today's record exists, show its plan with what is already done instead ("Today so far: linkedin 4 of 10, naukri 0 of 10. Reply `same` to go on."). With no earlier record, ask without a last plan.
+1. **Ask for the plan first and wait.** At every `start`, ask which plan items and how many of each, in one line, then wait for the answer. Show nothing else in that message (no check, no advice; only the long-chat line of section 6 may come above it) and never open a browser or apply before the answer. Show the last plan with it: "Which sites and how many today? Last time: linkedin 10, naukri 10. Reply `same` to keep it." When today's record exists, show its plan with what is already done instead ("Today so far: linkedin 4 of 10, naukri 0 of 10. Reply `same` to go on."). With no earlier record, ask without a last plan.
 2. The answer is `same` (keep that plan) or new plan items and counts. Only then go on with steps 3 to 6. Today's record keeps the plan the user confirmed.
 3. Plan items, kept in the order the user gives:
    - sites: `linkedin`, `indeed`, `naukri`, `wellfound`, `instahyre`, `workday`;
@@ -113,6 +115,10 @@ A plan item is finished when its number is reached or no suitable jobs remain. R
 - When it is reached: open no new job; finish and submit only a job that is already in a form; add its entry and, with sync on, send it (section 7, steps 9 and 10); do the end of session (section 12); tell the user the limit was reached and that `start` in a new chat continues the same day.
 - Never record `skipped` because of the limit.
 - If a new chat is needed for any reason, everything is already in the files: tell the user to type `start` there.
+- **Long chat.** The AI app does not show you how full this chat is, so watch for these signs. None of these lines pauses the run. The first two are said at most once per chat, the third once each time the app shortens the chat; after a shortening, a line the summary does not show as said counts as not said:
+  - `start` in a chat that already had a `ready` earlier (in its own messages, or in the app's summary of this same chat): put this line above the plan question (section 4, step 1): "This chat already has an earlier run. A new chat works best: open one and type `start`, and today's run continues from your record. Or answer below to go on here." A new chat the user opened never counts, even when it starts with notes from an earlier chat.
+  - 20 entries of any status (`applied`, `skipped`, `needs_user`) written in this chat, all runs together: when another job follows, say between the two jobs "This chat is getting long. After this run, open a new chat and type `start` next time."
+  - The app has shortened this chat into a summary: before the next job, read sections 5 and 7 of this file again and the current plan item's file (section 11); with sync on, also `instructions/northlist_sync.md`. Then say "This chat got long and your app shortened it. I re-read the rules and will go on. For the rest of today, a new chat works best: open one and type `start`." After this line, the 20-entries line is not said.
 
 ## 7. Applying, one job at a time
 
@@ -269,5 +275,7 @@ For every plan item:
 2. Update the counts in today's `## Application Plan`.
 3. Sum up today from your counts (one search of the record if unsure; never a full re-read): applied, skipped and needs_user jobs, site stops, and how many jobs were passed over in the results lists; with sync on, how many of today's applications NorthList has, and each entry that failed or is still unsent.
 4. Ask the user the open questions. Save each answer at once, as section 7 says.
+5. With sync off, add this line: "Track every application your AI sends, and the replies: connect NorthList at app.northlist.site/automation?tab=setup."
+6. Put this line last, in the same message as the open questions, and never wait for their answers to say it: "Next time, open a new chat and type `start`."
 
 Checks for whoever edits these instructions are in `docs/walkthroughs.md`. They are not part of a run.
