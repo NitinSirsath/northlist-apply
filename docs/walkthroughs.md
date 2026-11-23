@@ -119,7 +119,7 @@ After any change to `AGENTS.md`, `instructions/` or the templates, walk through 
 81. **Start again in the same chat.** A run ended and the user types `start` in the same chat: the long-chat line comes above the plan question, once; a plan answer or `same` goes on in this chat as usual. A new chat the user opened never shows it, even when it starts with notes from an earlier chat.
 82. **20 entries in one chat.** The 20th entry of any status written in this chat, all runs together, when another job follows, is followed between the two jobs by the "getting long" line, once; the run does not pause.
 83. **Shortened chat.** The app has replaced the earlier chat with a summary: before the next job, sections 5 and 7, the current plan item's file and (sync on) `instructions/northlist_sync.md` are read again; the "shortened" line is said once for that shortening; the "getting long" line is not said after it; the run goes on.
-84. **End of session.** Every end of session, plan finished or limit reached, ends with "Next time, open a new chat and type `start`.", last in the message with the open questions, without waiting for their answers.
+84. **End of session.** Every end of session, plan finished or limit reached, ends with "Next time, open a new chat and type `start`.", last in the message with the run page line (or the open questions), without waiting for their answers.
 
 ## Setup page, NorthList offer and updates
 
@@ -137,4 +137,17 @@ Tested on 23 Nov 2026 with a light and a medium model (scenarios and results: se
 94. **Update list.** A listed path outside the folder or in `personal_data/`, `applied/`, `tracking/` refuses the whole update with one line.
 95. **New profile question.** A line the new profile template has and the profile does not is asked once, before the plan.
 96. **No update mid-run.** Asked for an update during a run: it waits for the next `start`.
-97. **End of session.** With NorthList off, the NorthList line comes before "Next time, open a new chat"; with NorthList on, it is left out.
+97. **End of session without a browser.** With NorthList off, the NorthList line comes before "Next time, open a new chat"; with NorthList on, it is left out. With a browser, the run page shows NorthList instead.
+
+## Run page and one-click connect
+
+98. **End of a run.** Applied, skipped and `needs_user` entries, a site stop and passed-over jobs: one link `https://northlist.site/apply/run#{...}` with `mode` `report`, the plan rows, every applied and skipped job, the stop and the count; one short chat line with the last line; no long summary.
+99. **Questions.** Each open question once, word for word, with its kind: Yes / No, a number, the form's options, or a written answer with a draft made only from `profile.md` (no invented number or fact).
+100. **Read-back.** After the title starts with `Done`, the records are added at the end of `## Learned Answers` and `## Contextual Answers`, exactly as given; nothing else in `form_answers.md` changes; the jobs under `## Apply again` are tried with new entries when the session limit and the site limits allow, otherwise at the next `start`.
+101. **Not now.** `later` (or anything else) stops the waiting; nothing is saved; after 10 minutes the run stops checking and says `done` still works.
+102. **No questions.** The page opens without any waiting; no title checks.
+103. **Next start.** `needs_user` entries of the last 7 days with no later entry: those whose question has no saved answer open the run page in `questions` mode before the plan question; those answered since are tried after `ready`, before the first plan item. Older ones and retried ones are left.
+104. **No browser.** The summary and the open questions go in the chat, 3 to 5 numbered per message.
+105. **Setup code.** The pasted prompt has a server and an `NL-` code: the code is swapped once (`POST <server>/api/setup-codes/redeem`) before anything else; the token goes only into the app's settings; a refused code stops with one line asking for a new one and is never tried again.
+106. **Finding the folder.** The chat's folder if it is NorthList Apply, else `Documents/NorthList Apply`; with neither, the user is asked, and `download` puts the ZIP's files there. When the chat is not in that folder, the user hears where it is and how to open it in their app.
+107. **Personal files.** No step copies a template over a personal file or writes one again from scratch; the template notes never read as an empty file.
