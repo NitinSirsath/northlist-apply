@@ -24,20 +24,20 @@ Write the facts as one line of JSON with these keys. Copy facts exactly as the r
 
 | Key | What | Example |
 | --- | --- | --- |
-| `firstName`, `lastName` | the name | "Asha", "Rao" |
-| `email` | | "asha@example.com" |
-| `phoneCountryCode`, `phoneNumber` | split the phone | "+91", "98200 12345" |
-| `city`, `country` | where the user lives now; the country's full English name, never a short form | "Pune", "India" (write "United States", not "USA"; "United Kingdom", not "UK"; "United Arab Emirates", not "UAE") |
-| `currentTitle` | the latest job title | "Frontend Engineer" |
-| `employers` | every job, newest first: `company`, `title`, `start`, `end` as `YYYY-MM`, or "Present". Only a year written (like "2023 – Present"): use January, "2023-01". Never leave `start` out | `[{"company":"Acme","title":"Developer","start":"2022-04","end":"Present"}]` |
+| `firstName`, `lastName` | the name | `"Asha"`, `"Rao"` |
+| `email` | | `"asha@example.com"` |
+| `phoneCountryCode`, `phoneNumber` | split the phone | `"+91"`, `"98200 12345"` |
+| `city`, `country` | where the user lives now; the country's full English name, never a short form | `"Pune"`, `"India"` (write `"United States"`, not `"USA"`; `"United Kingdom"`, not `"UK"`; `"United Arab Emirates"`, not `"UAE"`) |
+| `currentTitle` | the latest job title | `"Frontend Engineer"` |
+| `employers` | every job, newest first: `company`, `title`, `start`, `end` as `YYYY-MM`, or `"Present"`. Only a year written (like "2023 – Present"): use January, `"2023-01"`. Never leave `start` out | `[{"company":"Acme","title":"Developer","start":"2022-04","end":"Present"}]` |
 | `education` | `degree`, `field`, `institution`, `year` (finish year as a number) | `[{"degree":"B.E.","field":"Computer Engineering","institution":"Pune University","year":2020}]` |
 | `skillYears` | *guess*: each main skill and its years (a number) | `{"React":4,"TypeScript":3}` |
-| `englishGuess` | *guess*: "Native", "Fluent", "Professional" or "Basic" | "Professional" |
+| `englishGuess` | *guess*: `"Native"`, `"Fluent"`, `"Professional"` or `"Basic"` | `"Professional"` |
 | `suggestedTitles` | *guess*: 3 to 5 job titles that fit | `["Frontend Engineer","React Developer"]` |
 | `checkedTitles` | *guess*: the 1 or 2 best of them | `["Frontend Engineer"]` |
 | `suggestedLocations` | *guess*: the user's city and 3 big cities nearby | `["Pune","Mumbai","Bengaluru"]` |
 | `checkedLocations` | the user's city | `["Pune"]` |
-| `currency` | the money of the user's country: "INR", "USD", "EUR", "GBP", "AED" or "SGD" | "INR" |
+| `currency` | the money of the user's country: `"INR"`, `"USD"`, `"EUR"`, `"GBP"`, `"AED"` or `"SGD"` | `"INR"` |
 
 Only when the resume says it:
 
@@ -46,10 +46,10 @@ Only when the resume says it:
 | `noticeDays` | "Notice period: 30 days", "Immediate joiner" | `30`, `0` |
 | `currentSalary` | "Current CTC: 12 LPA" | `1200000` (a full number) |
 | `expectedSalary` | "Expected CTC: 16 LPA" | `1600000` |
-| `salaryPeriod` | the salary is per month | "monthly" (leave out for per year) |
+| `salaryPeriod` | the salary is per month | `"monthly"` (leave out for per year) |
 | `workModes` | "Open to remote", "Hybrid preferred" | `["remote"]`, `["hybrid"]` |
 | `relocate` | "Willing to relocate" | `true` |
-| `workAuth` | "US citizen", "Needs H-1B sponsorship" | `[{"country":"United States","value":"yes"}]` (full country names, as for `country`); `value` is "yes" (no visa needed), "later" (visa needed later) or "need" (needs a visa now) |
+| `workAuth` | "US citizen", "Needs H-1B sponsorship" | `[{"country":"United States","value":"yes"}]` (full country names, as for `country`); `value` is `"yes"` (no visa needed), `"later"` (visa needed later) or `"need"` (needs a visa now) |
 
 Money: 1 lakh = 100000, 1 crore = 10000000, "12 LPA" = 1200000 per year, "$120k" = 120000.
 
