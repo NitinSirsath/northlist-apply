@@ -100,7 +100,6 @@ Made while running and ignored by Git: your files in `personal_data/` (profile, 
 
 **"There is a new NorthList Apply version, but you changed some of its files."** You edited a rule file yourself, so the update did not overwrite it. Download the folder again from GitHub and copy your `personal_data/`, `applied/` and `tracking/` folders into it.
 
-
 **Many browser permission prompts.** Many AI apps ask once per new website, and Workday, company career pages, web search and the job sources open a new company site for almost every job. Choose always allow (or allow for the session) when your app offers it, and stay near. The run asks your app for permission instead of asking you to do a step yourself, so each Allow keeps it hands-free. For hands-off runs, use the quick-apply sites.
 
 **"Browser connection lost. The run is paused."** The browser closed, the computer slept, or (extension backup) the browser extension lost its connection. Make sure the AI app's browser works again (extension backup: your browser open with one window, and the extension connected), keep the computer awake and plugged in, then reply `ready`. It tries once more, then ends the run cleanly.
