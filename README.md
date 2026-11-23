@@ -28,7 +28,7 @@ The first time, it offers to connect NorthList (reply `skip` to set up without i
 2. **`sign in`** (first run, or a new site in your plan): it opens each job site that is new in your plan and needs your account (LinkedIn, Indeed, Naukri, Wellfound, Instahyre) in the AI app's own browser. Sign in there, then reply `done`.
 3. **`ready`**: once the check is done. It starts and applies on its own, one job at a time.
 
-When a site asks you to sign in, it waits for you: sign in in that tab and reply `done`. At the end, it sums up the run and asks you the questions it could not answer, and saves your answers for next time.
+When a site asks you to sign in, it waits for you: sign in in that tab and reply `done`. At the end, it opens **Today's run**, a page in your AI app's browser: how many jobs it applied to on each site, what it skipped and why, and the questions it could not answer, with buttons to answer them (written answers start as a draft from your profile). Press Save: it saves your answers for every job or only that company, and applies to those jobs again. Not now? Reply `later`: the next `start` asks again before the plan.
 
 ## Before a run
 
@@ -69,11 +69,12 @@ Once per run, it tells you which kind of model fits today's plan; it never names
 [NorthList](https://northlist.site/automation) tracks your job applications. Connected, each job this automation applies to shows up there with its links and the answers it sent, and mail from the company moves it on. Without it nothing changes: the daily record in this folder is enough.
 
 **Set up once:**
-1. In NorthList, open **Automation › Setup** and create your setup prompt. Copy it: it is shown once.
-2. Paste it into a chat in this folder, in Claude Code, Codex or Antigravity. Your AI app adds NorthList to its own settings and asks you to allow the change. Your token goes only into those settings, never into this folder.
-3. When it says so, open a new chat or restart the app, then type `start`. The first time it uses NorthList, your app asks: allow it for good.
+1. In NorthList, open **Automation › Setup** and pick your AI app: Antigravity, Codex or Claude Code.
+2. Press its button. Codex and Claude Code open with the setup prompt typed in (Claude Code opens in a terminal): press Enter. For Antigravity the prompt is copied: paste it into a new chat. The prompt holds a setup code that works once, for 10 minutes, never your token.
+3. Your AI app finds this folder (the chat's folder, or `Documents/NorthList Apply`; without one it offers to download it there), swaps the code for your token, adds NorthList to its own settings and asks you to allow the change. Your token goes only into those settings, never into this folder.
+4. When it says so, open a new chat or restart the app, then type `start`. The first time it uses NorthList, your app asks: allow it for good.
 
-**By hand instead:** add NorthList as an MCP server in your AI app's **user-level** settings (never a file inside this folder), with the server address from the Setup tab (it ends in `/mcp`) and the header `Authorization: Bearer <token>`. If your app cannot send headers, use the `mcp-remote` bridge with that same address: `npx mcp-remote <server address> --header "Authorization: Bearer <token>"`. Allow its two tools, `record_application_submission` and `record_not_submitted_job`, and set the profile line the Setup tab shows, `- NorthList server: <address>` (without `/mcp`), in `personal_data/profile.md`. An older `- Career Companion server: <address>` line works the same.
+**By hand instead:** under **Set it up by hand** on the Setup tab, create a token, then add NorthList as an MCP server in your AI app's **user-level** settings (never a file inside this folder), with the server address from the Setup tab (it ends in `/mcp`) and the header `Authorization: Bearer <token>`. If your app cannot send headers, use the `mcp-remote` bridge with that same address: `npx mcp-remote <server address> --header "Authorization: Bearer <token>"`. Allow its two tools, `record_application_submission` and `record_not_submitted_job`, and set the profile line the Setup tab shows, `- NorthList server: <address>` (without `/mcp`), in `personal_data/profile.md`. An older `- Career Companion server: <address>` line works the same.
 
 **What NorthList gets:**
 - For each job it applied to: the company, job title, site, job and apply page links, the apply site's address, the job ID, where the job was found, location, work mode, time, the site's confirmation, your resume's file name and the answers it sent.
@@ -81,7 +82,7 @@ Once per run, it tells you which kind of model fits today's plan; it never names
 - For each job it opened but did not apply to: the company, job title, site, job link, whether it skipped the job or left it for you, the reason and the time.
 - Never: your passwords for LinkedIn, Indeed, Naukri and the other job sites you sign in to yourself, your resume file or its text, or your plan and limits.
 
-Sync is on whenever NorthList is connected in your AI app, with or without the profile line; the line only lets a run wake NorthList before its first send. To stop sending, tell the run, or remove NorthList from your AI app's settings to turn it off for good. Each application is sent right after the site confirms it, before the next job starts, so a stopped run keeps what was sent. A send that was missed goes before the next job, at the next `start`, or at the end of the run, and the run's summary says how many of today's applications NorthList has. Jobs it did not apply to are sent at the end of the run, and failed sends are tried again then. To send a day again later, say `sync NorthList for YYYY-MM-DD`. To add portal accounts to applications sent before this version, say `send portal accounts for YYYY-MM-DD`. If you delete an application in NorthList, what this automation sent for it goes too. Tokens expire: when it says the tools are not available, create a new setup prompt and paste it again.
+Sync is on whenever NorthList is connected in your AI app, with or without the profile line; the line only lets a run wake NorthList before its first send. To stop sending, tell the run, or remove NorthList from your AI app's settings to turn it off for good. Each application is sent right after the site confirms it, before the next job starts, so a stopped run keeps what was sent. A send that was missed goes before the next job, at the next `start`, or at the end of the run, and the run's summary says how many of today's applications NorthList has. Jobs it did not apply to are sent at the end of the run, and failed sends are tried again then. To send a day again later, say `sync NorthList for YYYY-MM-DD`. To add portal accounts to applications sent before this version, say `send portal accounts for YYYY-MM-DD`. If you delete an application in NorthList, what this automation sent for it goes too. Tokens expire: when it says the tools are not available, make a new setup prompt on the Setup tab and send it again.
 
 ## Files
 
@@ -122,6 +123,8 @@ Made while running and ignored by Git: your files in `personal_data/` (profile, 
 
 **The run is slow.** It applies to one job at a time and reads each job before it applies. Choose 10 to 15 jobs per site.
 
-**"NorthList sync is on, but its tools are not available."** If you just connected, open a new chat or restart your AI app first. Otherwise the token has probably expired: create a new setup prompt under Automation › Setup in NorthList and paste it into your AI app.
+**"NorthList sync is on, but its tools are not available."** If you just connected, open a new chat or restart your AI app first. Otherwise the token has probably expired: make a new setup prompt under Automation › Setup in NorthList and send it to your AI app.
+
+**"This setup code is used or too old."** A setup code works once, for 10 minutes. Press the button on the Setup tab again for a new one.
 
 **Applications are missing in NorthList.** Type `sync NorthList for YYYY-MM-DD` (the day of the run) in a chat in this folder: it sends that day's missing entries, and repeats are safe. If the run never said "NorthList is connected" after `ready`, your AI app did not have NorthList in that chat: connect it (Automation › Setup), open a new chat and sync the day.

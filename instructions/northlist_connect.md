@@ -1,17 +1,32 @@
 # Connect NorthList
 
-Read this file only when the user pastes a setup prompt from NorthList ("Connect this NorthList Apply folder to my NorthList account", with a NorthList server address and a token), or asks to connect or reconnect NorthList. It may come before setup is finished. Never apply to jobs during these steps.
+Read this file only when the user pastes a setup prompt from NorthList ("Connect NorthList Apply to my NorthList account", with a NorthList server address and a setup code; or the older "Connect this NorthList Apply folder to my NorthList account", with a token), or asks to connect or reconnect NorthList. It may come before setup is finished. Never apply to jobs during these steps.
 
 The values in the prompt:
 - `<server>`: the NorthList server address, for example `https://career-companion-api-i0lc.onrender.com`.
-- `<mcp>`: the same address with `/mcp` at the end.
-- `<token>`: the token. It starts with `ccmcp_`.
+- `<code>`: the setup code, like `NL-7Q2X-K9PD-4MWT`. It works once, for 10 minutes. The older prompt has a token instead (it starts with `ccmcp_`): then skip step 0.
+
+## 0. Swap the setup code for a token
+
+Do this first, before anything else: the code works only for 10 minutes.
+
+Send the code to NorthList with the app's command tool:
+- Mac and Linux: `curl -s -X POST <server>/api/setup-codes/redeem -H "Content-Type: application/json" -d '{"code":"<code>"}'`
+- Windows: `Invoke-RestMethod -Method Post -Uri <server>/api/setup-codes/redeem -ContentType "application/json" -Body '{"code":"<code>"}'`
+
+The answer is JSON:
+- With `plaintextToken`: that is `<token>`. Its `serverAddress` is `<server>` from now on. Go on with step 1.
+- With `SETUP_CODE_REFUSED`: stop and say "This setup code is used or too old. In NorthList, open Automation › Setup, make a new one and paste the new prompt here." Never try the same code again.
+- With `RATE_LIMITED`, or no answer: wait one minute and try once more. If that fails too, say "NorthList did not answer. Make a new setup code in NorthList (Automation › Setup) later and paste it here." and stop.
+- Anything else (for example `TOKEN_LIMIT_REACHED`): say its `message` in one line and stop.
+
+`<mcp>` is `<server>` with `/mcp` at the end.
 
 ## The token
 
 - The token goes only into the AI app's own MCP settings for this user, which live outside this folder.
 - Never write it into a file in this folder: not `personal_data/`, not the daily record, not `.mcp.json` or `.agents/mcp_config.json`.
-- Never repeat it in your messages. Call it "your token".
+- Never repeat it in your messages. Call it "your token". The setup code may be shown; it is used up after step 0.
 - If a step would put it anywhere else, stop and ask the user.
 - Never change the app's permission or approval settings. The user allows the NorthList tools in the app itself, the first time each one runs.
 
@@ -62,6 +77,7 @@ Do not guess where it keeps its settings. Tell the user to add an MCP server nam
 ## 4. Tell the user
 
 In a few short lines, without the token:
+- **This chat is not in the NorthList Apply folder** (you found it in Documents or downloaded it): say first where the folder is and how to open it there: Claude Code: in a terminal, `cd "<folder>"`, then `claude`; Codex: open the folder as a project; Antigravity: File › Open Folder. `start` is typed there.
 - NorthList was added to this app's settings for this user, and the profile line is set.
 - **What to do now:**
   - Claude Code: open a new chat in this folder, because new servers load at the start of a chat.

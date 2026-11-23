@@ -1,6 +1,6 @@
 # Standard Application Credentials
 
-> **Instructions:** Copy this file to `credentials.md`. This file is ignored by Git to protect privacy.
+> **About this file:** the user's standard login for company job portals. It is ignored by Git to protect privacy.
 
 Use this information only for company-portal or ATS accounts when the current application requires account creation. Do not use the password for banking, primary email, or other sensitive accounts.
 

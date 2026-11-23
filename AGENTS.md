@@ -15,7 +15,8 @@ Never run setup, collect personal details or apply to jobs just because this rep
 - `done`: the user finished a step in the browser, such as a sign-in, an upload or an email link.
 - `sync NorthList for YYYY-MM-DD`: send that day's entries to NorthList again (`instructions/northlist_sync.md`). The older wording `sync Career Companion for YYYY-MM-DD` means the same.
 - `send portal accounts for YYYY-MM-DD`: send that day's company-portal accounts to NorthList with their applications (`instructions/northlist_sync.md`, "Replay on request").
-- A setup prompt from NorthList ("Connect this NorthList Apply folder to my NorthList account", with a server address and a token), or `connect NorthList`: follow `instructions/northlist_connect.md`. It may come before setup is finished.
+- A setup prompt from NorthList ("Connect NorthList Apply to my NorthList account", with a server address and a setup code `NL-…`; the older prompt has a token instead), or `connect NorthList`: follow `instructions/northlist_connect.md`. It may come before setup is finished.
+- `later`: on the run page's questions (section 4, step 0), answer them at a later `start`.
 
 ## 2. Files
 
@@ -29,6 +30,8 @@ Records (never committed):
 - `applied/YYYY-MM-DD/applications.md`: the one record for that local date (section 8). Every new entry goes here.
 - `tracking/created_accounts.csv`: company portal accounts, with the header `"date","company","portal_url","login_email","password","email_verified"`.
 - `tracking/applied_jobs.csv`: old history from before the daily records, if present. Read-only: only searched for duplicates. Never add to it, change it, move it or delete it.
+
+**Keep what the user saved.** Never copy a template over a personal file, and never write a personal file again from scratch. Change only the lines a step names, with small edits; everything else in the file stays as it is.
 
 If two sources disagree about the same fact, do not pick one. Mark the job `needs_user`, ask the user, and save the answer in the authoritative file at once.
 
@@ -49,7 +52,11 @@ If anything is missing, read `instructions/setup.md` and finish setup first. Nev
 
 ## 4. Today's plan and the `ready` check
 
-1. **Ask for the plan first and wait.** At every `start`, ask which plan items and how many of each, in one line, then wait for the answer. Show nothing else in that message (no check, no advice; only the long-chat line of section 6 may come above it) and never open a browser or apply before the answer. Show the last plan with it: "Which sites and how many today? Last time: linkedin 10, naukri 10. Reply `same` to keep it." When today's record exists, show its plan with what is already done instead ("Today so far: linkedin 4 of 10, naukri 0 of 10. Reply `same` to go on."). With no earlier record, ask without a last plan.
+0. **Held jobs from earlier.** At every `start`, after the setup check, search `applied/` of the last 7 days once for `- Status: needs_user`, and keep only the entries whose job has no later entry. For each, look for its exact question in `form_answers.md`:
+   - **not saved yet** (an open question): with the AI app's own browser, read `instructions/run_page.md` and open the run page with `"mode":"questions"`, then wait as it says. Without a browser, ask these questions in the chat, 3 to 5 numbered per message, and save each answer at once (section 7). Then go on with step 1;
+   - **saved** (answered since): keep the job for after `ready` (step 7).
+   With no held job, say nothing about it.
+1. **Ask for the plan first and wait.** At every `start`, ask which plan items and how many of each, in one line, then wait for the answer. Show nothing else in that message (no check, no advice; only the long-chat line of section 6 may come above it) and never open a browser (except the run page of step 0) or apply before the answer. Show the last plan with it: "Which sites and how many today? Last time: linkedin 10, naukri 10. Reply `same` to keep it." When today's record exists, show its plan with what is already done instead ("Today so far: linkedin 4 of 10, naukri 0 of 10. Reply `same` to go on."). With no earlier record, ask without a last plan.
 2. The answer is `same` (keep that plan) or new plan items and counts. Only then go on with steps 3 to 6. Today's record keeps the plan the user confirmed.
 3. Plan items, kept in the order the user gives:
    - sites: `linkedin`, `indeed`, `naukri`, `wellfound`, `instahyre`, `workday`;
@@ -78,7 +85,7 @@ If anything is missing, read `instructions/setup.md` and finish setup first. Nev
 7. After `ready`:
    - create today's record if needed (section 8) and add `- Started HH:MM:SS — limit N h` under `## Sessions`;
    - **NorthList check.** Look for the tools `record_application_submission` and `record_not_submitted_job` by these names, whatever the server is called in the AI app. A tool the app lists by name but loads only on request (for example through a tool search) counts as there: load it now. **Sync is on** when they are there (the user connected NorthList), or when `profile.md` has `NorthList server:` (or the older `Career Companion server:`) with an address. With sync on, read `instructions/northlist_sync.md` and follow it for the whole session. With neither, sync is off: no tool calls, no messages, no sync lines. If the user asks to stop sending to NorthList, nothing more is sent this session (`instructions/northlist_sync.md`, rule 5);
-   - open the browser if it is not open yet (section 9), and start with the first plan item.
+   - open the browser if it is not open yet (section 9). First apply to the held jobs whose answers are saved (step 0), within the limits: open each one's `Job URL` from its entry; each try gets a new entry. Then start with the first plan item.
 
 ## 5. Limits, counts, duplicates and pacing
 
@@ -129,7 +136,7 @@ A plan item is finished when its number is reached or no suitable jobs remain. R
 5. **Fill the form** only from `profile.md`, `form_answers.md` and the resume:
    - compare every prefilled or parsed value with `profile.md`; correct a material difference from it, or mark the job `needs_user`;
    - reuse a contextual answer only when its recorded context matches this job; never turn one employer's or country's answer into a general one;
-   - a required question with no saved answer: never guess; add a `needs_user` entry with the exact question, and ask the user at the end of the session;
+   - a required question with no saved answer: never guess; add a `needs_user` entry with the exact question and, when the form shows them, its options (Yes / No, or the list), as `Question: <exact question> | Options: <option>; <option>`. The run page asks the user at the end of the session;
    - never submit `[placeholders]`, sample values, `None` or guessed numbers;
    - upload `personal_data/resume.pdf` yourself, never asking the user first: use the browser's file-upload tool; if it has none or it fails, attach the file to the page's file field with the app's script tool (read the file, put it on the field, fire the field's change event). If the app asks to allow either one, that is an Allow prompt (section 9, "Hands-free"). Check that the page shows the file. Only when both ways failed twice, ask the user to upload that file in the current tab and reply `done`, then check the upload.
 6. **Check before submitting.** Before every submit action (Naukri's one-click **Apply** included), check the form's final values. Never wait for the user's approval of an application: after `ready` the run applies on its own. Still follow every approval the AI app itself asks for.
@@ -139,7 +146,7 @@ A plan item is finished when its number is reached or no suitable jobs remain. R
 10. **Send it to NorthList** (sync on, `applied` entries): at once, before you open the next job, call `record_application_submission` for this entry, with the portal account it used (Workday and company portals), and add its `- NorthList sync:` line, as `instructions/northlist_sync.md` says. If that file's field table is no longer in this chat, read the file again first. This step is part of every application: never skip it or leave it for later; the user does not have to ask for it. A failed send gets its `failed (...)` line, and applying goes on.
 11. A form that keeps failing after two tries: add a `skipped` entry with the reason and go on.
 
-When the user answers a question, save it in `form_answers.md` at once: under `## Contextual Answers` when it holds only for an employer, country, role or portal, otherwise under `## Learned Answers`, each with its context and the exact question. A job left as `needs_user` may then be tried again; the retry gets a new entry, and the old one stays. Use this format, and add a record only when a real question comes up:
+When the user answers a question (in the chat, or on the run page, which gives the records ready to copy), save it in `form_answers.md` at once: under `## Contextual Answers` when it holds only for an employer, country, role or portal, otherwise under `## Learned Answers`, each with its context and the exact question. A job left as `needs_user` may then be tried again; the retry gets a new entry, and the old one stays. Use this format, and add a record only when a real question comes up:
 
 ```md
 - Context: Employer=<value or Any>; Country=<value or Any>; Role=<value or Any>; Portal/ATS=<value or Any>
@@ -211,7 +218,7 @@ Records made before this version have per-site sections and more tables. Leave t
 
 ## 9. Browser
 
-**Which browser.** Use the AI app's own built-in browser, the one that runs inside the app. A browser extension that drives the user's own browser (for example Claude in Chrome) is only the backup: use it only when the app has no built-in browser. Pick the browser once, before the check in section 4, from the tools the app has: never open a page to pick it, because nothing is opened before `ready` except the `sign in` tabs (section 4). Use it for the whole session, and never switch browsers during a session: sign-ins are not shared between them. A built-in browser that fails is a lost connection (rule 11 below), not a reason to use the extension.
+**Which browser.** Use the AI app's own built-in browser, the one that runs inside the app. A browser extension that drives the user's own browser (for example Claude in Chrome) is only the backup: use it only when the app has no built-in browser. Pick the browser once, before the check in section 4, from the tools the app has: never open a page to pick it, because nothing is opened before `ready` except the run page (section 4, step 0) and the `sign in` tabs (section 4). Use it for the whole session, and never switch browsers during a session: sign-ins are not shared between them. A built-in browser that fails is a lost connection (rule 11 below), not a reason to use the extension.
 
 **Hands-free.** The user should not have to do browser work. Before handing a step to the user, try every tool the app has for it. When a tool needs the AI app's permission, use it anyway: the app shows the user an Allow prompt, and you say in one line: "Please allow it, and choose always allow (or allow for this session) if your app offers it, so I don't ask again." Hand a step to the user only for a job-site sign-in (their password), a CAPTCHA or security check (a site stop, section 10), or a step whose tools failed twice.
 
@@ -273,9 +280,11 @@ For every plan item:
 
 1. With sync on, do its end-of-session steps first (`instructions/northlist_sync.md`). The first of them sends every `applied` entry of today that still has no sync line.
 2. Update the counts in today's `## Application Plan`.
-3. Sum up today from your counts (one search of the record if unsure; never a full re-read): applied, skipped and needs_user jobs, site stops, and how many jobs were passed over in the results lists; with sync on, how many of today's applications NorthList has, and each entry that failed or is still unsent.
-4. Ask the user the open questions. Save each answer at once, as section 7 says.
-5. With sync off, add this line: "Track every application your AI sends, and the replies: connect NorthList at app.northlist.site/automation?tab=setup."
-6. Put this line last, in the same message as the open questions, and never wait for their answers to say it: "Next time, open a new chat and type `start`."
+3. **The run page.** With the AI app's own browser, read `instructions/run_page.md` and open the run page with `"mode":"report"`. It shows today's run, the open questions and NorthList, so the chat message stays short (that file, section 3).
+4. **Without a browser** (or when the page cannot open), instead:
+   - sum up today from your counts (one search of the record if unsure; never a full re-read): applied, skipped and needs_user jobs, site stops, and how many jobs were passed over in the results lists; with sync on, how many of today's applications NorthList has, and each entry that failed or is still unsent;
+   - ask the user the open questions, 3 to 5 numbered per message. Save each answer at once, as section 7 says;
+   - with sync off, add this line: "Track every application your AI sends, and the replies: connect NorthList at app.northlist.site/automation?tab=setup."
+5. Put this line last, in the same message as the run page line or the open questions, and never wait for their answers to say it: "Next time, open a new chat and type `start`."
 
 Checks for whoever edits these instructions are in `docs/walkthroughs.md`. They are not part of a run.
