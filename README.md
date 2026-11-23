@@ -92,7 +92,7 @@ Sync is on whenever NorthList is connected in your AI app, with or without the p
 - `docs/walkthroughs.md`: checks for anyone who changes the instructions.
 - `docs/platform_test_results.md`: what was found when each site was tried.
 
-Made while running and ignored by Git: your files in `personal_data/` (profile, saved answers, portal login, resume), `applied/` (one record per day) , `tracking/` (company portal accounts) and `.update/` (only during an update).
+Made while running and ignored by Git: your files in `personal_data/` (profile, saved answers, portal login, resume), `applied/` (one record per day), `tracking/` (company portal accounts) and `.update/` (only during an update).
 
 ## Troubleshooting
 
