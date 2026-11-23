@@ -1,6 +1,6 @@
 # Professional Profile
 
-> **Instructions:** Copy this file to `profile.md` and replace the bracketed values with the user's actual information. Save `None` for optional values that are unavailable. This file is the authoritative source for profile facts and job preferences.
+> **About this file:** the user's profile, filled in during setup. `None` means not provided. It is the authoritative source for profile facts and job preferences.
 
 ## Basic Information
 - **First Name:** [Your First Name]
