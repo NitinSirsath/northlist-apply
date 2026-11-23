@@ -114,7 +114,6 @@ A plan item is finished when its number is reached or no suitable jobs remain. R
 - It counts per chat session, from this session's `Started` line.
 - When it is reached: open no new job; finish and submit only a job that is already in a form; add its entry and, with sync on, send it (section 7, steps 9 and 10); do the end of session (section 12); tell the user the limit was reached and that `start` in a new chat continues the same day.
 - Never record `skipped` because of the limit.
-
 - If a new chat is needed for any reason, everything is already in the files: tell the user to type `start` there.
 - **Long chat.** The AI app does not show you how full this chat is, so watch for these signs. None of these lines pauses the run. The first two are said at most once per chat, the third once each time the app shortens the chat; after a shortening, a line the summary does not show as said counts as not said:
   - `start` in a chat that already had a `ready` earlier (in its own messages, or in the app's summary of this same chat): put this line above the plan question (section 4, step 1): "This chat already has an earlier run. A new chat works best: open one and type `start`, and today's run continues from your record. Or answer below to go on here." A new chat the user opened never counts, even when it starts with notes from an earlier chat.
