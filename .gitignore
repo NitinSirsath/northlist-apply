@@ -12,6 +12,7 @@
 /setup_checklist.md
 /applied/
 /tracking/
+/.update/
 
 # Ensure templates are committed
 !/personal_data/profile_template.md
