@@ -11,6 +11,3 @@ Adds only Indeed's steps to `AGENTS.md`; if the two ever conflict, `AGENTS.md` w
 1. Start Indeed's application flow for the job.
 2. Compare prefilled values with `profile.md`, and answer employer questions from `form_answers.md`.
 3. Submit and wait for Indeed's confirmation.
-
-## Skip
-- Jobs that need a required skills test or assessment before submitting, unless the user saved an answer or a way to do it.
