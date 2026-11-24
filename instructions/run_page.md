@@ -4,7 +4,6 @@ Read this file only when `AGENTS.md` sends you here: at the end of a session (se
 
 Page address: `https://northlist.site/apply/run`. Open it in the AI app's own browser (`AGENTS.md` section 9), in a new tab.
 
-
 ## 1. Write the facts
 
 Write the facts as one line of JSON. Take them from your counts and from one search of today's record (the search of `instructions/before_run.md`, section 1); never re-read the whole record.
