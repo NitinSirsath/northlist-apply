@@ -60,6 +60,6 @@ Also when the session limit ends it (`AGENTS.md` section 6):
 
 ## Replay on request
 
-When the user says `sync NorthList for YYYY-MM-DD` , read that day's record and send every entry whose sync line is missing, `failed` or `not sent` (never a `Not a fit:` entry, rule 2), with the matching tool, then update the lines. Repeats are safe: the same `sourceRecordRef` is recorded once, and a repeat only fills details NorthList does not have yet.
+When the user says `sync NorthList for YYYY-MM-DD`, read that day's record and send every entry whose sync line is missing, `failed` or `not sent` (never a `Not a fit:` entry, rule 2), with the matching tool, then update the lines. Repeats are safe: the same `sourceRecordRef` is recorded once, and a repeat only fills details NorthList does not have yet.
 
 When the user says `send portal accounts for YYYY-MM-DD`, send that day's `applied` entries that used a portal account again, with `portalAccount` (`instructions/company_accounts.md`, section 3), whatever their sync line says, and leave the lines as they are. This adds the account to applications sent before this version; NorthList keeps each application once.
