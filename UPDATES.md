@@ -10,7 +10,7 @@ New for you:
 
 Before → Now:
 - Type `linkedin 10, workday 2` in the chat → tap it on a page (typing in the chat still works).
-- One long list of applications in NorthList → one group per run
+- One long list of applications in NorthList → one group per run.
 
 ## 2026.11.26
 
