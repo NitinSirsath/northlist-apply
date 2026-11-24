@@ -26,10 +26,8 @@
 
 ## Contextual Answers
 
-Use this section for answers that depend on an employer, country, role, portal, or exact question wording. This section must remain empty until a real contextual question arises. Add a contextual record only when there is an actual question to record.
+Answers that hold only for one employer, country, role or portal. Empty until a real question comes up.
 
 ## Learned Answers
 
-Use this section for required questions that were previously unanswered. This section must remain empty until a real question is answered and learned. Add a learned record only when the user provides the answer.
-
-When a record is needed, use the concise contextual record format defined in `AGENTS.md` and preserve all existing records. Keep both sections empty until a real answer exists; do not create placeholder records.
+Answers to questions that came up in a form: the user's own, and the AI's standard answers (the user may change them). Empty until a real question comes up.
