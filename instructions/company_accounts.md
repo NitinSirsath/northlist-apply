@@ -14,7 +14,7 @@ A company portal often sends a verification link or code after a new account.
 
 1. Open the user's webmail in a new tab of the same browser: Gmail (`https://mail.google.com`) for a `gmail.com` address, Outlook (`https://outlook.live.com/mail`) for `outlook.com`, `hotmail.com` or `live.com`, Yahoo Mail (`https://mail.yahoo.com`) for a `yahoo.` address.
 2. If it is signed in, search only for that company's message from the last hour. Use its link or code, close the tab, and set the record's `email_verified` to `yes`. Read no other mail.
-3. If webmail is signed out, the address is another kind, or no message comes within 3 minutes, say: "<Company> sent a check to your email (<email>). Please open that mail and click its link (or type its code in this tab). I'll check for 5 minutes, then go on." and wait (`AGENTS.md` section 9, "Never stop"). When the portal shows the check is done, set the record's `email_verified` to `yes`.
+3. If webmail is signed out, the address is another kind, or no message comes within 3 minutes, say: "<Company> sent a check to your email (<email>). Please open that mail and click its link (or type its code in this tab). I'll check for 5 minutes, then go on." and wait (`AGENTS.md` section 9, "Never stop"). When the portal shows the check is done, set `email_verified` to `yes`.
 
 Next time, the check before the run offers to sign in to the email first (`instructions/before_run.md`, section 2). After one such wait ran out, later email checks this session still try the webmail steps 1 and 2; only the request to the user is left out, and that job is skipped at once (`AGENTS.md` section 9, "Never stop").
 
