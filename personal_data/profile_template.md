@@ -16,9 +16,19 @@
 - **GitHub Profile URL:** [Your GitHub URL or None]
 - **Personal Portfolio URL:** [Your Portfolio URL or None]
 
+## Details forms ask
+> Company sites often require these. `None` means the user skipped it: a form that needs it then waits for the user.
+- **Date of Birth:** None
+- **Gender:** None
+- **Nationality:** None
+- **Postal Code:** None
+- **Marks or CGPA (highest degree):** None
+- **Ever convicted of a crime:** None
+- **Bound by a non-compete agreement:** None
+
 ## Professional Details
 - **Current Job Title:** [E.g., Frontend Engineer]
-- **Total Years of Experience:** [E.g., 4]
+- **Total Years of Experience:** [E.g., 4 or 1.5]
 - **Core Tech Stack:** [E.g., React, Next.js, TypeScript, Tailwind CSS]
 - **Notice Period (Days):** [30]
 - **Current Compensation Amount:** [e.g., 1200000 or None]
