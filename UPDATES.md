@@ -2,6 +2,16 @@
 
 The AI shows the versions you missed at `start`, then reads the new rules.
 
+## 2026.11.27
+
+New for you:
+- Today's plan is a page: tap the sites, set how many jobs with + and −, press Start. It never lets you go above a site's daily limit, and guesses how long the run takes.
+- NorthList shows each run as a task, named by when it started ("Yesterday 9:02 pm"), with how many it sent per site and how long it took.
+
+Before → Now:
+- Type `linkedin 10, workday 2` in the chat → tap it on a page (typing in the chat still works).
+- One long list of applications in NorthList → one group per run.
+
 ## 2026.11.26
 
 New for you:

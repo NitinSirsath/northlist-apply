@@ -1,4 +1,4 @@
-version: 2026.11.26
+version: 2026.11.27
 files:
 AGENTS.md
 CLAUDE.md
@@ -27,3 +27,4 @@ VERSION
 instructions/setup_page.md
 instructions/update.md
 instructions/run_page.md
+instructions/plan_page.md

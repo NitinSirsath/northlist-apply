@@ -38,7 +38,7 @@ Use the user's local date and time, never UTC.
 
 At every `start`, read `instructions/before_run.md` and follow it from the top: the update check, the setup check, held jobs from earlier, today's plan, the check, and the first steps after `ready`. It has the exact words.
 
-Before the user replies exactly `ready`, never apply, and open nothing in the browser except what that file names (the run page for open questions, the `sign in` tabs). Never update during a run.
+Before the user replies exactly `ready`, never apply, and open nothing in the browser except what that file names (the run page for open questions, the plan page, the `sign in` tabs). Never update during a run.
 
 ## 4. NorthList sync
 

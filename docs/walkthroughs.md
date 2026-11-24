@@ -213,3 +213,16 @@ Added on 24 Nov 2026 (owner): the setup page is light by default, one column wit
 145. **Update of an older profile.** The seven `## Details forms ask` lines are added as `None` with their heading, and nothing is asked: the run page asks only when a form needs one.
 146. **Page too early.** `done` typed while the page is on a step: the agent reads `Step N of 9 · <name>` and names that step.
 147. **In the chat instead.** Group e asks the seven details once, each optional; `skip` saves `None`.
+
+## Plan page and runs as tasks
+
+Added on 25 Nov 2026 (owner): the plan question is a page with buttons, and every NorthList send says which run it belongs to.
+
+148. **Plan page.** `start` in an app with its own browser, last plan `linkedin 10, naukri 2`, no record today: after the update and setup checks the agent opens `https://northlist.site/apply/plan#{"last":"linkedin 10, naukri 2","hours":4}` in a new tab and says the one line of `instructions/plan_page.md` section 1. No chat list of sites.
+149. **Read back.** The tab title becomes `Done · linkedin 10, workday 2`: the agent reads `linkedin 10, workday 2` between `BEGIN NORTHLIST PLAN` and `END NORTHLIST PLAN` and shows the advice and the check, exactly as after a typed plan. No question to confirm it.
+150. **Chat wins.** While the page is open the user replies `same`: the agent stops checking the tab and uses the last plan.
+151. **Second run today.** Today's record has 4 LinkedIn entries: the start search runs first, and the facts have `"today":"linkedin 4"`.
+152. **No browser.** An app with only the extension backup asks the plan question in the chat, as before; nothing opens.
+153. **Task on every send.** Session started 21:02:10 on 24 Nov (+05:30), plan linkedin 10, naukri 2: every `record_application_submission` and `record_not_submitted_job` of the session has `"task":{"startedAt":"2026-11-24T21:02:10+05:30","plan":[{"site":"linkedin","planned":10},{"site":"naukri","planned":2}]}`.
+154. **Past midnight.** The same session sends at 00:20 on 25 Nov: `startedAt` stays `2026-11-24T21:02:10+05:30`.
+155. **Replay.** `sync NorthList for 2026-11-24` with two sessions that day (10:15:00 and 21:02:10): an entry at 21:40 gets the 21:02:10 start, an entry at 10:47 the 10:15:00 start.
