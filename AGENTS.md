@@ -86,7 +86,7 @@ A plan item is finished when its number is reached or no suitable jobs remain. R
 3. **Read the post** of a job that looks right, and check the fit rules again. If it breaks one, add a `skipped` entry whose reason starts with `Not a fit:` ("Not a fit: needs 8+ years", "Not a fit: main skill PHP"). Such an entry is never sent to NorthList.
 4. **Limits** (section 5), before any sign-in, account creation or form.
 5. **Fill the form** only from `profile.md`, `form_answers.md` and the resume. Read `instructions/form_questions.md` before the first form of a session: it says how to answer questions and how to add the resume.
-   - Compare every prefilled or parsed value with `profile.md`; correct a material difference in this form, or mark the job `needs_user`.
+   - Compare every prefilled or parsed value with `profile.md`; correct a material difference in this form, or mark the job `needs_user`. Never change the user's profile on the site (section 11).
    - A question with no saved answer: answer a judgment yourself, and hold a job that needs a fact only the user knows, as that file says. Never stop to ask in the chat.
    - Never submit `[placeholders]`, sample values, `None` or guessed numbers.
    - The resume: pick the form's own `resume.pdf` when it lists one; otherwise upload `personal_data/resume.pdf` yourself, never asking the user first (that file, section 6).
