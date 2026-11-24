@@ -18,17 +18,17 @@ In beta. Tried so far on LinkedIn Easy Apply, Naukri and Indeed. Like any AI, it
 2. Open the folder in your AI app.
 3. Type `start`.
 
-The first time, it offers to connect NorthList (reply `skip` to set up without it), then opens the setup page in your AI app's browser: drop your resume there, check what your AI read from it, and answer the rest with a few taps, about 3 minutes. What your resume already says, such as your notice period or salary, is filled in for you. Rather answer in the chat? Say "just ask me here". Your profile, saved answers, portal login and resume stay in `personal_data/` on your computer, and Git ignores them, so they are never committed.
+The first time, it offers to connect NorthList (reply `skip` to set up without it), then opens the setup page in your AI app's browser: drop your resume there, check what your AI read from it, and answer the rest with a few taps, about 4 minutes. What your resume already says, such as your notice period or salary, is filled in for you, and every way of working and suggested city is picked from the start, so you only take away what does not fit. One step asks the details company sites often require (date of birth, gender, nationality, postal code, marks, and two yes or no questions); skip any you like, and a form that needs a skipped one waits for you. ID numbers such as PAN, Aadhaar or passport are never saved. Rather answer in the chat? Say "just ask me here". Your profile, saved answers, portal login and resume stay in `personal_data/` on your computer, and Git ignores them, so they are never committed.
 
 **It keeps itself up to date.** At every `start` it checks this repository for a newer version. If there is one, it updates its own instruction files (with `git pull` in a cloned folder, by downloading them in a ZIP folder), shows you what is new, and goes on. It never changes your files in `personal_data/`, `applied/` or `tracking/`, and never updates in the middle of a run.
 
 ## A normal run
 
-1. **`start`**: it checks your setup and asks which sites and how many jobs today, with last time's plan, for example "Last time: linkedin 10, naukri 10". Reply `same` to keep it, or name new sites and counts. Nothing starts before you answer. Then it shows a short check (see "Before a run").
-2. **`sign in`** (first run, or a new site in your plan): it opens each job site that is new in your plan and needs your account (LinkedIn, Indeed, Naukri, Wellfound, Instahyre) in the AI app's own browser. Sign in there, then reply `done`.
+1. **`start`**: it checks your setup and asks what to apply to today. It lists every site with its daily limit and last time's plan, for example "Last time: linkedin 10, naukri 10". Reply `same` to keep it, or write sites and numbers, like `linkedin 10, workday 2`. Nothing starts before you answer. Then it shows a short check (see "Before a run").
+2. **`sign in`** (first run, or a new site in your plan): it opens each job site that is new in your plan and needs your account (LinkedIn, Indeed, Naukri, Wellfound, Instahyre) in the AI app's own browser, and your email (Gmail, Outlook or Yahoo Mail) the first time your plan has Workday or company sites, so it can click their verification links itself. Sign in there, then reply `done`.
 3. **`ready`**: once the check is done. It starts and applies on its own, one job at a time.
 
-When a site asks you to sign in, it waits for you: sign in in that tab and reply `done`. At the end, it opens **Today's run**, a page in your AI app's browser: how many jobs it applied to on each site, what it skipped and why, and the questions it could not answer, with buttons to answer them (written answers start as a draft from your profile). Press Save: it saves your answers for every job or only that company, and applies to those jobs again. Not now? Reply `later`: the next `start` asks again before the plan.
+**It never stops for you.** Once you reply `ready`, it runs on its own. Stay for the first job or two: when your AI app asks to allow a tool, choose always allow, or the run waits at that prompt. Questions that ask for a judgment (rate your JavaScript, willing to work shifts, why this company) it answers itself from your profile and saves, so the next form gets the same answer. A fact only you know (like a PAN number or your date of birth) is never guessed: that job waits, and the run goes on. When a site needs your hands (a sign-in, an upload, an email link), it asks in that tab and checks for 5 minutes; then it goes on with other jobs and tries that one again on another day. At the end, it opens **Today's run**, a page in your AI app's browser: how many jobs it applied to on each site, what it skipped and why, and the questions it could not answer, with buttons to answer them (written answers start as a draft from your profile). Press Save: it saves your answers for every job or only that company, and applies to those jobs again. Not now? Reply `later`: the next `start` asks again before the plan.
 
 ## Before a run
 
@@ -39,6 +39,7 @@ A run can take up to your session limit (4 hours by default).
    - **macOS:** System Settings › Lock Screen › "Turn display off when inactive" › Never. Also System Settings › Battery › Options (or Displays › Advanced) › "Prevent automatic sleeping on power adapter when the display is off" › On.
    - **Windows 11:** Settings › System › Power & battery › Screen and sleep: set "When plugged in, put my device to sleep after" and "When plugged in, turn off my screen after" to Never.
 3. Sign in to the job sites in your plan inside your AI app's own browser. NorthList Apply recommends that browser, and it does not share sign-ins with your usual browser. Reply `sign in` at the check and it opens each site in its own tab: sign in, then reply `done`. Once per site is usually enough; the browser keeps you signed in. The check reminds you only for sites new to your plan, but you can reply `sign in` at any check to open all of today's sites. Extension backup only: open your browser with one window, signed in to those sites.
+4. Stay for the first job or two. When your AI app asks to allow something (the browser, the resume upload, NorthList), choose always allow, so the run does not wait for you later.
 
 ## Sites and limits
 
@@ -52,8 +53,9 @@ Most applications per day: LinkedIn 20, Indeed 20, Naukri 25, Wellfound 10, Inst
 ## What it always does
 
 - Applies to one job at a time, with at least 30 seconds between two applications on the same site.
-- Applies only to jobs that match your titles, places and work modes, and skips the companies you list.
-- Fills in only facts from your profile, saved answers and resume. When a question has no saved answer, it asks you instead of guessing.
+- Applies to jobs that match your titles, places and work modes, and skips the companies you list. It skips a job for experience only when it asks for more than 3 years above yours (with 1.5 years, it applies up to "4+ years"), and for skills only when the job is built around a main skill you don't have at all.
+- Never changes your profile on LinkedIn, Naukri or any other site. If a site wants its profile filled before you can apply, it tells you.
+- Fills in facts only from your profile, saved answers and resume, and never guesses a fact only you know. Judgment questions (a self-rating, willingness, a short why-us) it answers itself and saves in `personal_data/form_answers.md`, where you can change them.
 - Counts a job as applied only after the site confirms it.
 - Stops a site for the day at a CAPTCHA, a security check or a limit message, and never tries to get around it.
 - Never emails recruiters, and never turns on a site's own auto-apply.
@@ -62,7 +64,7 @@ Most applications per day: LinkedIn 20, Indeed 20, Naukri 25, Wellfound 10, Inst
 
 ## Which model
 
-Once per run, it tells you which kind of model fits today's plan; it never names one. A light model is enough for the quick-apply sites (LinkedIn, Indeed, Naukri, Wellfound, Instahyre). Workday, company career pages, web search and the job sources go better with a medium one. For the first setup, use your app's strongest model.
+Once per run, it reminds you which kind of model to use; it never names one. A medium model of your AI app works best for every plan: it makes fewer mistakes than a light one, so the run needs fewer repeats. A light model can still run the quick-apply sites (LinkedIn, Indeed, Naukri, Wellfound, Instahyre). For the first setup, use your app's strongest model. If your app lets you pick a thinking level (effort), low or medium is enough and much faster than high.
 
 ## Connect NorthList (optional)
 
@@ -74,20 +76,20 @@ Once per run, it tells you which kind of model fits today's plan; it never names
 3. Your AI app finds this folder (the chat's folder, or `Documents/NorthList Apply`; without one it offers to download it there), swaps the code for your token, adds NorthList to its own settings and asks you to allow the change. Your token goes only into those settings, never into this folder.
 4. When it says so, open a new chat or restart the app, then type `start`. The first time it uses NorthList, your app asks: allow it for good.
 
-**By hand instead:** under **Set it up by hand** on the Setup tab, create a token, then add NorthList as an MCP server in your AI app's **user-level** settings (never a file inside this folder), with the server address from the Setup tab (it ends in `/mcp`) and the header `Authorization: Bearer <token>`. If your app cannot send headers, use the `mcp-remote` bridge with that same address: `npx mcp-remote <server address> --header "Authorization: Bearer <token>"`. Allow its two tools, `record_application_submission` and `record_not_submitted_job`, and set the profile line the Setup tab shows, `- NorthList server: <address>` (without `/mcp`), in `personal_data/profile.md`. An older `- Career Companion server: <address>` line works the same.
+**By hand instead:** under **Set it up by hand** on the Setup tab, create a token, then add NorthList as an MCP server in your AI app's **user-level** settings (never a file inside this folder), with the server address from the Setup tab (it ends in `/mcp`) and the header `Authorization: Bearer <token>`. If your app cannot send headers, use the `mcp-remote` bridge with that same address: `npx mcp-remote <server address> --header "Authorization: Bearer <token>"`. Allow its two tools, `record_application_submission` and `record_not_submitted_job`, and set the profile line the Setup tab shows, `- NorthList server: <address>` (without `/mcp`), in `personal_data/profile.md`.
 
 **What NorthList gets:**
 - For each job it applied to: the company, job title, site, job and apply page links, the apply site's address, the job ID, where the job was found, location, work mode, time, the site's confirmation, your resume's file name and the answers it sent.
 - For Workday and other company portals: the account it used (sign-in page, login email, password, whether the email was checked), so you can sign in from NorthList. NorthList stores the password encrypted and shows it only to you. Say "don't send portal passwords" in a run to leave the password out from then on (it is saved in your profile).
-- For each job it opened but did not apply to: the company, job title, site, job link, whether it skipped the job or left it for you, the reason and the time.
+- For each job it tried but could not finish (a sign-in or upload you did not answer in 5 minutes, a form that failed, a site stop) or left for you with a question: the company, job title, site, job link, the reason and the time. Jobs it turned down because they do not fit are never sent.
 - Never: your passwords for LinkedIn, Indeed, Naukri and the other job sites you sign in to yourself, your resume file or its text, or your plan and limits.
 
-Sync is on whenever NorthList is connected in your AI app, with or without the profile line; the line only lets a run wake NorthList before its first send. To stop sending, tell the run, or remove NorthList from your AI app's settings to turn it off for good. Each application is sent right after the site confirms it, before the next job starts, so a stopped run keeps what was sent. A send that was missed goes before the next job, at the next `start`, or at the end of the run, and the run's summary says how many of today's applications NorthList has. Jobs it did not apply to are sent at the end of the run, and failed sends are tried again then. To send a day again later, say `sync NorthList for YYYY-MM-DD`. To add portal accounts to applications sent before this version, say `send portal accounts for YYYY-MM-DD`. If you delete an application in NorthList, what this automation sent for it goes too. Tokens expire: when it says the tools are not available, make a new setup prompt on the Setup tab and send it again.
+Sync is on whenever NorthList is connected in your AI app, with or without the profile line; the line only lets a run wake NorthList before its first send. To stop sending, tell the run, or remove NorthList from your AI app's settings to turn it off for good. Each application is sent right after the site confirms it, before the next job starts, so a stopped run keeps what was sent. A send that was missed goes before the next job, at the next `start`, or at the end of the run, and the run page says how many of today's applications NorthList has. Jobs it tried but could not finish are sent at the end of the run, and failed sends are tried again then; one that still failed is named in the chat. To send a day again later, say `sync NorthList for YYYY-MM-DD`. To add portal accounts to applications sent before this version, say `send portal accounts for YYYY-MM-DD`. If you delete an application in NorthList, what this automation sent for it goes too. Tokens expire: when it says the tools are not available, make a new setup prompt on the Setup tab and send it again.
 
 ## Files
 
 - `AGENTS.md`: the rules for every run (`CLAUDE.md` loads it for Claude Code).
-- `instructions/`: setup (and the setup page), updates, connecting and syncing NorthList, and one file per site, each read only when needed.
+- `instructions/`: the start of a run, setup (and the setup page), updates, company accounts, connecting and syncing NorthList, and one file per site, each read only when needed.
 - `VERSION` and `UPDATES.md`: this version, the files an update may change, and what is new in each version.
 - `personal_data/*_template.md`: templates for your profile, saved answers and portal login.
 - `docs/walkthroughs.md`: checks for anyone who changes the instructions.
@@ -103,7 +105,7 @@ Made while running and ignored by Git: your files in `personal_data/` (profile, 
 
 **Many browser permission prompts.** Many AI apps ask once per new website, and Workday, company career pages, web search and the job sources open a new company site for almost every job. Choose always allow (or allow for the session) when your app offers it, and stay near. The run asks your app for permission instead of asking you to do a step yourself, so each Allow keeps it hands-free. For hands-off runs, use the quick-apply sites.
 
-**"Browser connection lost. The run is paused."** The browser closed, the computer slept, or (extension backup) the browser extension lost its connection. Make sure the AI app's browser works again (extension backup: your browser open with one window, and the extension connected), keep the computer awake and plugged in, then reply `ready`. It tries once more, then ends the run cleanly.
+**"Browser connection lost. The run is paused."** The browser closed, the computer slept, or (extension backup) the browser extension lost its connection. Make sure the AI app's browser works again (extension backup: your browser open with one window, and the extension connected), keep the computer awake and plugged in. It tries again every minute for 5 minutes (reply `ready` to try at once), then ends the run cleanly.
 
 **Many windows or tabs, and a slow computer.** Stop the run, close the extra windows and tabs, keep one window, and type `start`. A run uses at most two more tabs than it has plan items.
 
@@ -111,9 +113,9 @@ Made while running and ignored by Git: your files in `personal_data/` (profile, 
 
 **It forgets an answer or repeats itself in a long chat.** A very long chat gets shortened by your AI app, and older details can get lost. Open a new chat and type `start`: nothing is lost, because today's run continues from your record. The run tells you when a chat is getting long. Use a new chat for each run.
 
-**It keeps asking me to sign in.** The site is signed out in the browser the run uses. The AI app's own browser does not share sign-ins with your usual browser: sign in once in that tab, then reply `done`. Next time, reply `sign in` at the check to sign in before the run starts.
+**It keeps asking me to sign in.** The site is signed out in the browser the run uses. The AI app's own browser does not share sign-ins with your usual browser: sign in once in that tab (the run checks for 5 minutes, then goes on with other sites and asks once more at the end). Next time, reply `sign in` at the check to sign in before the run starts.
 
-**It asks to allow a tool for the resume upload.** The run uploads `personal_data/resume.pdf` itself; your AI app may ask you to allow the tool it uses. Choose always allow. Only if every way fails does it ask you to upload the file in that tab and reply `done`.
+**It asks to allow a tool for the resume upload.** The run uploads `personal_data/resume.pdf` itself; your AI app may ask you to allow the tool it uses. Choose always allow. On LinkedIn it uploads once and then picks that saved `resume.pdf` for the next jobs. If your app cannot upload files at all, it asks you to upload the file in that tab and checks for 5 minutes, without trying its own ways again for the rest of the run.
 
 **A site stopped for the day after a CAPTCHA or "unusual activity".** That is a site stop. Nothing more on that site today; the other sites go on. Try it again tomorrow.
 
@@ -121,7 +123,11 @@ Made while running and ignored by Git: your files in `personal_data/` (profile, 
 
 **Counts look wrong.** Only the entries in `applied/YYYY-MM-DD/applications.md` count, and there is never a second file for the same day. The table at the top of that file is brought up to date at the start and the end of each session, not after every job.
 
-**The run is slow.** It applies to one job at a time and reads each job before it applies. Choose 10 to 15 jobs per site.
+**The run is slow.** It applies to one job at a time and reads each job before it applies. A low or medium thinking level, when your app has one, is much faster than high. A Workday job takes about 5 to 10 minutes, the first one at a company longest (a new account and an email check). Choose 10 to 15 jobs per site.
+
+**It skips many jobs.** Each skipped job and its reason is on the run page. Jobs are skipped only for a title, place or work mode that does not match, more than 3 years of experience above yours, a main skill you don't have, work permission, or a company you listed. Check `Total Years of Experience` in `personal_data/profile.md`.
+
+**Workday found no jobs.** Workday has no single job board: the run searches the web for Workday job pages posted in the last 7 days, with your titles and close ones, at least 5 searches. Add more titles to `Target Job Titles` in `personal_data/profile.md` to find more.
 
 **"NorthList sync is on, but its tools are not available."** If you just connected, open a new chat or restart your AI app first. Otherwise the token has probably expired: make a new setup prompt under Automation › Setup in NorthList and send it to your AI app.
 
