@@ -8,10 +8,10 @@ Adds only LinkedIn's steps to `AGENTS.md`; if the two ever conflict, `AGENTS.md`
 
 ## Apply
 1. Open a matching job and click **Easy Apply**.
-2. Fill each step from the saved data, and compare LinkedIn's prefilled values with `profile.md`.
-3. Untick **Follow company** before submitting.
-4. Submit and wait for LinkedIn's confirmation.
+2. Resume step: pick the saved resume named `resume.pdf` when LinkedIn lists it; upload `personal_data/resume.pdf` only when it does not (`instructions/form_questions.md`, section 6). After the first upload, LinkedIn keeps it for the next jobs.
+3. Fill each step from the saved data, and compare LinkedIn's prefilled values with `profile.md`. Change them only in this form, never in the LinkedIn profile.
+4. Untick **Follow company** before submitting.
+5. Submit and wait for LinkedIn's confirmation.
 
-## Skip
-- Jobs that ask for more years of experience than the profile has.
-- Jobs that send you to an outside application site, unless today's plan covers that kind of site through `company_direct`, `discovery` or a job source.
+## Pass over
+- A job without Easy Apply (it sends you to an outside application site), unless today's plan has `company_direct`, `discovery` or a job source.

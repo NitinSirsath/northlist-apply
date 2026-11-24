@@ -2,6 +2,17 @@
 
 The AI shows the versions you missed at `start`, then reads the new rules.
 
+## 2026.11.26
+
+New for you:
+- Skips fewer jobs: for experience only when a job asks for more than 3 years above yours, for skills only when its main skill is one you don't have.
+- Never stops for you: it answers judgment questions itself (like "rate your JavaScript") and waits at most 5 minutes for a sign-in or an upload.
+- Setup is cleaner and asks a few more details once (birth date, gender, your links), so fewer jobs wait for you.
+
+Before → Now:
+- 1.5 years of experience saved as 1 → 1.5, counted from your job dates.
+- Every skipped job sent to NorthList → only jobs it tried and could not finish, with the reason.
+
 ## 2026.11.25
 
 New for you:

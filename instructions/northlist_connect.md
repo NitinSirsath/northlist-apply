@@ -71,7 +71,7 @@ Do not guess where it keeps its settings. Tell the user to add an MCP server nam
 ## 3. The profile line
 
 1. If `personal_data/profile.md` is missing, create it from `personal_data/profile_template.md`.
-2. Set its NorthList server line to `<server>`, without `/mcp`, replacing `None` or an older address. An older `Career Companion server:` line becomes the NorthList line.
+2. Set its NorthList server line to `<server>`, without `/mcp`, replacing `None` or an older address.
 3. Change nothing else in the file.
 
 ## 4. Tell the user

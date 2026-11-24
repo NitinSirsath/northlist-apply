@@ -19,6 +19,4 @@ The account record header is:
 
 Before creating a new portal account, check that record first. Never repeat any password in `applied/YYYY-MM-DD/applications.md`.
 
-With NorthList connected, the record of the account used for an application is sent with it, password included, so you can sign in from NorthList (`instructions/northlist_sync.md`, "The portal account"). NorthList stores the password encrypted. Job-site passwords (LinkedIn and the like) are never in this file and never sent.
-
-Some apps may require the user to sign in or verify email in the current tab. When that happens, use the documented `done` fallback and resume.
+With NorthList connected, the record of the account used for an application is sent with it, password included, so you can sign in from NorthList (`instructions/company_accounts.md`, section 3). NorthList stores the password encrypted. Job-site passwords (LinkedIn and the like) are never in this file and never sent.

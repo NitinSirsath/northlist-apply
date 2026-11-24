@@ -1,4 +1,4 @@
-version: 2026.11.25
+version: 2026.11.26
 files:
 AGENTS.md
 CLAUDE.md
@@ -7,6 +7,9 @@ docs/platform_test_results.md
 docs/walkthroughs.md
 instructions/advanced_strategies/company_direct_apply.md
 instructions/advanced_strategies/web_search_discovery.md
+instructions/before_run.md
+instructions/company_accounts.md
+instructions/form_questions.md
 instructions/northlist_connect.md
 instructions/northlist_sync.md
 instructions/platforms/indeed_strategy.md
