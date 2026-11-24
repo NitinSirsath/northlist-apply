@@ -9,8 +9,4 @@ Adds only these steps to `AGENTS.md`; if the two ever conflict, `AGENTS.md` wins
 ## Apply
 1. Find the Apply or View Roles control on the current page, and tell the application system from the page's address and content.
 2. Greenhouse, Lever and Ashby: attach `personal_data/resume.pdf`; fill basic details and links from `profile.md`; answer from `form_answers.md`; compare prefilled values; submit and wait for the confirmation.
-3. Other systems: follow what the page shows. Use the portal login only when an account is required: check `tracking/created_accounts.csv` first, and add a new account's record at once.
-
-## Skip
-- Required essay-style questions about past behaviour that the saved answers do not cover.
-- Never invent a control or a confirmation.
+3. Other systems: follow what the page shows. Make or use an account only when one is required: `instructions/company_accounts.md`.
