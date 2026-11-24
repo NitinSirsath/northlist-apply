@@ -3,9 +3,9 @@
 Adds only these steps to `AGENTS.md`; if the two ever conflict, `AGENTS.md` wins.
 
 ## Discovery (web search)
-1. Search the web with the target job titles, locations and work modes from `personal_data/profile.md`. No saved career URLs are needed.
+1. Search the web with the target job titles, locations and work modes from `personal_data/profile.md`, and 2 or 3 close titles from the profile's skills. Use the AI app's own web search tool when it has one; otherwise a search engine in the browser. No saved career URLs are needed.
 2. Prefer direct application pages, such as Greenhouse, Lever, Ashby and Workday. Avoid job boards that only lead back to LinkedIn or Indeed.
-3. When a site shows freshness controls, use them (`AGENTS.md` section 9); if not, say so instead of calling the results fresh.
+3. Take jobs posted in the last 7 days, by the job page's own date (`AGENTS.md` section 9); use the search engine's past-week filter when it has one. A page with no date: say so instead of calling it fresh.
 
 ## Job sources
 These plan items only find jobs. Each job is applied to where it is actually submitted.
@@ -18,7 +18,7 @@ These plan items only find jobs. Each job is applied to where it is actually sub
 
 ## Every found job
 1. Open the job and look at its real application page.
-2. Fill `Selected plan choice` (the plan item), `Discovery source` (the job source or website) and `Actual application destination` (where the form is sent).
+2. Fill `Selected plan choice` (the plan item), `Discovery source` (the job source or website) and `Actual application destination` (where the form is sent). The job also counts toward the site where it is submitted (`Platform`: any Workday form counts as `workday`), within that site's daily limit, also when that site is not in today's plan.
 3. Continue this exact job where it is, never with a new search:
    - a Workday form: `instructions/platforms/workday_strategy.md`;
    - Greenhouse, Lever, Ashby or another company form: `instructions/advanced_strategies/company_direct_apply.md`;
