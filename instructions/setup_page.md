@@ -50,10 +50,18 @@ Only when the resume says it:
 | `workModes` | "Open to remote", "Hybrid preferred" | `["remote"]`, `["hybrid"]` |
 | `relocate` | "Willing to relocate" | `true` |
 | `workAuth` | "US citizen", "Needs H-1B sponsorship" | `[{"country":"United States","value":"yes"}]` (full country names, as for `country`); `value` is `"yes"` (no visa needed), `"later"` (visa needed later) or `"need"` (needs a visa now) |
+| `dateOfBirth` | "DOB: 7 April 1998" | `"1998-04-07"` |
+| `gender` | "Gender: Female" | `"Woman"`, `"Man"` or `"Another"` |
+| `nationality` | "Nationality: Indian" | `"Indian"` |
+| `postalCode` | an address with "Pune 411001" | `"411001"` |
+| `marks` | "CGPA 8.4", "72%" for the highest degree | `"8.4 CGPA"`, `"72%"` |
+| `linkedinUrl`, `githubUrl`, `portfolioUrl` | the links ("Links" below) | `"https://www.linkedin.com/in/asha-rao"` |
 
 Money: 1 lakh = 100000, 1 crore = 10000000, "12 LPA" = 1200000 per year, "$120k" = 120000.
 
-Also add `"resumeFile": {"name": "<file name>", "size": <size>}` when you know them from step 1, and `"northlistConnected": true` when the NorthList tools are there (`AGENTS.md` section 4, step 7).
+**Links:** the LinkedIn, GitHub and portfolio addresses. A resume often shows only a word like "LinkedIn" or "GitHub" with the address hidden behind it. If your reading of the PDF shows no address, search the file itself for `/URI` with the app's command or script tool, for example `grep -a -o '/URI *([^)]*)' personal_data/resume.pdf` on Mac and Linux. Use only addresses that are in the resume. None found: leave the key out; a run takes the LinkedIn address later from the signed-in LinkedIn page (`instructions/form_questions.md`, section 1).
+
+Also add `"resumeFile": {"name": "<file name>", "size": <size>}` when you know them from step 1, and `"northlistConnected": true` when the NorthList tools are there (`AGENTS.md` section 4).
 
 ## 3. Show the page with the facts
 
@@ -66,18 +74,18 @@ The page fills itself in. The user checks and answers the rest.
 ## 4. Wait
 
 Check the tab title every 15 seconds. When it starts with `Done`, go to step 5.
-- If the user types `done` and the title does not start with `Done`, read the step line on the page (`Step N of 8 · <name>`) and say: "The page is still on <name>. Finish it there and press Save."
+- If the user types `done` and the title does not start with `Done`, read the step line on the page (`Step N of 9 · <name>`) and say: "The page is still on <name>. Finish it there and press Save."
 - If the page is closed, open the page address again (the page keeps the answers).
 
 ## 5. Copy the answers into the files
 
 Read the page text between `BEGIN NORTHLIST ANSWERS` and `END NORTHLIST ANSWERS`. These are the user's own choices: when they differ from the resume, the page wins. Do not ask the user to confirm them. Then:
-- Under `## profile.md`: for each line `- **Label:** value`, replace the line with the same `- **Label:**` in `personal_data/profile.md`.
+- Under `## profile.md`: for each line `- **Label:** value`, replace the line with the same `- **Label:**` in `personal_data/profile.md`. A label the profile does not have yet: add the line in the section where `personal_data/profile_template.md` has it.
 - Under `## Work Authorization`: replace that whole section in `personal_data/profile.md` with the lines given (keep the section heading and its note line).
 - Under `## Employment History`: write one `### Employer N` block per job given, in that order, with `Company`, `Job Title`, `Start Date` and `End Date` from the page, and `Key Responsibilities / Achievements` as one short line from the resume. Replace the old blocks.
 - Under `## Education`: write one `### Education N` block per entry, with `Institution` and `Graduation Year` from the page, and `Degree`, `Field / Major`, `Start Year` and `Notes` from the resume (`None` when the resume does not say). Replace the old blocks.
 - Under `## form_answers.md`: in `personal_data/form_answers.md` each label has its answer on the next line. Find the label, and replace the answer line below it with the value.
-- Also fill in from your facts: `First Name`, `Last Name`, `Email`, `Phone Country Code`, `Phone Number`, `Location (City, Country)`, `Current Job Title`, `Core Tech Stack` (the skills, comma separated). `Address`, `LinkedIn Profile URL`, `GitHub Profile URL`, `Personal Portfolio URL`: from the resume, else `None`.
+- Also fill in, in `personal_data/profile.md`, from your facts: `First Name`, `Last Name`, `Email`, `Phone Country Code`, `Phone Number`, `Location (City, Country)`, `Current Job Title`, `Core Tech Stack` (the skills, comma separated). `Address`: from the resume, else `None`. The links and the details company sites ask (date of birth, gender and so on) come from the page's lines: never fill them from a guess.
 - `None` means not provided: write `None`. An optional field the page and the resume did not answer (for example `Company Career Page URLs`, `Lower Daily Limit Per Site`): write `None`.
 
-Change nothing else. Then run the setup check again (`AGENTS.md` section 3).
+Change nothing else. Then run the setup check again (`instructions/before_run.md`, section 0).
