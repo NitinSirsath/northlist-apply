@@ -1,6 +1,6 @@
 # Before a run
 
-Read this file at every `start` (`AGENTS.md` section 3) and follow it from the top: the update and setup checks, held jobs, the plan question, the advice and the check, the `sign in` steps, and the first steps after `ready`. Its last section is the message for a lost browser connection.
+Read this file at every `start` (`AGENTS.md` section 3) and follow it from the top: the update and setup checks, held jobs, the plan question (on the plan page, or in the chat), the advice and the check, the `sign in` steps, and the first steps after `ready`. Its last section is the message for a lost browser connection.
 
 ## 0. First: the update check, the setup check and held jobs
 
@@ -17,7 +17,9 @@ If anything is missing, read `instructions/setup.md` and finish setup first. Nev
 
 ## 1. The plan question
 
-Ask it first and wait for the answer. Before the answer, never open a browser (except the run page of section 0) and never apply. Ask it in this form; nothing else goes in the message (no check, no advice), except the long-chat line below when it applies:
+Ask it first and wait for the answer. Before the answer, never open a browser (except the run page of section 0 and the plan page) and never apply.
+
+**With the AI app's own browser, ask it on the plan page:** do the search of the third point below when today's record exists, then read `instructions/plan_page.md` and follow it. Without one, or when the page cannot open, ask it in the chat in this form; nothing else goes in the message (no check, no advice), except the long-chat line below when it applies:
 
 > **What should I apply to today?** Last time: linkedin 10, naukri 10. Reply `same` to keep it, or write sites and numbers, like `linkedin 10, workday 2`.
 > - **Quick apply:** `linkedin` (up to 20), `naukri` (25), `indeed` (20), `wellfound` (10), `instahyre` (10)
